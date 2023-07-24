@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/fcegatti/dHondtApp/issues"
   },
-  "homepage": "https://github.com/fcegatti/dHondtApp#readme"
+  "homepage": "https://github.com/fcegatti/dHondtApp#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
