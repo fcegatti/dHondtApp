@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const { elections, calculateSeats } = require('./elections');
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set('view engine', 'ejs');
 
@@ -12,6 +15,19 @@ app.get('/', (req, res) => {
 app.get('/electionForm', (req, res) => {
   res.render('electionForm');
 });
+
+app.post('/electionForm', (req, res) => {
+  // Aquí es donde extraigo los datos del formulario del objeto req.body
+  // Por ejemplo:
+  // const electionType = req.body.electionType;
+  // const electionName = req.body.electionName;
+  
+  // Después de extraer los datos, puedo procesarlos por ejemplo, guardándolos en una base de datos o usarlos para calcular algo
+  
+  // Finalmente, puedo responder al cliente, por ejemplo, redirigiendo a otra página o enviando un mensaje
+  // res.redirect('/someOtherPage');
+});
+
 
 app.get('/election/:id', (req, res) => {
   const id = parseInt(req.params.id);
