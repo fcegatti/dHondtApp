@@ -607,84 +607,76 @@ const elections = [
 ];
 
 const voteData = {
-  Barcelona: {
-    'Partido A': 600000,
-    'Partido B': 400000,
-    'Partido C': 300000,
-    'Partido D': 200000,
-  },
-  Girona: {
-    'Partido A': 200000,
-    'Partido B': 150000,
-    'Partido C': 100000,
-    'Partido D': 50000,
-  },
-  Lleida: {
-    'Partido A': 100000,
-    'Partido B': 150000,
-    'Partido C': 10000,
-    'Partido D': 12000,
-  },
-  Tarragona: {
-    'Partido A': 200000,
-    'Partido B': 150000,
-    'Partido C': 100000,
-    'Partido D': 50000,
-  },
+  Catalunya: {
+    Barcelona: {
+      'Partido A': 600000,
+      'Partido B': 400000,
+      'Partido C': 300000,
+      'Partido D': 200000,
+    },
+    Girona: {
+      'Partido A': 200000,
+      'Partido B': 150000,
+      'Partido C': 100000,
+      'Partido D': 50000,
+    },
+    Lleida: {
+      'Partido A': 100000,
+      'Partido B': 150000,
+      'Partido C': 10000,
+      'Partido D': 12000,
+    },
+    Tarragona: {
+      'Partido A': 200000,
+      'Partido B': 150000,
+      'Partido C': 100000,
+      'Partido D': 50000,
+    },
+  }
 };
 
-function calculateSeats(voteData, communityName, elections) {
+function calculateSeats(voteData, elections) {
   if (!Array.isArray(elections) || elections.length === 0) {
     throw new Error("El array 'elections' debe estar definido y tener al menos un elemento.");
   }
 
-  // Creamos un array para almacenar los resultados totales de cada partido.
-  const totalResults = [];
+  const election = elections[0];
+  
+  // Creamos un objeto para almacenar los resultados totales de cada comunidad autónoma.
+  const totalResults = {};
+  
+  // Iteramos sobre cada comunidad autónoma en los datos de voto.
+  for (const communityName in voteData) {
+    const communityVotes = voteData[communityName];
+    const communityData = election.autonomousCommunities.find(c => c.name === communityName);
+    
+    // Creamos un objeto para almacenar los resultados totales de esta comunidad.
+    totalResults[communityName] = {};
 
-  // Buscamos los datos de la elección para la comunidad autónoma especificada.
-  const election = elections.find(e => e.autonomousCommunities.some(ac => ac.name === communityName));
+    // Iteramos sobre cada provincia en los datos de voto de esta comunidad.
+    for (const provinceName in communityVotes) {
+      const provinceVotes = communityVotes[provinceName];
+      const provinceData = communityData.provinces.find(p => p.name === provinceName);
+      const totalSeats = provinceData.seats;
 
-  if (!election) {
-    throw new Error(`No se encontraron elecciones para la comunidad autónoma "${communityName}".`);
-  }
+      // Creamos un array para almacenar los resultados de cada partido en esta provincia.
+      const results = Object.keys(provinceVotes).map(party => ({
+        party,
+        votes: provinceVotes[party],
+        seats: 0,
+        quotient: provinceVotes[party]
+      }));
 
-  const communityData = election.autonomousCommunities.find(ac => ac.name === communityName);
-
-  // Iteramos sobre cada provincia en los datos de voto.
-  for (const province in voteData) {
-    const provinceVotes = voteData[province];
-    const provinceData = communityData.provinces.find(p => p.name === province);
-
-    if (!provinceData) {
-      throw new Error(`No se encontraron datos de elección para la provincia "${province}" en la comunidad autónoma "${communityName}".`);
-    }
-
-    const totalSeats = provinceData.seats;
-
-    // Creamos un array para almacenar los resultados de cada partido en esta provincia.
-    const results = Object.keys(provinceVotes).map(party => ({
-      party,
-      votes: provinceVotes[party],
-      seats: 0,
-      quotient: provinceVotes[party]
-    }));
-
-    // Repartimos los escaños utilizando el método D'Hondt.
-    for (let i = 0; i < totalSeats; i++) {
-      const maxQuotient = Math.max(...results.map(r => r.quotient));
-      const winner = results.find(r => r.quotient === maxQuotient);
-      winner.seats++;
-      winner.quotient = winner.votes / (winner.seats + 1);
-    }
-
-    // Añadimos los resultados de esta provincia a los resultados totales.
-    for (const result of results) {
-      const totalResult = totalResults.find(r => r.party === result.party);
-      if (totalResult) {
-        totalResult.seats += result.seats;
-      } else {
-        totalResults.push({ party: result.party, seats: result.seats });
+      // Repartimos los escaños utilizando el método D'Hondt.
+      for (let i = 0; i < totalSeats; i++) {
+        const maxQuotient = Math.max(...results.map(r => r.quotient));
+        const winner = results.find(r => r.quotient === maxQuotient);
+        winner.seats++;
+        winner.quotient = winner.votes / (winner.seats + 1);
       }
+
+      // Añadimos los resultados de esta provincia a los resultados totales de la comunidad.
+      totalResults[communityName][provinceName] = results.map(r => ({party: r.party, seats: r.seats}));
     }
   }
 
@@ -692,8 +684,9 @@ function calculateSeats(voteData, communityName, elections) {
 }
 
 const communityName = "Catalunya";
-const results = calculateSeats(voteData, communityName, elections);
-console.log(results);
+const results = calculateSeats(voteData, elections);
+console.dir(results, { depth: null });
+
 
 module.exports = {
   geography,
