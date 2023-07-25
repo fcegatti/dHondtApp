@@ -4,6 +4,12 @@ const port = 3000;
 const elections = require('./elections');
 const { calculateSeats } = require('./elections');
 
+app.set('view engine', 'ejs');
+
+app.get('/electionForm', (req, res) => {
+  res.render('electionForm');
+});
+
 app.get('/', (req, res) => {
   res.send('Te calculo los escaños');
 });
