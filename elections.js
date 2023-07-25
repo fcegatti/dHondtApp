@@ -606,4 +606,26 @@ const elections = [
   }, 
 ];
 
-module.exports = elections;
+function calculateSeats(voteObjects, totalSeats) {
+  const results = voteObjects.map((voteObj, index) => ({
+    party: voteObj.party,
+    votes: voteObj.votes,
+    seats: 0,
+    quotient: voteObj.votes
+  }));
+
+  for (let i = 0; i < totalSeats; i++) {
+    const maxQuotient = Math.max(...results.map(r => r.quotient));
+    const winner = results.find(r => r.quotient === maxQuotient);
+    winner.seats++;
+    winner.quotient = winner.votes / (winner.seats + 1);
+  }
+
+  return results.map(r => ({ party: r.party, seats: r.seats }));
+}
+
+module.exports = {
+  geography,
+  elections,
+  calculateSeats
+};
