@@ -26,7 +26,25 @@ app.post('/electionForm', (req, res) => {
   
   // Finalmente, puedo responder al cliente, por ejemplo, redirigiendo a otra página o enviando un mensaje
   // res.redirect('/someOtherPage');
+  res.send('Form data received');
 });
+
+app.post('/calculateSeats', (req, res) => {
+  // Extraer los datos del formulario del objeto req.body
+  const { electionType, votes } = req.body;
+
+  // Validar los datos
+  if (!electionType || !votes) {
+    return res.status(400).json({ message: 'Invalid data' });
+  }
+
+  // Calcular los escaños
+  const seatResults = calculateSeats(votes, 10); // Aquí tendríamos que determinar cuántos escaños hay para esta elección
+
+  // Devolver el resultado
+  res.json(seatResults);
+});
+
 
 
 app.get('/election/:id', (req, res) => {
