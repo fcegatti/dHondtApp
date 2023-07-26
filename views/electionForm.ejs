@@ -31,12 +31,36 @@
     <div class="container">
       <section class="party-list">
         <h2>Lista de partidos</h2>
-        <!-- Lista de partidos y formulario de votos aquí -->
+         <!-- Lista de partidos y formulario de votos aquí -->
+        
+        <!-- Formulario de entrada de partidos y colores -->
+        <form action="/addParty" method="POST">
+          <label for="party">Partido:</label>
+          <input type="text" id="party" name="party">
+          <label for="color">Color:</label>
+          <input type="color" id="color" name="color">
+          <input type="submit" value="Submit">
+        </form>
       </section>
 
       <section class="seats-graph">
         <h2>Gráfico de escaños</h2>
         <!-- Gráfico de escaños aquí -->
+
+        <!-- Formulario de entrada de votos -->
+        <form action="/calculateSeats" method="POST">
+          <!-- Aquí debería haber un bloque de código para cada partido, algo como esto: -->
+          <label for="votes-party1">Votos para el Partido 1:</label>
+          <input type="number" id="votes-party1" name="votes-party1">
+
+          <!-- ... Y así sucesivamente para cada partido ... -->
+
+          <label for="blankVotes">Votos en blanco:</label>
+          <input type="number" id="blankVotes" name="blankVotes">
+          <label for="nullVotes">Votos nulos:</label>
+          <input type="number" id="nullVotes" name="nullVotes">
+          <input type="submit" value="Submit">
+        </form>
       </section>
 
       <section class="province-map">
