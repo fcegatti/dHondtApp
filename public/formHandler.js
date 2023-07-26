@@ -3,29 +3,38 @@ document.addEventListener('DOMContentLoaded', function() {
 const electionTypeSelect = document.getElementById('electionType');
 const chamberSelect = document.getElementById('chamber');
 const addPartyForm = document.forms['addParty'];
+let parties = [];
+
 
 // Definimos las funciones que manejarán los eventos
 function handleElectionTypeChange(event) {
-  // Por ahora, solo vamos a imprimir el tipo de elección seleccionado en la consola
+  // imprimir el tipo de elección seleccionado en la consola
   const selectedElectionType = event.target.value;
   console.log('Tipo de elección seleccionado:', selectedElectionType);
 }
 
 function handleChamberChange(event) {
-  // Por ahora, solo vamos a imprimir la cámara seleccionada en la consola
+  // imprimir la cámara seleccionada en la consola
   const selectedChamber = event.target.value;
   console.log('Cámara seleccionada:', selectedChamber);
 }
 
 function handleAddPartySubmit(event) {
-  event.preventDefault();  // Evita que la página se recargue cuando se envía el formulario
+  event.preventDefault();  
 
-  // Obtén los valores del formulario
+  // Obtener los valores del formulario
   const partyName = event.target.elements['party'].value;
   const partyColor = event.target.elements['color'].value;
+  const newParty = {
+    name: partyName,
+    color: partyColor
+  };
 
-  // Por ahora, solo vamos a imprimir estos valores en la consola
-  console.log('Partido añadido:', partyName, partyColor);
+  parties.push(newParty);
+
+  console.log('Partidos actuales:', parties);
+
+  
 }
 
 // Agregamos los event listeners a los elementos correspondientes
