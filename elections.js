@@ -1,82 +1,92 @@
 // Datos de muestra para las elecciones
+
+// El umbral electoral para las generales es del 3% y para las municipales es del 5%, en ambos casos sobre votos válidos.
+
 const geography = {
   autonomousCommunities: [
     {
       name: "Andalucía",
+      electoralTreshold: 3,
+      tresholdRef: 'valid',
       provinces: [
         {
           name: 'Almería',
           congressSeats: 6,
-          parliamentSeats: null,
+          parliamentSeats: 12,
           municipalities: [],
         },
         {
           name: 'Cádiz',
           congressSeats: 9,
-          parliamentSeats: null,
+          parliamentSeats: 15,
           municipalities: [],
         },
         {
           name: 'Córdoba',
           congressSeats: 6,
-          parliamentSeats: null,
+          parliamentSeats: 12,
           municipalities: [],
         },
         {
           name: 'Granada',
           congressSeats: 7,
-          parliamentSeats: null,
+          parliamentSeats: 13,
           municipalities: [],
         },
         {
           name: 'Huelva',
           congressSeats: 5,
-          parliamentSeats: null,
+          parliamentSeats: 11,
           municipalities: [],
         },
         {
           name: 'Jaén',
           congressSeats: 5,
-          parliamentSeats: null,
+          parliamentSeats: 11,
           municipalities: [],
         },
         {
           name: 'Málaga',
           congressSeats: 11,
-          parliamentSeats: null,
+          parliamentSeats: 17,
           municipalities: [],
         },
         {
           name: 'Sevilla',
           congressSeats: 12,
-          parliamentSeats: null,
+          parliamentSeats: 18,
           municipalities: [],
         },
       ]
     },
     { name: "Aragón",
+      electoralTreshold: 3,
+      tresholdRef: 'valid',
       provinces: [
         {
           name: 'Huesca',
           congressSeats: 3,
-          parliamentSeats: null,
+          parliamentSeats: 14,
           municipalities: [],
         },
         {
           name: 'Teruel',
           congressSeats: 3,
-          parliamentSeats: null,
+          parliamentSeats: 14,
           municipalities: [],
         },
         {
           name: 'Zaragoza',
           congressSeats: 7,
-          parliamentSeats: null,
+          parliamentSeats: 35,
           municipalities: [],
         }, 
       ]
     },
     { name: "Canarias",
+      electoralTreshold: 4,
+      tresholdRef: 'valid',
+    // falta modificar calculateSeats para ajustar a la especificidad canaria de 9 circunscripciones electorales, 8 inferiores a la provincia y una circuscripción autonómica para las elecciones autonómicas. Gran Canaria (15), Tenerife (15), Fuerteaventura (8), La Gomera (8), La Palma (8), La Gomera (4), El Hierro (3) y 9 para la circunscripción autonómica. La barrera electoral de las circunscripciones insulares es de 15% válidos o 4% válidos en la suma de todas las circunscripciones.
       provinces: [
         {
           name: 'Las Palmas',
@@ -93,109 +103,117 @@ const geography = {
       ]
     },
     { name: "Cantabria",
+      electoralTreshold: 5,
+      tresholdRef: 'valid',
       provinces: [
         {
           name: 'Cantabria',
           congressSeats: 5,
-          parliamentSeats: null,
+          parliamentSeats: 35,
           municipalities: [],
         },
       ]
     },
     { name: "Castilla-La Mancha",
+      electoralTreshold: 3,
+      tresholdRef: 'valid',
       provinces: [
         {
           name: 'Albacete',
           congressSeats: 4,
-          parliamentSeats: null,
+          parliamentSeats: 6,
           municipalities: [],
         },
         {
           name: 'Ciudad Real',
           congressSeats: 5,
-          parliamentSeats: null,
+          parliamentSeats: 8,
           municipalities: [],
         },
         {
           name: 'Cuenca',
           congressSeats: 3,
-          parliamentSeats: null,
+          parliamentSeats: 5,
           municipalities: [],
         },
         {
           name: 'Guadalajara',
           congressSeats: 3,
-          parliamentSeats: null,
+          parliamentSeats: 5,
           municipalities: [],
         },
         {
           name: 'Toledo',
           congressSeats: 6,
-          parliamentSeats: null,
+          parliamentSeats: 9,
           municipalities: [],
         },  
       ]
     },
     {
       name: "Castilla y León",
+      electoralTreshold: 3,
+      tresholdRef: 'valid',
       provinces: [
         {
           name: 'Ávila',
           congressSeats: 3,
-          parliamentSeats: null,
+          parliamentSeats: 7,
           municipalities: [],
         },
         {
           name: 'Burgos',
           congressSeats: 4,
-          parliamentSeats: null,
+          parliamentSeats: 11,
           municipalities: [],
         },
         {
           name: 'León',
           congressSeats: 4,
-          parliamentSeats: null,
+          parliamentSeats: 13,
           municipalities: [],
         },
         {
           name: 'Palencia',
           congressSeats: 3,
-          parliamentSeats: null,
+          parliamentSeats: 7,
           municipalities: [],
         },
         {
           name: 'Salamanca',
           congressSeats: 4,
-          parliamentSeats: null,
+          parliamentSeats: 10,
           municipalities: [],
         },
         {
           name: 'Segovia',
           congressSeats: 3,
-          parliamentSeats: null,
+          parliamentSeats: 6,
           municipalities: [],
         },
         {
           name: 'Soria',
           congressSeats: 2,
-          parliamentSeats: null,
+          parliamentSeats: 5,
           municipalities: [],
         },
         {
           name: 'Valladolid',
           congressSeats: 5,
-          parliamentSeats: null,
+          parliamentSeats: 15,
           municipalities: [],
         },
         {
           name: 'Zamora',
           congressSeats: 3,
-          parliamentSeats: null,
+          parliamentSeats: 7,
           municipalities: [],
         },
       ]
     },
     { name: "Catalunya",
+      electoralTreshold: 3,
+      tresholdRef: 'valid',
       provinces: [
         {
           name: 'Barcelona',
@@ -209,136 +227,155 @@ const geography = {
             {
               name: 'Barcelona',
               cityHallSeats: 41,
+              electoralTreshold: 5,
             }
           ],
         },
         {
           name: 'Girona',
           congressSeats: 6,
-          parliamentSeats: null,
+          parliamentSeats: 17,
           municipalities: [],
         },
         {
           name: 'Lleida',
           congressSeats: 4,
-          parliamentSeats: null,
+          parliamentSeats: 15,
           municipalities: [],
         },
         {
           name: 'Tarragona',
           congressSeats: 6,
-          parliamentSeats: null,
+          parliamentSeats: 18,
           municipalities: [],
         },  
       ]
     },
     { name: "Ciudad de Ceuta",
+      electoralTreshold: 5,
+      tresholdRef: 'valid',
       provinces: [
         {
           name: 'Ceuta',
           congressSeats: 1,
-          parliamentSeats: null,
+          parliamentSeats: 25,
           municipalities: [],
         },
       ]
     },
     { name: "Ciudad de Melilla",
+      electoralTreshold: 5,
+      tresholdRef: 'valid',
       provinces: [
         {
           name: 'Melilla',
           congressSeats: 1,
-          parliamentSeats: null,
+          parliamentSeats: 25,
           municipalities: [],
         },
       ]
     },
     { name: "Comunidad de Madrid",
+      electoralTreshold: 5,
+      tresholdRef: 'valid',
       provinces: [
         {
           name: 'Madrid',
           congressSeats: 37,
-          parliamentSeats: null,
+          parliamentSeats: 136,
           municipalities: [],
         },
       ]
     },
     { name: "Comunidad Foral de Navarra",
+      electoralTreshold: 3,
+      tresholdRef: 'valid',
       provinces: [
         {
           name: 'Navarra',
           congressSeats: 5,
-          parliamentSeats: null,
+          parliamentSeats: 50,
           municipalities: [],
         },
       ]
     },
     { name: "Comunitat Valenciana",
+      electoralTreshold: 5,
+      tresholdRef: 'casted',
       provinces: [
         {
           name: 'Alacant',
           congressSeats: 12,
-          parliamentSeats: null,
+          parliamentSeats: 35,
           municipalities: [],
         },
         {
           name: 'Castelló',
           congressSeats: 5,
-          parliamentSeats: null,
+          parliamentSeats: 24,
           municipalities: [],
         },
         {
           name: 'València',
           congressSeats: 16,
-          parliamentSeats: null,
+          parliamentSeats: 40,
           municipalities: [],
         }, 
       ]
     },
     { name: "Extremadura",
+      electoralTreshold: 5,
+      tresholdRef: 'valid',
       provinces: [
         {
           name: 'Badajoz',
           congressSeats: 5,
-          parliamentSeats: null,
+          parliamentSeats: 36,
           municipalities: [],
         },
         {
           name: 'Cáceres',
           congressSeats: 4,
-          parliamentSeats: null,
+          parliamentSeats: 29,
           municipalities: [],
         }, 
       ]
     },
     { name: "Galicia",
+      electoralTreshold: 5,
+      tresholdRef: 'valid',
       provinces: [
         {
           name: 'A Coruña',
           congressSeats: 8,
-          parliamentSeats: null,
+          parliamentSeats: 25,
           municipalities: [],
         },
         {
           name: 'Lugo',
           congressSeats: 4,
-          parliamentSeats: null,
+          parliamentSeats: 14,
           municipalities: [],
         },
         {
           name: 'Ourense',
           congressSeats: 4,
-          parliamentSeats: null,
+          parliamentSeats: 14,
           municipalities: [],
         },
         {
           name: 'Pontevedra',
           congressSeats: 7,
-          parliamentSeats: null,
+          parliamentSeats: 22,
           municipalities: [],
         },  
       ]
     },
     { name: "Illes Balears",
+      electoralTreshold: 5,
+      tresholdRef: 'valid',
+    // falta modificar calculateSeats para ajustar a la especificidad balear de 4 circunscripciones electorales inferiores a la provincia para las elecciones autonómicas. Mallorca (33), Menorca (13), Eivissa (12) y Formentera (1).
+
       provinces: [
         {
           name: 'Illes Balears',
@@ -349,38 +386,45 @@ const geography = {
       ]
     },
     { name: "La Rioja",
+      electoralTreshold: 5,
+      tresholdRef: 'valid',
       provinces: [
         {
           name: 'La Rioja',
           congressSeats: 4,
-          parliamentSeats: null,
+          parliamentSeats: 33,
           municipalities: [],
         },
       ]
     },
     { name: "País Vasco",
+      electoralTreshold: 3,
+      tresholdRef: 'valid',
       provinces: [
         {
           name: 'Álava',
           congressSeats: 4,
-          parliamentSeats: null,
+          parliamentSeats: 25,
           municipalities: [],
         },
         {
           name: 'Guipúzcoa',
           congressSeats: 6,
-          parliamentSeats: null,
+          parliamentSeats: 25,
           municipalities: [],
         },
         {
           name: 'Vizcaya',
           congressSeats: 8,
-          parliamentSeats: null,
+          parliamentSeats: 25,
           municipalities: [],
         }, 
       ]
     },
     { name: "Principado Asturias",
+      electoralTreshold: null,
+      tresholdRef: null,
+    // falta modificar calculateSeats para ajustar a la excepción asuturiana de 3 circunscripciones electorales inferiores a la provincia para las elecciones autonómicas. Central (34), Occidental (6) y oriental (5)
       provinces: [
         {
           name: 'Asturias',
@@ -391,11 +435,13 @@ const geography = {
       ]
     },
     { name: "Región de Murcia",
+      electoralTreshold: 3,
+      tresholdRef: 'valid',
       provinces: [
         {
           name: 'Murcia',
           congressSeats: 10,
-          parliamentSeats: null,
+          parliamentSeats: 45,
           municipalities: [],
         },
       ]
@@ -403,7 +449,12 @@ const geography = {
 
   ]
 }
+/*
+-En Extremadura, el umbral de votos es del 5% por circunscripción o 5% de la comunidad.
+-En Valencia, el umbral es del 5% pero de los votos emitidos en toda la comunidad.
+// CONFIRMAR QUE EL UMBRAL DE VOTOS DEL 5% ES SOBRE VOTOS VÁLIDOS EN CEUTA Y MELILLA
 
+*/
 const calculateSeats = (votes, electionType, communityName, provinceName, municipalityName = null) => {
   // Extraemos la comunidad autónoma específica y sus provincias
   const community = geography.autonomousCommunities.find(c => c.name === communityName);
