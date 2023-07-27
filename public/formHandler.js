@@ -102,6 +102,12 @@ function fillProvinces() {
 function handleAddPartySubmit(event) {
   event.preventDefault();  
 
+  const acName = acSelect.value;
+
+  if (!acName) {
+    alert('Por favor, selecciona una Comunidad Autónoma antes de añadir partidos');
+    return;
+  }
   // Obtener los valores del formulario
   const partyName = event.target.elements['party'].value;
   const partyColor = event.target.elements['color'].value;
@@ -110,7 +116,7 @@ function handleAddPartySubmit(event) {
     color: partyColor,
   };
 
-  const acName = provinceToAcMap[provinceSelect.value];
+  
 if (!parties[acName]) {
   parties[acName] = [];
 }
