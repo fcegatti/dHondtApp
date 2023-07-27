@@ -5,8 +5,9 @@ const chamberSelect = document.getElementById('chamber');
 const acSelect = document.getElementById('autonomousCommunity');
 const provinceSelect = document.getElementById('province');
 const addPartyForm = document.forms['addParty'];
-let parties = [];
+let parties = {};
 let electionsData = null;
+let provinceToAcMap = {};
 
 // Obtenemos los datos de elections desde el servidor
 fetch('/api/elections')
@@ -17,6 +18,14 @@ fetch('/api/elections')
 
     electionsData = data;
     fillAutonomousCommunities(electionsData);
+
+    // Creo un objeto que mapea cada provincia a su comunidad autónoma para que handleAddPartySubmit pueda acceder a la lista de partidos desde el nivel de provincia
+    
+    for (let ac of electionsData.autonomousCommunities) {
+      for (let province of ac.provinces) {
+        provinceToAcMap[province.name] = ac.name;
+      }
+    }
 
     // Agregamos los event listeners a los elementos correspondientes
     electionTypeSelect.addEventListener('change', handleElectionTypeChange);
@@ -98,10 +107,16 @@ function handleAddPartySubmit(event) {
   const partyColor = event.target.elements['color'].value;
   const newParty = {
     name: partyName,
-    color: partyColor
+    color: partyColor,
   };
 
-  parties.push(newParty);
+  const acName = provinceToAcMap[provinceSelect.value];
+if (!parties[acName]) {
+  parties[acName] = [];
+}
+parties[acName].push(newParty);
+ 
+   console.log('Comunidad Autónoma:', acName);
 
   console.log('Partidos actuales:', parties);
 

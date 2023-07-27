@@ -8,6 +8,7 @@ const geography = {
       name: "Andalucía",
       electoralTreshold: 3,
       tresholdRef: 'valid',
+      parties: [],
       provinces: [
         {
           name: 'Almería',
@@ -62,6 +63,7 @@ const geography = {
     { name: "Aragón",
       electoralTreshold: 3,
       tresholdRef: 'valid',
+      parties: [],
       provinces: [
         {
           name: 'Huesca',
@@ -86,7 +88,9 @@ const geography = {
     { name: "Canarias",
       electoralTreshold: 4,
       tresholdRef: 'valid',
+ 
     // falta modificar calculateSeats para ajustar a la especificidad canaria de 9 circunscripciones electorales, 8 inferiores a la provincia y una circuscripción autonómica para las elecciones autonómicas. Gran Canaria (15), Tenerife (15), Fuerteaventura (8), La Gomera (8), La Palma (8), La Gomera (4), El Hierro (3) y 9 para la circunscripción autonómica. La barrera electoral de las circunscripciones insulares es de 15% válidos o 4% válidos en la suma de todas las circunscripciones.
+      parties: [],
       provinces: [
         {
           name: 'Las Palmas',
@@ -105,6 +109,7 @@ const geography = {
     { name: "Cantabria",
       electoralTreshold: 5,
       tresholdRef: 'valid',
+      parties: [],
       provinces: [
         {
           name: 'Cantabria',
@@ -117,6 +122,7 @@ const geography = {
     { name: "Castilla-La Mancha",
       electoralTreshold: 3,
       tresholdRef: 'valid',
+      parties: [],
       provinces: [
         {
           name: 'Albacete',
@@ -154,6 +160,7 @@ const geography = {
       name: "Castilla y León",
       electoralTreshold: 3,
       tresholdRef: 'valid',
+      parties: [],
       provinces: [
         {
           name: 'Ávila',
@@ -214,6 +221,7 @@ const geography = {
     { name: "Catalunya",
       electoralTreshold: 3,
       tresholdRef: 'valid',
+      parties: [],
       provinces: [
         {
           name: 'Barcelona',
@@ -254,6 +262,7 @@ const geography = {
     { name: "Ciudad de Ceuta",
       electoralTreshold: 5,
       tresholdRef: 'valid',
+      parties: [],
       provinces: [
         {
           name: 'Ceuta',
@@ -266,6 +275,7 @@ const geography = {
     { name: "Ciudad de Melilla",
       electoralTreshold: 5,
       tresholdRef: 'valid',
+      parties: [],
       provinces: [
         {
           name: 'Melilla',
@@ -278,6 +288,7 @@ const geography = {
     { name: "Comunidad de Madrid",
       electoralTreshold: 5,
       tresholdRef: 'valid',
+      parties: [],
       provinces: [
         {
           name: 'Madrid',
@@ -290,6 +301,7 @@ const geography = {
     { name: "Comunidad Foral de Navarra",
       electoralTreshold: 3,
       tresholdRef: 'valid',
+      parties: [],
       provinces: [
         {
           name: 'Navarra',
@@ -302,6 +314,7 @@ const geography = {
     { name: "Comunitat Valenciana",
       electoralTreshold: 5,
       tresholdRef: 'casted',
+      parties: [],
       provinces: [
         {
           name: 'Alacant',
@@ -326,6 +339,7 @@ const geography = {
     { name: "Extremadura",
       electoralTreshold: 5,
       tresholdRef: 'valid',
+      parties: [],
       provinces: [
         {
           name: 'Badajoz',
@@ -344,6 +358,7 @@ const geography = {
     { name: "Galicia",
       electoralTreshold: 5,
       tresholdRef: 'valid',
+      parties: [],
       provinces: [
         {
           name: 'A Coruña',
@@ -374,6 +389,7 @@ const geography = {
     { name: "Illes Balears",
       electoralTreshold: 5,
       tresholdRef: 'valid',
+      parties: [],
     // falta modificar calculateSeats para ajustar a la especificidad balear de 4 circunscripciones electorales inferiores a la provincia para las elecciones autonómicas. Mallorca (33), Menorca (13), Eivissa (12) y Formentera (1).
 
       provinces: [
@@ -388,6 +404,7 @@ const geography = {
     { name: "La Rioja",
       electoralTreshold: 5,
       tresholdRef: 'valid',
+      parties: [],
       provinces: [
         {
           name: 'La Rioja',
@@ -400,6 +417,7 @@ const geography = {
     { name: "País Vasco",
       electoralTreshold: 3,
       tresholdRef: 'valid',
+      parties: [],
       provinces: [
         {
           name: 'Álava',
@@ -424,6 +442,7 @@ const geography = {
     { name: "Principado Asturias",
       electoralTreshold: null,
       tresholdRef: null,
+      parties: [],
     // falta modificar calculateSeats para ajustar a la excepción asuturiana de 3 circunscripciones electorales inferiores a la provincia para las elecciones autonómicas. Central (34), Occidental (6) y oriental (5)
       provinces: [
         {
@@ -437,6 +456,7 @@ const geography = {
     { name: "Región de Murcia",
       electoralTreshold: 3,
       tresholdRef: 'valid',
+      parties: [],
       provinces: [
         {
           name: 'Murcia',
