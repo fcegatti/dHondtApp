@@ -35,6 +35,7 @@ fetch('/api/elections')
     acSelect.addEventListener('change', fillProvinces);
     acSelect.addEventListener('change', () => {
       console.log('Comunidad Autónoma seleccionada:', acSelect.value);
+      updatePartyList();
     });
     provinceSelect.addEventListener('change', (event) => {
       console.log(`Provincia seleccionada: ${event.target.value}`);
@@ -117,22 +118,38 @@ function handleAddPartySubmit(event) {
   };
 
   
-if (!parties[acName]) {
+  if (!parties[acName]) {
   parties[acName] = [];
-}
-parties[acName].push(newParty);
+  }
+  parties[acName].push(newParty);
+  updatePartyList();
  
   console.log('Comunidad Autónoma:', acName);
 
   console.log('Partidos actuales:', parties);
 
-  const newPartyElement = document.createElement('li');
-  newPartyElement.textContent = newParty.name;
-  const partyListDiv = document.getElementById('party-list');
-  partyListDiv.appendChild(newPartyElement);
-
-
 }
+
+function updatePartyList() {
+  const acName = acSelect.value;
+
+  // borro todos los elementos actuales de la lista de partidos
+  const partyListItems = document.querySelector('#party-list-items');
+  while (partyListItems.firstChild) {
+    partyListItems.removeChild(partyListItems.firstChild);
+  }
+
+  // recreo la lista de partidos basada en los partidos de la Comunidad Autónoma seleccionada
+  const acParties = parties[acName];
+  if (acParties) {
+    for (let party of acParties) {
+      const partyListItem = document.createElement('li');
+      partyListItem.textContent = party.name;
+      partyListItems.appendChild(partyListItem);
+    }
+  }
+}
+
 
 });
 
