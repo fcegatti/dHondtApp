@@ -112,9 +112,11 @@ function handleAddPartySubmit(event) {
   // Obtener los valores del formulario
   const partyName = event.target.elements['party'].value;
   const partyColor = event.target.elements['color'].value;
+  const logoURL = event.target.elements['logo'].value;
   const newParty = {
     name: partyName,
     color: partyColor,
+    logo: logoURL,
   };
 
   
@@ -123,10 +125,6 @@ function handleAddPartySubmit(event) {
   }
   parties[acName].push(newParty);
   updatePartyList();
- 
-  console.log('Comunidad Autónoma:', acName);
-
-  console.log('Partidos actuales:', parties);
 
 }
 
