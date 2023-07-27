@@ -122,9 +122,15 @@ if (!parties[acName]) {
 }
 parties[acName].push(newParty);
  
-   console.log('Comunidad Autónoma:', acName);
+  console.log('Comunidad Autónoma:', acName);
 
   console.log('Partidos actuales:', parties);
+
+  const newPartyElement = document.createElement('li');
+  newPartyElement.textContent = newParty.name;
+  const partyListDiv = document.getElementById('party-list');
+  partyListDiv.appendChild(newPartyElement);
+
 
 }
 
