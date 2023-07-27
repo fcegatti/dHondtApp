@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
 const electionTypeSelect = document.getElementById('electionType');
 const chamberSelect = document.getElementById('chamber');
 const acSelect = document.getElementById('autonomousCommunity');
+const provinceSelect = document.getElementById('province');
 const addPartyForm = document.forms['addParty'];
 let parties = [];
 let electionsData = null;
@@ -23,6 +24,9 @@ fetch('/api/elections')
     chamberSelect.addEventListener('change', handleChamberChange);
     chamberSelect.addEventListener('change', fillAutonomousCommunities);
     acSelect.addEventListener('change', fillProvinces);
+    provinceSelect.addEventListener('change', (event) => {
+      console.log(`Provincia seleccionada: ${event.target.value}`);
+    });
     addPartyForm.addEventListener('submit', handleAddPartySubmit);
   })
   .catch(error => console.error('Error:', error));
@@ -59,13 +63,17 @@ function fillAutonomousCommunities() {
 
 function fillProvinces() {
   // obtén el selector de la provincia
-  const provinceSelector = document.querySelector('#province');
+  const provinceSelect = document.querySelector('#province');
 
   // limpia las opciones actuales
-  provinceSelector.innerHTML = '<option value="">-Provincia-</option>';
+  provinceSelect.innerHTML = '<option value="">-Provincia-</option>';
 
   // obtén el nombre de la comunidad autónoma seleccionada
   const acName = document.querySelector('#autonomousCommunity').value;
+
+  if (!acName) {
+    return;
+  }
 
   // busca la comunidad autónoma en `elections.js`
   const ac = electionsData.autonomousCommunities.find(ac => ac.name === acName);
@@ -75,7 +83,7 @@ function fillProvinces() {
     const option = document.createElement('option');
     option.value = province.name;
     option.text = province.name;
-    provinceSelector.add(option);
+    provinceSelect.add(option);
   }
 }
 
