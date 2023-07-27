@@ -24,6 +24,9 @@ fetch('/api/elections')
     chamberSelect.addEventListener('change', handleChamberChange);
     chamberSelect.addEventListener('change', fillAutonomousCommunities);
     acSelect.addEventListener('change', fillProvinces);
+    acSelect.addEventListener('change', () => {
+      console.log('Comunidad Autónoma seleccionada:', acSelect.value);
+    });
     provinceSelect.addEventListener('change', (event) => {
       console.log(`Provincia seleccionada: ${event.target.value}`);
     });
