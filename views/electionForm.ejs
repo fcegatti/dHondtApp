@@ -11,7 +11,7 @@
     <h1>Contador de escaños</h1>
     <nav>
       <select id="electionType" name="electionType">
-        <option value="">--Seleccione el tipo de elecciones--</option>
+        <option value="">-Elecciones-</option>
         <option value="generales">Generales</option>
         <option value="autonomicas">Autonómicas</option>
         <option value="municipales">Municipales</option>
@@ -19,10 +19,18 @@
       </select>
     
       <select id="chamber" name="chamber">
-        <option value="">--Seleccione la cámara--</option>
+        <option value="">-Cámara-</option>
         <option value="congreso">Congreso</option>
         <option value="senado">Senado</option>
       </select>
+
+      <select id="autonomousCommunity" name="autonomousCommunity">
+        <option value="">-Comunidad Autónoma-</option>
+    </select>
+    
+    <select id="province" name="province">
+        <option value="">-Provincia-</option>
+    </select>
     </nav>
     
   </header>
@@ -42,25 +50,27 @@
           <input type="submit" value="Submit">
         </form>
       </section>
-
-      <section class="seats-graph">
-        <h2>Gráfico de escaños</h2>
-        <!-- Gráfico de escaños aquí -->
-
-        <!-- Formulario de entrada de votos -->
+      <section class="voting-form" style="display: none;">
+        <h2>Formulario de votos</h2>
+        <!-- Formulario de votos aquí -->
         <form action="/calculateSeats" method="POST">
           <!-- Aquí debería haber un bloque de código para cada partido, algo como esto: -->
           <label for="votes-party1">Votos para el Partido 1:</label>
           <input type="number" id="votes-party1" name="votes-party1">
-
+      
           <!-- ... Y así sucesivamente para cada partido ... -->
-
+      
           <label for="blankVotes">Votos en blanco:</label>
           <input type="number" id="blankVotes" name="blankVotes">
           <label for="nullVotes">Votos nulos:</label>
           <input type="number" id="nullVotes" name="nullVotes">
           <input type="submit" value="Submit">
         </form>
+      </section>
+
+      <section class="seats-graph">
+        <h2>Gráfico de escaños</h2>
+        <!-- Gráfico de escaños aquí -->        
       </section>
 
       <section class="province-map">

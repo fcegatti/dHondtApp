@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-const { elections, calculateSeats } = require('./elections');
+const { geography, calculateSeats } = require('./elections');
 const bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -16,6 +16,10 @@ app.get('/', (req, res) => {
 
 app.get('/electionForm', (req, res) => {
   res.render('electionForm');
+});
+
+app.get('/api/elections', (req, res) => {
+  res.json(geography);
 });
 
 app.post('/electionForm', (req, res) => {
