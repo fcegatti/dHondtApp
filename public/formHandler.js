@@ -47,8 +47,15 @@ fetch('/api/elections')
       handleElectionTypeChange(event);
       fillAutonomousCommunities(event);
     });
-    chamberSelect.addEventListener('change', handleChamberChange);
-    chamberSelect.addEventListener('change', fillAutonomousCommunities);
+    chamberSelect.addEventListener('change', function(event) {
+      if (event.target.value === 'senado') {
+        showModal('El cálculo de elecciones al senado no está disponible en esta versión');
+        return;  
+      }
+
+      handleChamberChange(event);
+      fillAutonomousCommunities(event);
+    });
     acSelect.addEventListener('change', fillProvinces);
     acSelect.addEventListener('change', () => {
       console.log('Comunidad Autónoma seleccionada:', acSelect.value);
