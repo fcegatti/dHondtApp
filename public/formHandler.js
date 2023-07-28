@@ -163,7 +163,7 @@ function handleAddPartySubmit(event) {
     return;
   }
 
-  if (!isValidURL(logoURL)) {
+  if (logoURL && !isValidURL(logoURL)) {
   showModal(`Debes ingresar una URL válida para el logo de ${partyName}.`);
   return;
 }
