@@ -130,13 +130,24 @@ function handleAddPartySubmit(event) {
   const acName = acSelect.value;
 
   if (!acName) {
-    alert('Por favor, selecciona una Comunidad Autónoma antes de añadir partidos');
+    showModal('Debes seleccionar una Comunidad Autónoma para poder añadir partidos');
     return;
   }
   // Obtener los valores del formulario
   const partyName = event.target.elements['party'].value;
   const partyColor = event.target.elements['color'].value;
   const logoURL = event.target.elements['logo'].value;
+
+  if (!partyName) {
+    showModal('Debes ingresar un nombre válido para el partido');
+    return;
+  }
+
+  if (!partyColor) {
+    showModal('Debes ingresar un color relativo al partido');
+    return;
+  }
+  
   const newParty = {
     name: partyName,
     color: partyColor,
