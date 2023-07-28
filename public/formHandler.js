@@ -152,6 +152,11 @@ function handleAddPartySubmit(event) {
     return;
   }
 
+  if (partyName.length > 32) {
+    showModal('El nombre del partido no puede exceder los 50 caracteres');
+    return;
+  }
+
   if (!/^[\da-zA-Z\s]+$/.test(partyName)) {
     showModal('El nombre del partido solo puede contener letras y números.');
     return;
