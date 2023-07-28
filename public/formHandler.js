@@ -28,8 +28,16 @@ fetch('/api/elections')
     }
 
     // Agregamos los event listeners a los elementos correspondientes
-    electionTypeSelect.addEventListener('change', handleElectionTypeChange);
-    electionTypeSelect.addEventListener('change', fillAutonomousCommunities);
+    electionTypeSelect.addEventListener('change', function(event) {
+      if (event.target.value === 'autonomicas') {
+        // Mostrar el modal
+        showModal('El cálculo de elecciones autonómicas no está disponible en esta versión');
+        return;  // Interrumpe la ejecución de la función si se seleccionaron las elecciones autonómicas
+      }
+    
+      handleElectionTypeChange(event);
+      fillAutonomousCommunities(event);
+    });
     chamberSelect.addEventListener('change', handleChamberChange);
     chamberSelect.addEventListener('change', fillAutonomousCommunities);
     acSelect.addEventListener('change', fillProvinces);
