@@ -7,14 +7,20 @@ function showModal(message, onConfirm = null) {
   modal.style.display = "block";
   modalMessage.textContent = message;
 
-  continueButton.textContent = onConfirm ? 'Continuar' : 'Aceptar';
-  continueButton.onclick = function () {
-    modal.style.display = "none";
-    if (onConfirm) {
+  if (onConfirm) {
+    closeModalButton.style.display = "inline-block";
+    continueButton.textContent = 'Continuar';
+    continueButton.onclick = function () {
+      modal.style.display = "none";
       onConfirm();
     }
-  }
-
+  } else {
+    closeModalButton.style.display = "none";
+    continueButton.textContent = "Aceptar";
+    continueButton.onclick = function () {
+    modal.style.display = "none";
+    }
+  } 
 }
 
 closeModalButton.addEventListener('click', function() {
