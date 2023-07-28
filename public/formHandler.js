@@ -191,8 +191,20 @@ function handleAddPartySubmit(event) {
     showModal(`Ya existe un partido de nombre ${partyName} en ${acName}.`);
     return;
   }
-  parties[acName].push(newParty);
-  updatePartyList();
+
+  if (!logoURL) {
+    showModal(`Estás ingresando el partido ${partyName} sin un logo. El espacio del logo será reemplazado por el color del partido.`, () => {
+      showModal(`¿Confirmas que deseas añadir ${partyName} a ${acName}?`, () => {
+        parties[acName].push(newParty);
+        updatePartyList();
+      });
+    });
+  } else {
+    showModal(`¿Confirmas que deseas añadir ${partyName} a ${acName}?`, () => {
+      parties[acName].push(newParty);
+      updatePartyList();
+    });
+  }
 
 }
 
