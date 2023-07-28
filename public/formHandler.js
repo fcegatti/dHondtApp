@@ -220,14 +220,23 @@ function updatePartyList() {
   // recreo la lista de partidos basada en los partidos de la Comunidad Autónoma seleccionada
   const acParties = parties[acName];
   if (acParties) {
-    for (let party of acParties) {
+    for (let i = 0; i <acParties.length; i++) {
+      const party = acParties[i];
       const partyListItem = document.createElement('li');
       partyListItem.textContent = party.name;
+
+      const deleteButton = document.createElement('button');
+      deleteButton.textContent = 'Eliminar'
+      deleteButton.addEventListener('click', function() {
+        ac.Parties.splice(i, 1);
+        updatePartyList();
+      });
+      
+      partyListItem.appendChild(deleteButton);
       partyListItems.appendChild(partyListItem);
     }
   }
 }
-
 
 });
 
