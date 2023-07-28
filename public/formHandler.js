@@ -158,6 +158,13 @@ function handleAddPartySubmit(event) {
   if (!parties[acName]) {
   parties[acName] = [];
   }
+
+  const isPartyDuplicated = parties[acName].some(party => party.name === partyName);
+
+  if (isPartyDuplicated) {
+    showModal(`Ya existe un partido de nombre ${partyName} en ${acName}.`);
+    return;
+  }
   parties[acName].push(newParty);
   updatePartyList();
 
