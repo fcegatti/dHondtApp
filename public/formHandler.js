@@ -38,6 +38,11 @@ fetch('/api/elections')
         showModal('El cálculo de elecciones municipales no está disponible en esta versión');
         return;  
       }
+
+      if (event.target.value === 'europeas') {
+        showModal('El cálculo de elecciones eeuropeas no está disponible en esta versión');
+        return;  
+      }
     
       handleElectionTypeChange(event);
       fillAutonomousCommunities(event);
