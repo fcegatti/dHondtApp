@@ -152,6 +152,12 @@ function handleAddPartySubmit(event) {
     return;
   }
 
+  if (!/^[\da-zA-Z\s]+$/.test(partyName)) {
+    showModal('El nombre del partido solo puede contener letras y números.');
+    return;
+  }
+  
+
   if (!partyColor) {
     showModal('Debes ingresar un color relativo al partido');
     return;
