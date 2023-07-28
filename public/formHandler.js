@@ -124,6 +124,15 @@ function fillProvinces() {
   }
 }
 
+function isValidURL(string) {
+  try {
+    new URL(string);
+    return true;
+  } catch (_) {
+    return false;  
+  }
+}
+
 function handleAddPartySubmit(event) {
   event.preventDefault();  
 
@@ -147,7 +156,13 @@ function handleAddPartySubmit(event) {
     showModal('Debes ingresar un color relativo al partido');
     return;
   }
-  
+
+  if (!isValidURL(logoURL)) {
+  showModal(`Debes ingresar una URL válida para el logo de ${partyName}.`);
+  return;
+}
+
+
   const newParty = {
     name: partyName,
     color: partyColor,
