@@ -241,8 +241,10 @@ function updatePartyList() {
       const deleteButton = document.createElement('button');
       deleteButton.textContent = 'Eliminar'
       deleteButton.addEventListener('click', function() {
-        acParties.splice(i, 1);
-        updatePartyList();
+        showModal(`¿Confirmas que deseas eliminar a ${party.name} de ${acName}?`, function onConfirm() {
+          acParties.splice(i, 1);
+          updatePartyList();
+        });  
       });
       
       partyListItem.appendChild(deleteButton);
