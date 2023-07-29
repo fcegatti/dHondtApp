@@ -77,6 +77,7 @@ fetch('/api/elections')
       }
     });
     addPartyForm.addEventListener('submit', handleAddPartySubmit);
+
   })
   .catch(error => console.error('Error:', error));
 
@@ -337,7 +338,7 @@ function generateVotingForm() {
   submitDiv.appendChild(submit);
   
   form.appendChild(submitDiv);
-  
+
   // Añade el formulario al contenedor
   formContainer.appendChild(form);
 
@@ -348,6 +349,25 @@ function generateVotingForm() {
   partyList.classList.add('hide');
   formContainer.classList.remove('hide');
   formContainer.style.display = 'block';
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    for (let i = 0; i < form.elements.length; i++) {
+      const element = form.elements[i];
+
+      if (element.type === 'number' && element.value === '') {
+        alert('Debes ingresar los votos de todos los partidos');
+        return;
+      }
+
+      if (element.type === 'number' && (element.value < 0 || !Number.isInteger(Number(element.value)))) {
+        // Muestra un mensaje de error y detiene la función
+        alert('Los votos deben ser números enteros no negativos');
+        return;
+      }
+    }
+  });
 }
 
 
