@@ -3,6 +3,11 @@
   flex-direction: column;
 }
 
+.container > * {
+  flex: 1;
+  border: 1px solid black;
+}
+
 .party-list,
 .seats-graph,
 .province-map {
