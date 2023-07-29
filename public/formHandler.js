@@ -263,6 +263,13 @@ function generateVotingForm() {
   
   // Borra el contenido actual del formulario
   formContainer.innerHTML = '';
+
+  // Crea el título del formulario de votos
+  const formTitle = document.createElement('h2');
+  formTitle.textContent = 'Ingresar votos';
+  
+  // Añade el título al contenedor del formulario
+  formContainer.appendChild(formTitle);
   
   // Crea un formulario
   const form = document.createElement('form');
