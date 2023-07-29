@@ -30,6 +30,13 @@
   width: 80%;
 }
 
+.voting-form {
+  display: none;
+}
+
+.hide {
+  display: none;
+}
 
 @media screen and (min-width: 600px) {
   .container {
