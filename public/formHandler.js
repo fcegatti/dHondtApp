@@ -281,15 +281,19 @@ function generateVotingForm() {
     for (const party of acParties) {
       const label = document.createElement('label');
       label.for = `votes-${party.name}`;
-      label.textContent = `Votos para ${party.name}:`;
+      label.textContent = `${party.name}:`;
 
       const input = document.createElement('input');
       input.type = 'number';
       input.id = `votes-${party.name}`;
       input.name = `votes-${party.name}`;
+      input.style.width = '60px';
 
-      form.appendChild(label);
-      form.appendChild(input);
+      const div = document.createElement('div');
+      div.appendChild(label);
+      div.appendChild(input);
+
+      form.appendChild(div);
     }
   }
   // Añade campos para los votos nulos y en blanco
@@ -301,6 +305,11 @@ function generateVotingForm() {
   blankInput.type = 'number';
   blankInput.id = 'blankVotes';
   blankInput.name = 'blankVotes';
+  blankInput.style.width = '60px';
+
+  const blankDiv = document.createElement('div');
+  blankDiv.appendChild(blankLabel);
+  blankDiv.appendChild(blankInput);
   
   const nullLabel = document.createElement('label');
   nullLabel.for = 'nullVotes';
@@ -310,18 +319,24 @@ function generateVotingForm() {
   nullInput.type = 'number';
   nullInput.id = 'nullVotes';
   nullInput.name = 'nullVotes';
+  nullInput.style.width = '60px';
+
+  const nullDiv = document.createElement('div');
+  nullDiv.appendChild(nullLabel);
+  nullDiv.appendChild(nullInput);
   
-  form.appendChild(blankLabel);
-  form.appendChild(blankInput);
-  form.appendChild(nullLabel);
-  form.appendChild(nullInput);
+  form.appendChild(blankDiv);
+  form.appendChild(nullDiv);
   
   // Añade un botón de envío al formulario
   const submit = document.createElement('input');
   submit.type = 'submit';
   submit.value = 'Submit';
+
+  const submitDiv = document.createElement('div');
+  submitDiv.appendChild(submit);
   
-  form.appendChild(submit);
+  form.appendChild(submitDiv);
   
   // Añade el formulario al contenedor
   formContainer.appendChild(form);
