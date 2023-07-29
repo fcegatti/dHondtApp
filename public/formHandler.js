@@ -1,5 +1,6 @@
 // Obtenemos referencias a los elementos del formulario que necesitaremos
 document.addEventListener('DOMContentLoaded', function() {
+  console.log('DOM fully loaded and parsed');
 const electionTypeSelect = document.getElementById('electionType');
 const chamberSelect = document.getElementById('chamber');
 const acSelect = document.getElementById('autonomousCommunity');
@@ -8,6 +9,7 @@ const addPartyForm = document.forms['addParty'];
 let parties = {};
 let electionsData = null;
 let provinceToAcMap = {};
+let votes = {};
 
 // Obtenemos los datos de elections desde el servidor
 fetch('/api/elections')
@@ -63,6 +65,7 @@ fetch('/api/elections')
     });
     provinceSelect.addEventListener('change', (event) => {
       console.log(`Provincia seleccionada: ${event.target.value}`);
+      generateVotingForm();
     });
     addPartyForm.addEventListener('submit', handleAddPartySubmit);
   })
@@ -237,6 +240,83 @@ function updatePartyList() {
     }
   }
 }
+
+function generateVotingForm() {
+  // Obtengo el nombre de la provincia y la comunidad autónoma seleccionada
+  const provinceName = provinceSelect.value;
+  const acName = provinceToAcMap[provinceName]; 
+
+  // Obtengo la lista de partidos para la comunidad autónoma seleccionada
+  const acParties = parties[acName];
+  
+  if (!acParties) {
+    // Si no hay partidos para esta comunidad autónoma, no hacemos nada
+    return;
+  }
+
+  // Obtengo el contenedor del formulario
+  const formContainer = document.querySelector('.voting-form');
+  
+  // Borra el contenido actual del formulario
+  formContainer.innerHTML = '';
+  
+  // Crea un formulario
+  const form = document.createElement('form');
+  form.action = '/calculateSeats';
+  form.method = 'POST';
+
+  // Crea un campo de entrada para cada partido
+  for (const party of acParties) {
+    const label = document.createElement('label');
+    label.for = `votes-${party.name}`;
+    label.textContent = `Votos para ${party.name}:`;
+
+    const input = document.createElement('input');
+    input.type = 'number';
+    input.id = `votes-${party.name}`;
+    input.name = `votes-${party.name}`;
+
+    form.appendChild(label);
+    form.appendChild(input);
+  }
+  
+  // Añade campos para los votos nulos y en blanco
+  const blankLabel = document.createElement('label');
+  blankLabel.for = 'blankVotes';
+  blankLabel.textContent = 'Votos en blanco:';
+  
+  const blankInput = document.createElement('input');
+  blankInput.type = 'number';
+  blankInput.id = 'blankVotes';
+  blankInput.name = 'blankVotes';
+  
+  const nullLabel = document.createElement('label');
+  nullLabel.for = 'nullVotes';
+  nullLabel.textContent = 'Votos nulos:';
+  
+  const nullInput = document.createElement('input');
+  nullInput.type = 'number';
+  nullInput.id = 'nullVotes';
+  nullInput.name = 'nullVotes';
+  
+  form.appendChild(blankLabel);
+  form.appendChild(blankInput);
+  form.appendChild(nullLabel);
+  form.appendChild(nullInput);
+  
+  // Añade un botón de envío al formulario
+  const submit = document.createElement('input');
+  submit.type = 'submit';
+  submit.value = 'Submit';
+  
+  form.appendChild(submit);
+  
+  // Añade el formulario al contenedor
+  formContainer.appendChild(form);
+
+  formContainer.style.display = 'block';
+}
+
 
 });
 
