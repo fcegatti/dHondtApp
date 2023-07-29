@@ -19,6 +19,9 @@ function showModal(message, onConfirm = null) {
     continueButton.textContent = "Aceptar";
     continueButton.onclick = function () {
     modal.style.display = "none";
+      if (typeof onConfirm === 'function') {
+        onConfirm();
+      }
     }
   } 
 }

@@ -251,6 +251,18 @@ function updatePartyList() {
   }
 }
 
+function formatPartiesList(parties) {
+  if (parties.length === 1) {
+    return parties[0];
+  } else if (parties.length === 2) {
+    return `${parties[0]} ni ${parties[1]}`;
+  } else {
+    let lastParty = parties.pop();
+    return `${parties.join(', ')} ni ${lastParty}`;
+  }
+}
+
+
 function generateVotingForm() {
   // Obtengo el nombre de la provincia y la comunidad autónoma seleccionada
   const provinceName = provinceSelect.value;
@@ -350,21 +362,47 @@ function generateVotingForm() {
   formContainer.classList.remove('hide');
   formContainer.style.display = 'block';
 
-  form.addEventListener('submit', function(event) {
+  form.addEventListener('submit', async function(event) {
     event.preventDefault();
 
     for (let i = 0; i < form.elements.length; i++) {
       const element = form.elements[i];
 
-      if (element.type === 'number' && element.value === '') {
-        alert('Debes ingresar los votos de todos los partidos');
-        return;
+      let partiesWithoutVotes = [];
+
+      for (let i= 0; i < form.elements.length; i++) {
+        const element = form.elements[i];
+        let partyName = element.name.replace('votes-', '');
+
+        if (partyName === 'blankVotes') {
+          partyName = 'votos en blanco';
+        } else if (partyName === 'nullVotes') {
+          partyName = 'votos nulos';
+        }
+
+        if (element.type === 'number' && element.value === '') {
+          partiesWithoutVotes.push(partyName);
+        }
+
+        if (element.type === 'number' && (element.value < 0 || !Number.isInteger(Number(element.value)))) {
+          showModal('Los votos deben ser números enteros no negativos');
+          return;
+        }
       }
 
-      if (element.type === 'number' && (element.value < 0 || !Number.isInteger(Number(element.value)))) {
-        // Muestra un mensaje de error y detiene la función
-        alert('Los votos deben ser números enteros no negativos');
-        return;
+      
+
+      if (partiesWithoutVotes.length > 0) {
+        try {
+          if (partiesWithoutVotes.length === 1) {
+            await showModal(`No has introducido votos para ${formatPartiesList(partiesWithoutVotes)}. Se le asignarán cero votos.`);
+          } else {
+            await showModal(`No has introducido votos para ${formatPartiesList(partiesWithoutVotes)}. Se les asignarán cero votos a cada uno.`);
+          }
+          
+        } catch (error) {
+
+        }    
       }
     }
   });
