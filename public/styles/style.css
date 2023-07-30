@@ -10,7 +10,7 @@
 
 .party-list,
 .seats-graph,
-.province-map {
+.region-map {
   padding: 20px;
   box-sizing: border-box;
 }
@@ -50,7 +50,7 @@
 
   .party-list,
   .seats-graph,
-  .province-map {
+  .region-map {
     flex: 1;
   }
 }
