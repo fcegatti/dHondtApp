@@ -35,17 +35,17 @@ fetch('/api/elections')
     // Agregamos los event listeners a los elementos correspondientes
     electionTypeSelect.addEventListener('change', function(event) {
       if (event.target.value === 'autonomicas') {
-        showModal('El cálculo de elecciones autonómicas no está disponible en esta versión');
+        showModal('El cálculo de elecciones autonómicas no está disponible en esta versión', function() { return; });
         return;  
       }
 
       if (event.target.value === 'municipales') {
-        showModal('El cálculo de elecciones municipales no está disponible en esta versión');
+        showModal('El cálculo de elecciones municipales no está disponible en esta versión', function() { return; });
         return;  
       }
 
       if (event.target.value === 'europeas') {
-        showModal('El cálculo de elecciones eeuropeas no está disponible en esta versión');
+        showModal('El cálculo de elecciones europeas no está disponible en esta versión', function() { return; });
         return;  
       }
     
@@ -54,7 +54,7 @@ fetch('/api/elections')
     });
     chamberSelect.addEventListener('change', function(event) {
       if (event.target.value === 'senado') {
-        showModal('El cálculo de elecciones al senado no está disponible en esta versión');
+        showModal('El cálculo de elecciones al senado no está disponible en esta versión', function() { return; });
         return;  
       }
 
@@ -152,7 +152,7 @@ function handleAddPartySubmit(event) {
   const acName = acSelect.value;
 
   if (!acName) {
-    showModal('Debes seleccionar una Comunidad Autónoma para poder añadir partidos');
+    showModal('Debes seleccionar una Comunidad Autónoma para poder añadir partidos', function() { return; });
     return;
   }
   // Obtener los valores del formulario
@@ -161,28 +161,28 @@ function handleAddPartySubmit(event) {
   const logoURL = event.target.elements['logo'].value;
 
   if (!partyName) {
-    showModal('Debes ingresar un nombre válido para el partido');
+    showModal('Debes ingresar un nombre válido para el partido', function() { return; });
     return;
   }
 
   if (partyName.length > 32) {
-    showModal('El nombre del partido no puede exceder los 32 caracteres');
+    showModal('El nombre del partido no puede exceder los 32 caracteres', function() { return; });
     return;
   }
 
   if (!/^[A-Za-z0-9\u00C0-\u024F\s]+$/g.test(partyName)) {
-    showModal('El nombre del partido solo puede contener letras y números.');
+    showModal('El nombre del partido solo puede contener letras y números.', function() { return; });
     return;
   }
   
 
   if (!partyColor) {
-    showModal('Debes ingresar un color relativo al partido');
+    showModal('Debes ingresar un color relativo al partido', function() { return; });
     return;
   }
 
   if (logoURL && !isValidURL(logoURL)) {
-  showModal(`Debes ingresar una URL válida para el logo de ${partyName}.`);
+  showModal(`Debes ingresar una URL válida para el logo de ${partyName}.`, function() { return; });
   return;
 }
 
@@ -201,22 +201,22 @@ function handleAddPartySubmit(event) {
   const isPartyDuplicated = parties[acName].some(party => party.name === partyName);
 
   if (isPartyDuplicated) {
-    showModal(`Ya existe un partido de nombre ${partyName} en ${acName}.`);
+    showModal(`Ya existe un partido de nombre ${partyName} en ${acName}.`, function() { return; });
     return;
   }
 
   if (!logoURL) {
-    showModal(`Estás ingresando el partido ${partyName} sin un logo. El espacio del logo será reemplazado por el color del partido.`, () => {
-      showModal(`¿Confirmas que deseas añadir ${partyName} a ${acName}?`, () => {
+    showModal(`Estás ingresando el partido ${partyName} sin un logo. El espacio del logo será reemplazado por el color del partido.`, function () {
+      showModal(`¿Confirmas que deseas añadir ${partyName} a ${acName}?`, function() {
         parties[acName].push(newParty);
         updatePartyList();
-      });
-    });
+      }, function() {return; });
+    }, function() {return; });
   } else {
-    showModal(`¿Confirmas que deseas añadir ${partyName} a ${acName}?`, () => {
+    showModal(`¿Confirmas que deseas añadir ${partyName} a ${acName}?`, function () {
       parties[acName].push(newParty);
       updatePartyList();
-    });
+    }, function() {return; });
   }
 
 }
@@ -241,10 +241,10 @@ function updatePartyList() {
       const deleteButton = document.createElement('button');
       deleteButton.textContent = 'Eliminar'
       deleteButton.addEventListener('click', function() {
-        showModal(`¿Confirmas que deseas eliminar a ${party.name} de ${acName}?`, function onConfirm() {
+        showModal(`¿Confirmas que deseas eliminar a ${party.name} de ${acName}?`, function () {
           acParties.splice(i, 1);
           updatePartyList();
-        });  
+        }, function() {return; });  
       });
       
       partyListItem.appendChild(deleteButton);
@@ -367,13 +367,18 @@ function generateVotingForm() {
   form.addEventListener('submit', async function(event) {
     event.preventDefault();
 
+    let votes = {
+      type: 'Generales',
+      province: provinceName,
+    };
+
+    let partiesWithoutVotes = [];
+
+
     for (let i = 0; i < form.elements.length; i++) {
       const element = form.elements[i];
 
-      let partiesWithoutVotes = [];
-
-      for (let i= 0; i < form.elements.length; i++) {
-        const element = form.elements[i];
+      if (element.type === 'number') {
         let partyName = element.name.replace('votes-', '');
 
         if (partyName === 'blankVotes') {
@@ -382,31 +387,37 @@ function generateVotingForm() {
           partyName = 'votos nulos';
         }
 
-        if (element.type === 'number' && element.value === '') {
+        if (element.value === '') {
           partiesWithoutVotes.push(partyName);
-        }
-
-        if (element.type === 'number' && (element.value < 0 || !Number.isInteger(Number(element.value)))) {
+        } else if (element.value < 0 || !Number.isInteger(Number(element.value))) {
           showModal('Los votos deben ser números enteros no negativos');
           return;
-        }
-      }
-
-      
-
-      if (partiesWithoutVotes.length > 0) {
-        try {
-          if (partiesWithoutVotes.length === 1) {
-            await showModal(`No has introducido votos para ${formatPartiesList(partiesWithoutVotes)}. Se le asignarán cero votos.`);
-          } else {
-            await showModal(`No has introducido votos para ${formatPartiesList(partiesWithoutVotes)}. Se les asignarán cero votos a cada uno.`);
-          }
-          
-        } catch (error) {
-
+        } else { 
+          votes[partyName] = parseInt(element.value, 10);
         }    
       }
     }
+
+    if (partiesWithoutVotes.length > 0) {
+      const confirmed = await new Promise(resolve => {
+        if (partiesWithoutVotes.length === 1) {
+          showModal(`No has introducido votos para ${formatPartiesList(partiesWithoutVotes)}. Se le asignarán cero votos.`, resolve);
+        } else {
+          showModal(`No has introducido votos para ${formatPartiesList(partiesWithoutVotes)}. Se les asignarán cero votos a cada uno.`, resolve);
+        }
+      });
+      
+      if (confirmed) {
+        for (let partyName of partiesWithoutVotes) {
+          votes[partyName] = 0;
+        }        
+      } else {
+          return;
+      }
+    }  
+    
+  
+    console.log(votes);
   });
 }
 
@@ -418,6 +429,3 @@ function generateVotingForm() {
 
 Todavía no se tiene en cuenta el llenado de los partidos y los votos. Eso se debe manejar en otro lugar y depende de la estructura exacta de los datos en elections.js.
 */
-
-
-  // Si no hay partidos para esta comunidad autónoma, no hacemos nada

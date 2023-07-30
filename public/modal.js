@@ -3,29 +3,30 @@ const modalMessage = document.getElementById('modal-message');
 const closeModalButton = document.getElementById('modal-close');
 const continueButton = document.getElementById('continue-button');
 
-function showModal(message, onConfirm = null) {
+function showModal(message, onConfirm = null, onCancel = null) {
   modal.style.display = "block";
   modalMessage.textContent = message;
 
-  if (onConfirm) {
+  if (onCancel) {
     closeModalButton.style.display = "inline-block";
     continueButton.textContent = 'Continuar';
-    continueButton.onclick = function () {
-      modal.style.display = "none";
-      onConfirm();
-    }
   } else {
     closeModalButton.style.display = "none";
     continueButton.textContent = "Aceptar";
-    continueButton.onclick = function () {
+  }
+
+  continueButton.onclick = function () {
     modal.style.display = "none";
-      if (typeof onConfirm === 'function') {
-        onConfirm();
-      }
+    if (typeof onConfirm === 'function') {
+      onConfirm(true);
     }
-  } 
+  }
+
+  closeModalButton.onclick = function () {
+    modal.style.display = "none";
+    if (typeof onCancel === 'function') {
+      onCancel(false);
+    }
+  }
 }
 
-closeModalButton.addEventListener('click', function() {
-  modal.style.display = "none";
-});
