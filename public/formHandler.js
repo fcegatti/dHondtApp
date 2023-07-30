@@ -367,9 +367,10 @@ function generateVotingForm() {
   form.addEventListener('submit', async function(event) {
     event.preventDefault();
 
-    let votes = {
+    let votesData = {
       type: 'Generales',
       province: provinceName,
+      parties: [],
     };
 
     let partiesWithoutVotes = [];
@@ -393,7 +394,10 @@ function generateVotingForm() {
           showModal('Los votos deben ser números enteros no negativos');
           return;
         } else { 
-          votes[partyName] = parseInt(element.value, 10);
+          votesData.parties.push({
+            name: partyName,
+            votes: parseInt(element.value, 10),
+          });
         }    
       }
     }
@@ -401,15 +405,18 @@ function generateVotingForm() {
     if (partiesWithoutVotes.length > 0) {
       const confirmed = await new Promise(resolve => {
         if (partiesWithoutVotes.length === 1) {
-          showModal(`No has introducido votos para ${formatPartiesList(partiesWithoutVotes)}. Se le asignarán cero votos.`, resolve);
+          showModal(`No has introducido un número de votos para ${formatPartiesList(partiesWithoutVotes)}. Se le asignarán cero votos.`, resolve);
         } else {
-          showModal(`No has introducido votos para ${formatPartiesList(partiesWithoutVotes)}. Se les asignarán cero votos a cada uno.`, resolve);
+          showModal(`No has introducido un número de votos para ${formatPartiesList(partiesWithoutVotes)}. Se les asignarán cero votos a cada uno.`, resolve);
         }
       });
       
       if (confirmed) {
         for (let partyName of partiesWithoutVotes) {
-          votes[partyName] = 0;
+          votesData.parties.push({
+            name: partyName,
+            votes: 0,
+          });
         }        
       } else {
           return;
@@ -417,7 +424,7 @@ function generateVotingForm() {
     }  
     
   
-    console.log(votes);
+    console.log(votesData);
   });
 }
 
