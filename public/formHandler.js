@@ -368,8 +368,9 @@ function generateVotingForm() {
     event.preventDefault();
 
     let votesData = {
-      type: 'Generales',
+      type: 'generales',
       province: provinceName,
+      community: acName,
       parties: [],
     };
 

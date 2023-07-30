@@ -475,14 +475,24 @@ const geography = {
 // CONFIRMAR QUE EL UMBRAL DE VOTOS DEL 5% ES SOBRE VOTOS VÁLIDOS EN CEUTA Y MELILLA
 
 */
-const calculateSeats = (votes, electionType, communityName, provinceName, municipalityName = null) => {
+const calculateSeats = (votesData) => { 
+  const {type, province, parties} = votesData;
+
   // Extraemos la comunidad autónoma específica y sus provincias
-  const community = geography.autonomousCommunities.find(c => c.name === communityName);
+  const votes = votesData.parties.reduce((acc, party) => {
+    acc[party.name] = party.votes;
+    return acc;
+  }, {});
+
+  const electionType = votesData.type;
+  const provinceName = votesData.province;
+
+  const community = geography.autonomousCommunities.find(c => c.name === votesData.community);
   if (!community) throw new Error('La comunidad autónoma especificada no se encontró en los datos geográficos.');
 
   // Extraemos la provincia específica
-  const province = community.provinces.find(p => p.name === provinceName);
-  if (!province) throw new Error('La provincia especificada no se encontró en los datos geográficos de la comunidad autónoma.');
+  const provinceData = community.provinces.find(p => p.name === provinceName);
+  if (!provinceData) throw new Error('La provincia especificada no se encontró en los datos geográficos de la comunidad autónoma.');
 
   // Si estamos calculando para las elecciones municipales, extraemos el municipio específico
   let municipality = null;
@@ -495,10 +505,10 @@ const calculateSeats = (votes, electionType, communityName, provinceName, munici
   let totalSeats = 0;
   switch (electionType) {
     case 'generales':
-      totalSeats = province.congressSeats;
+      totalSeats = provinceData.congressSeats;
       break;
     case 'autonomicas':
-      totalSeats = province.parliamentSeats;
+      totalSeats = provinceData.parliamentSeats;
       break;
     case 'municipales':
       totalSeats = municipality.cityHallSeats;
