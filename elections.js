@@ -6,8 +6,8 @@ const geography = {
   autonomousCommunities: [
     {
       name: "Andalucía",
-      electoralTreshold: 3,
-      tresholdRef: 'valid',
+      electoralThreshold: 3,
+      thresholdRef: 'valid',
       parties: [],
       provinces: [
         {
@@ -61,8 +61,8 @@ const geography = {
       ]
     },
     { name: "Aragón",
-      electoralTreshold: 3,
-      tresholdRef: 'valid',
+      electoralThreshold: 3,
+      thresholdRef: 'valid',
       parties: [],
       provinces: [
         {
@@ -86,8 +86,8 @@ const geography = {
       ]
     },
     { name: "Canarias",
-      electoralTreshold: 4,
-      tresholdRef: 'valid',
+      electoralThreshold: 4,
+      thresholdRef: 'valid',
  
     // falta modificar calculateSeats para ajustar a la especificidad canaria de 9 circunscripciones electorales, 8 inferiores a la provincia y una circuscripción autonómica para las elecciones autonómicas. Gran Canaria (15), Tenerife (15), Fuerteaventura (8), La Gomera (8), La Palma (8), La Gomera (4), El Hierro (3) y 9 para la circunscripción autonómica. La barrera electoral de las circunscripciones insulares es de 15% válidos o 4% válidos en la suma de todas las circunscripciones.
       parties: [],
@@ -107,8 +107,8 @@ const geography = {
       ]
     },
     { name: "Cantabria",
-      electoralTreshold: 5,
-      tresholdRef: 'valid',
+      electoralThreshold: 5,
+      thresholdRef: 'valid',
       parties: [],
       provinces: [
         {
@@ -120,8 +120,8 @@ const geography = {
       ]
     },
     { name: "Castilla-La Mancha",
-      electoralTreshold: 3,
-      tresholdRef: 'valid',
+      electoralThreshold: 3,
+      thresholdRef: 'valid',
       parties: [],
       provinces: [
         {
@@ -158,8 +158,8 @@ const geography = {
     },
     {
       name: "Castilla y León",
-      electoralTreshold: 3,
-      tresholdRef: 'valid',
+      electoralThreshold: 3,
+      thresholdRef: 'valid',
       parties: [],
       provinces: [
         {
@@ -219,8 +219,8 @@ const geography = {
       ]
     },
     { name: "Catalunya",
-      electoralTreshold: 3,
-      tresholdRef: 'valid',
+      electoralThreshold: 3,
+      thresholdRef: 'valid',
       parties: [],
       provinces: [
         {
@@ -235,7 +235,7 @@ const geography = {
             {
               name: 'Barcelona',
               cityHallSeats: 41,
-              electoralTreshold: 5,
+              electoralThreshold: 5,
             }
           ],
         },
@@ -260,8 +260,8 @@ const geography = {
       ]
     },
     { name: "Ciudad de Ceuta",
-      electoralTreshold: 5,
-      tresholdRef: 'valid',
+      electoralThreshold: 5,
+      thresholdRef: 'valid',
       parties: [],
       provinces: [
         {
@@ -273,8 +273,8 @@ const geography = {
       ]
     },
     { name: "Ciudad de Melilla",
-      electoralTreshold: 5,
-      tresholdRef: 'valid',
+      electoralThreshold: 5,
+      thresholdRef: 'valid',
       parties: [],
       provinces: [
         {
@@ -286,8 +286,8 @@ const geography = {
       ]
     },
     { name: "Comunidad de Madrid",
-      electoralTreshold: 5,
-      tresholdRef: 'valid',
+      electoralThreshold: 5,
+      thresholdRef: 'valid',
       parties: [],
       provinces: [
         {
@@ -299,8 +299,8 @@ const geography = {
       ]
     },
     { name: "Comunidad Foral de Navarra",
-      electoralTreshold: 3,
-      tresholdRef: 'valid',
+      electoralThreshold: 3,
+      thresholdRef: 'valid',
       parties: [],
       provinces: [
         {
@@ -312,8 +312,8 @@ const geography = {
       ]
     },
     { name: "Comunitat Valenciana",
-      electoralTreshold: 5,
-      tresholdRef: 'casted',
+      electoralThreshold: 5,
+      thresholdRef: 'casted',
       parties: [],
       provinces: [
         {
@@ -337,8 +337,8 @@ const geography = {
       ]
     },
     { name: "Extremadura",
-      electoralTreshold: 5,
-      tresholdRef: 'valid',
+      electoralThreshold: 5,
+      thresholdRef: 'valid',
       parties: [],
       provinces: [
         {
@@ -356,8 +356,8 @@ const geography = {
       ]
     },
     { name: "Galicia",
-      electoralTreshold: 5,
-      tresholdRef: 'valid',
+      electoralThreshold: 5,
+      thresholdRef: 'valid',
       parties: [],
       provinces: [
         {
@@ -387,8 +387,8 @@ const geography = {
       ]
     },
     { name: "Illes Balears",
-      electoralTreshold: 5,
-      tresholdRef: 'valid',
+      electoralThreshold: 5,
+      thresholdRef: 'valid',
       parties: [],
     // falta modificar calculateSeats para ajustar a la especificidad balear de 4 circunscripciones electorales inferiores a la provincia para las elecciones autonómicas. Mallorca (33), Menorca (13), Eivissa (12) y Formentera (1).
 
@@ -402,8 +402,8 @@ const geography = {
       ]
     },
     { name: "La Rioja",
-      electoralTreshold: 5,
-      tresholdRef: 'valid',
+      electoralThreshold: 5,
+      thresholdRef: 'valid',
       parties: [],
       provinces: [
         {
@@ -415,8 +415,8 @@ const geography = {
       ]
     },
     { name: "País Vasco",
-      electoralTreshold: 3,
-      tresholdRef: 'valid',
+      electoralThreshold: 3,
+      thresholdRef: 'valid',
       parties: [],
       provinces: [
         {
@@ -440,8 +440,8 @@ const geography = {
       ]
     },
     { name: "Principado Asturias",
-      electoralTreshold: null,
-      tresholdRef: null,
+      electoralThreshold: null,
+      thresholdRef: null,
       parties: [],
     // falta modificar calculateSeats para ajustar a la excepción asuturiana de 3 circunscripciones electorales inferiores a la provincia para las elecciones autonómicas. Central (34), Occidental (6) y oriental (5)
       provinces: [
@@ -454,8 +454,8 @@ const geography = {
       ]
     },
     { name: "Región de Murcia",
-      electoralTreshold: 3,
-      tresholdRef: 'valid',
+      electoralThreshold: 3,
+      thresholdRef: 'valid',
       parties: [],
       provinces: [
         {
@@ -497,7 +497,7 @@ const calculateSeats = (votesData) => {
   // Si estamos calculando para las elecciones municipales, extraemos el municipio específico
   let municipality = null;
   if (electionType === 'municipales') {
-    municipality = province.municipalities.find(m => m.name === municipalityName);
+    municipality = province.municipalities.find(m => m.name === municipality);
     if (!municipality) throw new Error('El municipio especificado no se encontró en los datos geográficos de la provincia.');
   }
 
@@ -517,17 +517,43 @@ const calculateSeats = (votesData) => {
       throw new Error('El tipo de elección especificado no es válido. Debe ser "generales", "autonomicas" o "municipales".');
   }
 
+  let threshold = 0; 
+  switch (electionType) {
+    case 'generales':
+      threshold = 0.03;
+      break;
+    case 'municipales':
+      threshold = 0.05;
+      break;
+    case 'autonomicas':
+      threshold = provinceData.electoralThreshold;
+      break;
+    default:
+      throw new Error('El tipo de elección especificado no es válido. Debe ser "generales", "autonomicas" o "municipales".');
+  }
+
   // Creamos un array para almacenar los resultados de cada partido
-  const results = Object.keys(votes).map(party => ({
+
+  let results = Object.keys(votes).map(party => ({
     party,
     votes: votes[party], // Inicializamos los votos con los datos proporcionados
     seats: 0,
     quotient: votes[party], // El cociente inicial es el número de votos
   }));
 
+  const castedVotes = results.reduce((total, party) => total + party.votes, 0);
+
+  const validVotes = castedVotes - (votes['votos nulos'] || 0);
+
+  const thresholdVotes = threshold * validVotes;
+
+  const eligibleParties = results.filter(party => party.name !== 'votos nulos' && party.votes >= thresholdVotes);
+
+  const partiesForSeats = eligibleParties.filter(party => party.name !== 'votos en blanco');
+
   // Repartimos los escaños utilizando el método D'Hondt
   for (let i = 0; i < totalSeats; i++) {
-    const maxQuotient = Math.max(...results.map(r => r.quotient));
+    const maxQuotient = Math.max(...partiesForSeats.map(r => r.quotient));
     const winner = results.find(r => r.quotient === maxQuotient);
     winner.seats++;
     winner.quotient = winner.votes / (winner.seats + 1);
