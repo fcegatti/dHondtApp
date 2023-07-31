@@ -291,9 +291,35 @@ function generateVotingForm() {
   form.action = '/calculateSeats';
   form.method = 'POST';
 
+  const table = document.createElement('table'); 
+
+  const tableHead = document.createElement('thead');
+  const tableRow = document.createElement('tr');
+
+  const headers = ['Partido', 'Votos', '%', 'Escaños'];
+
+  headers.forEach(header => {
+    const th= document.createElement('th');
+    th.textContent = header;
+    tableRow.appendChild(th);
+  });
+
+  tableHead.appendChild(tableRow);
+  table.appendChild(tableHead);
+
+  const tableBody = document.createElement('tbody');
+
+
   // Crea un campo de entrada para cada partido
   if (acParties) {
     for (const party of acParties) {
+
+      const tableRow = document.createElement('tr');
+
+      const partyCell = document.createElement('td');
+      partyCell.textContent = party.name;
+      tableRow.appendChild(partyCell);
+
       const label = document.createElement('label');
       label.for = `votes-${party.name}`;
       label.textContent = `${party.name}:`;
@@ -304,31 +330,51 @@ function generateVotingForm() {
       input.name = `votes-${party.name}`;
       input.style.width = '60px';
 
-      const div = document.createElement('div');
-      div.appendChild(label);
-      div.appendChild(input);
+      const votesCell = document.createElement('td');
+      votesCell.appendChild(input);
+      tableRow.appendChild(votesCell);
 
-      form.appendChild(div);
+      const percentageCell = document.createElement('td');
+      tableRow.appendChild(percentageCell);
+
+      const seatsCell = document.createElement('td');
+      tableRow.appendChild(seatsCell);
+
+
+      tableBody.appendChild(tableRow);
     }
   }
-  // Añade campos para los votos nulos y en blanco
-  const blankLabel = document.createElement('label');
-  blankLabel.for = 'blankVotes';
-  blankLabel.textContent = 'Votos en blanco:';
+
+  const blankRow = document.createElement('tr');
   
+  // Añade campos para los votos nulos y en blanco
+  const blankLabel = document.createElement('td');
+  blankLabel.textContent = 'Votos en blanco:';
+  blankRow.appendChild(blankLabel);
+
   const blankInput = document.createElement('input');
   blankInput.type = 'number';
   blankInput.id = 'blankVotes';
   blankInput.name = 'blankVotes';
   blankInput.style.width = '60px';
 
-  const blankDiv = document.createElement('div');
-  blankDiv.appendChild(blankLabel);
-  blankDiv.appendChild(blankInput);
+  const blankVotesCell = document.createElement('td');
+  blankVotesCell.appendChild(blankInput);
+  blankRow.appendChild(blankVotesCell);
+
+  const blankPercentageCell = document.createElement('td');
+  blankRow.appendChild(blankPercentageCell);
+
+  const blankSeatsCell = document.createElement('td');
+  blankRow.appendChild(blankSeatsCell);
+
+  tableBody.appendChild(blankRow);
+
+  const nullRow = document.createElement('tr');
   
-  const nullLabel = document.createElement('label');
-  nullLabel.for = 'nullVotes';
+  const nullLabel = document.createElement('td');
   nullLabel.textContent = 'Votos nulos:';
+  nullRow.appendChild(nullLabel);
   
   const nullInput = document.createElement('input');
   nullInput.type = 'number';
@@ -336,25 +382,30 @@ function generateVotingForm() {
   nullInput.name = 'nullVotes';
   nullInput.style.width = '60px';
 
-  const nullDiv = document.createElement('div');
-  nullDiv.appendChild(nullLabel);
-  nullDiv.appendChild(nullInput);
+  const nullVotesCell = document.createElement('td');
+  nullVotesCell.appendChild(nullInput);
+  nullRow.appendChild(nullVotesCell);
   
-  form.appendChild(blankDiv);
-  form.appendChild(nullDiv);
+  const nullPercentageCell = document.createElement('td');
+  nullRow.appendChild(nullPercentageCell);
+
+  const nullSeatsCell = document.createElement('td');
+  nullRow.appendChild(nullSeatsCell);
+  
+  
+  tableBody.appendChild(nullRow);
   
   // Añade un botón de envío al formulario
   const submit = document.createElement('input');
   submit.type = 'submit';
-  submit.value = 'Submit';
-
-  const submitDiv = document.createElement('div');
-  submitDiv.appendChild(submit);
-  
-  form.appendChild(submitDiv);
+  submit.value = 'Calcular';
 
   // Añade el formulario al contenedor
   formContainer.appendChild(form);
+  table.appendChild(tableBody);
+  formContainer.appendChild(table);
+  form.appendChild(table);
+  form.appendChild(submit);
 
   console.log("Formulario de votación generado");
   
