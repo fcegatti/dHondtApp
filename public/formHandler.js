@@ -170,7 +170,7 @@ function handleAddPartySubmit(event) {
     return;
   }
 
-  if (!/^[A-Za-z0-9\u00C0-\u024F\s]+$/g.test(partyName)) {
+  if (!/^[A-Za-z0-9\u00C0-\u024F\-\s]+$/g.test(partyName)) {
     showModal('El nombre del partido solo puede contener letras y números.', function() { return; });
     return;
   }
