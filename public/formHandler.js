@@ -1,6 +1,6 @@
 // Obtenemos referencias a los elementos del formulario que necesitaremos
 document.addEventListener('DOMContentLoaded', function() {
-  console.log('DOM fully loaded and parsed');
+  
 const electionTypeSelect = document.getElementById('electionType');
 const chamberSelect = document.getElementById('chamber');
 const acSelect = document.getElementById('autonomousCommunity');

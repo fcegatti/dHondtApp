@@ -9,15 +9,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const acName = acSelect.value;
     const provinceName = provinceSelect.value;
 
-    if (provinceName) {
-      const totalSeats = "calculateSeats(acName, provinceName)";
-      seatsSectionTitle.textContent = `Escaños (${totalSeats})`;
-    } else if (acName) {
-      const totalSeats = "calcualteSeats(acName)";
-      seatsSectionTitle.textContent = `Escaños (${totalSeats})`;
-    } else {
-      seatsSectionTitle.textContent = 'Escaños';
+    if (!acName) {
+      console.error('acName is not defined');
+      return;
     }
+
+    const url = provinceName
+      ? `/api/seats/${acName}/${provinceName}`
+      : `/api/seats/${acName}`;
+
+    fetch(`/api/seats/${acName}/${provinceName}`)
+      .then(response => response.json())
+      .then(data => {seatsSectionTitle.textContent = `Escaños (${data.totalSeats})`;
+      })
+      .catch(error => console.error('Error', error))
   }
 
   acSelect.addEventListener('change', updateSeatsSectionTitle);

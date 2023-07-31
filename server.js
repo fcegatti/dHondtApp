@@ -22,6 +22,32 @@ app.get('/api/elections', (req, res) => {
   res.json(geography);
 });
 
+app.get('/api/seats/:ac/:province?', (req, res) => {
+  const { ac, province} = req.params;
+  
+  const acData = geography.autonomousCommunities.find(acItem => acItem.name === ac);
+
+  if (!acData) {
+    return res.status(400).json({ message: 'nombre de comunidad autónoma no válido'});
+  }
+
+  if (province) {
+    const provinceData = acData.provinces.find(p => p.name === province);
+
+    if (!provinceData) {
+      return res.status(400).json({ message: 'nombre de provinvia no válido'});
+    }
+
+    return res.json({ totalSeats: provinceData.congressSeats });
+  }
+
+  const totalSeats = acData.provinces.reduce((total, p) => total + p.congressSeats, 0);
+
+  res.json({ totalSeats })
+  
+});
+
+
 app.post('/electionForm', (req, res) => {
   // Aquí es donde extraigo los datos del formulario del objeto req.body
   // Por ejemplo:
