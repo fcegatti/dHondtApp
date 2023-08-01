@@ -488,6 +488,19 @@ function generateVotingForm() {
     .then(seatResults => {
 
       console.log(seatResults);
+      // Selecciono todas las filas de la tabla del cuerpo
+      const rows = Array.from(document.querySelector('tbody').children);
+      // Actualizo la tabla con los resultados de los escaños
+      for (const result of seatResults) {
+        // Busco la fila que tiene el nombre del partido en la primera celda
+        const row = rows.find(row => row.children[0].textContent === result.party);
+
+        if (row) {
+          // Actualizo la cuarta celda con el número de escaños
+          row.children[3].textContent = result.seats;
+        }
+      }
+
 
     })
     .catch(error => console.error('Error', error));
