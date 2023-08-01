@@ -4,7 +4,8 @@ const port = 3000;
 const { geography, calculateSeats } = require('./elections');
 const bodyParser = require('body-parser');
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.set('view engine', 'ejs');
 
@@ -63,18 +64,22 @@ app.post('/electionForm', (req, res) => {
 
 app.post('/calculateSeats', (req, res) => {
   // Extraer los datos del formulario del objeto req.body
-  const { electionType, votes } = req.body;
-
+  const votesData = req.body;
+  console.log('votesData:', votesData);
   // Validar los datos
-  if (!electionType || !votes) {
+  if (!votesData || !votesData.type || !votesData.province || !votesData.community ||!votesData.parties) {
     return res.status(400).json({ message: 'Invalid data' });
   }
 
-  // Calcular los escaños
-  const seatResults = calculateSeats(votes, 10); // Aquí tendríamos que determinar cuántos escaños hay para esta elección
+  try {
 
-  // Devolver el resultado
-  res.json(seatResults);
+    // Calcular los escaños
+    const seatResults = calculateSeats(votesData);
+    res.json(seatResults);
+  } catch (error) {
+    console.error('Error', error);
+    res.status(500).json({message: 'An error occurred while calculating seats'})
+  }  
 });
 
 

@@ -474,9 +474,23 @@ function generateVotingForm() {
           return;
       }
     }  
-    
-  
+
     console.log(votesData);
+
+    fetch('/calculateSeats', {
+            method: 'POST',
+            headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(votesData),
+    })
+    .then(response => response.json())
+    .then(seatResults => {
+
+      console.log(seatResults);
+
+    })
+    .catch(error => console.error('Error', error));
   });
 }
 
