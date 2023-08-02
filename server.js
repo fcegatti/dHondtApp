@@ -6,6 +6,7 @@ const port = 3000;
 const mainPostRoutes = require('./routes/post/main');
 const postRoutes = require('./routes/post');
 const mainGetRoutes = require('./routes/views/main');
+const getElection = require('./routes/api/getElection');
 const getElectionsData = require('./routes/api/getElectionsData');
 const calculateSeats = require('./routes/api/calculateSeats');
 const getSeatsData = require('./routes/api/seats');
@@ -23,11 +24,13 @@ app.use(express.static('public'));
 app.use('/api/elections', getElectionsData);
 app.use('/api/calculateSeats', calculateSeats);
 app.use('/api/seats', getSeatsData);
+app.use('/api', getElection);
+app.use('/', homeRoutes);
 app.use('/', mainGetRoutes);
 app.use('/', mainPostRoutes);
 app.use('/', viewRoutes);
 app.use('/', postRoutes);
-app.use('/', homeRoutes);
+
 
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
