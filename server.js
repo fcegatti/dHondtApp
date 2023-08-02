@@ -11,7 +11,6 @@ const getElectionsData = require('./routes/api/getElectionsData');
 const calculateSeats = require('./routes/api/calculateSeats');
 const getSeatsData = require('./routes/api/seats');
 const homeRoutes = require('./routes/views/home');
-const viewRoutes = require('./routes/views');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -28,7 +27,6 @@ app.use('/api', getElection);
 app.use('/', homeRoutes);
 app.use('/', mainGetRoutes);
 app.use('/', mainPostRoutes);
-app.use('/', viewRoutes);
 app.use('/', postRoutes);
 
 
