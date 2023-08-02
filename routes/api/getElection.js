@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const electionsData = require('../../data/electionsData');
 
-app.get('/election/:id', (req, res) => {
+router.get('/election/:id', (req, res) => {
   const id = parseInt(req.params.id);
   const election = electionsData.find(e => e.id === id);
   if (election) {

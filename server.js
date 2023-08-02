@@ -4,7 +4,7 @@ const port = 3000;
 
 // Importamos nuestros módulos de rutas
 const mainPostRoutes = require('./routes/post/main');
-const postRoutes = require('./routes/post');
+const postRoutes = require('./routes/post/main');
 const mainGetRoutes = require('./routes/views/main');
 const getElection = require('./routes/api/getElection');
 const getElectionsData = require('./routes/api/getElectionsData');
