@@ -15,7 +15,7 @@ let provinceToAcMap = {};
 let votes = {};
 
 // Obtenemos los datos de elections desde el servidor
-fetch('/api/electionsData')
+fetch('/api/elections')
   .then(response => response.json())
   .then(data => {
     // Ahora los datos de las elecciones están disponibles en la variable electionsData.
