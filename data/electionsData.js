@@ -469,7 +469,7 @@ const electionsData = {
   ]
 };
 
-modalMessage.exports = electionsData;
+module.exports = electionsData;
 
 
 /*
