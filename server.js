@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const { geography, calculateSeats } = require('./elections');
-const bodyParser = require('body-parser');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

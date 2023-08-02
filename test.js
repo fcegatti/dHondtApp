@@ -1,4 +1,4 @@
-const { calculateSeats } = require('./elections'); // Reemplace 'elections' con el nombre correcto de su archivo
+const { calculateSeats } = require('./elections');
 const votesData = {
   "type": "generales",
   "province": "Barcelona",
