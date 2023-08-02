@@ -3,6 +3,7 @@ const app = express();
 const port = 3000;
 
 // Importamos nuestros módulos de rutas
+const mainRoutes = require('./routes/post/main')
 const viewRoutes = require('./routes/views');
 const postRoutes = require('./routes/post');
 const homeRoutes = require('./routes/views/home');
@@ -22,6 +23,7 @@ app.use('/api/elections', getElectionsData);
 app.use('/api/calculateSeats', calculateSeats);
 app.use('/api/seats', getSeatsData);
 app.use('/', homeRoutes);
+app.use('/', mainRoutes);
 app.use('/', viewRoutes);
 app.use('/', postRoutes);
 
