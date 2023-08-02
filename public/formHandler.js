@@ -349,7 +349,7 @@ function generateVotingForm() {
   
   // Añade campos para los votos nulos y en blanco
   const blankLabel = document.createElement('td');
-  blankLabel.textContent = 'Votos en blanco:';
+  blankLabel.textContent = 'Votos en blanco';
   blankRow.appendChild(blankLabel);
 
   const blankInput = document.createElement('input');
@@ -373,7 +373,7 @@ function generateVotingForm() {
   const nullRow = document.createElement('tr');
   
   const nullLabel = document.createElement('td');
-  nullLabel.textContent = 'Votos nulos:';
+  nullLabel.textContent = 'Votos nulos';
   nullRow.appendChild(nullLabel);
   
   const nullInput = document.createElement('input');
@@ -492,12 +492,17 @@ function generateVotingForm() {
       const rows = Array.from(document.querySelector('tbody').children);
       // Actualizo la tabla con los resultados de los escaños
       for (const result of seatResults) {
+
         // Busco la fila que tiene el nombre del partido en la primera celda
-        const row = rows.find(row => row.children[0].textContent === result.party);
+        const row = rows.find(row => row.children[0].textContent.toLowerCase() === result.party.toLowerCase());
 
         if (row) {
+          // Actualizo la tercera celda con el porcentaje de votos
+          row.children[2].textContent = result.percentage.toFixed(2) + '%';
           // Actualizo la cuarta celda con el número de escaños
+          if(result.party !== 'votos en blanco' && result.party !== 'votos nulos') {
           row.children[3].textContent = result.seats;
+          }
         }
       }
 

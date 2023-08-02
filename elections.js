@@ -477,7 +477,7 @@ const geography = {
 */
 const calculateSeats = (votesData) => { 
   const {type, province, parties} = votesData;
-
+  console.log("Iniciando calculateSeats");
   // Extraemos la comunidad autónoma específica y sus provincias
   const votes = votesData.parties.reduce((acc, party) => {
     acc[party.name] = party.votes;
@@ -532,6 +532,12 @@ const calculateSeats = (votesData) => {
       throw new Error('El tipo de elección especificado no es válido. Debe ser "generales", "autonomicas" o "municipales".');
   }
 
+  const castedVotes = votesData.parties.reduce((total, party) => total + party.votes, 0);
+
+  const validVotes = castedVotes - (votes['votos nulos'] || 0);
+
+  const thresholdVotes = threshold * validVotes;
+
   // Creamos un array para almacenar los resultados de cada partido
 
   let results = Object.keys(votes).map(party => ({
@@ -539,28 +545,27 @@ const calculateSeats = (votesData) => {
     votes: votes[party], // Inicializamos los votos con los datos proporcionados
     seats: 0,
     quotient: votes[party], // El cociente inicial es el número de votos
+    percentage: (votes[party] / castedVotes) * 100, 
+    
   }));
 
-  const castedVotes = results.reduce((total, party) => total + party.votes, 0);
-
-  const validVotes = castedVotes - (votes['votos nulos'] || 0);
-
-  const thresholdVotes = threshold * validVotes;
-
-  const eligibleParties = results.filter(party => party.name !== 'votos nulos' && party.votes >= thresholdVotes);
-
-  const partiesForSeats = eligibleParties.filter(party => party.name !== 'votos en blanco');
+  const validParties = results.filter(party => party.party !== 'votos nulos' && party.party !== 'votos en blanco');
+  console.log(results);
+  const eligibleParties = validParties.filter(party => party.votes >= thresholdVotes);
 
   // Repartimos los escaños utilizando el método D'Hondt
   for (let i = 0; i < totalSeats; i++) {
-    const maxQuotient = Math.max(...partiesForSeats.map(r => r.quotient));
+    const maxQuotient = Math.max(...eligibleParties.map(r => r.quotient));
     const winner = results.find(r => r.quotient === maxQuotient);
-    winner.seats++;
-    winner.quotient = winner.votes / (winner.seats + 1);
+    if (winner) {
+      winner.seats++;
+      winner.quotient = winner.votes / (winner.seats + 1);
+    }
+    
   }
 
   // Devolvemos los resultados de cada partido
-  return results.map(r => ({ party: r.party, seats: r.seats }));
+  return results.map(r => ({ party: r.party, seats: r.seats, percentage: r.percentage }));
 };
 
 module.exports = {
