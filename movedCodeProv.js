@@ -9,11 +9,6 @@ app.get('/election/:id', (req, res) => {
 });
 
 
-app.get('/electionForm', (req, res) => {
-  res.render('electionForm');
-});
-
-
 
 
 
