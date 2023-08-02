@@ -15,7 +15,7 @@ let provinceToAcMap = {};
 let votes = {};
 
 // Obtenemos los datos de elections desde el servidor
-fetch('/api/elections')
+fetch('/api/electionsData')
   .then(response => response.json())
   .then(data => {
     // Ahora los datos de las elecciones están disponibles en la variable electionsData.
@@ -516,7 +516,5 @@ function generateVotingForm() {
 });
 
 
-/* Todavía se necesita verificar que tanto una elección como una cámara estén seleccionadas antes de llenar las comunidades autónomas, y verificar que se haya seleccionado una comunidad autónoma antes de llenar las provincias.
-
-Todavía no se tiene en cuenta el llenado de los partidos y los votos. Eso se debe manejar en otro lugar y depende de la estructura exacta de los datos en elections.js.
+/* Todavía se necesita verificar que tanto una elección como una cámara estén seleccionadas antes de llenar las comunidades autónomas, y verificar que se haya seleccionado una comunidad autónoma antes de llenar las provincias..
 */

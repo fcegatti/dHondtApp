@@ -11,27 +11,6 @@ app.post('/electionForm', (req, res) => {
   res.send('Form data received');
 });
 
-app.post('/calculateSeats', (req, res) => {
-  // Extraer los datos del formulario del objeto req.body
-  const votesData = req.body;
-  console.log('votesData:', votesData);
-  // Validar los datos
-  if (!votesData || !votesData.type || !votesData.province || !votesData.community ||!votesData.parties) {
-    return res.status(400).json({ message: 'Invalid data' });
-  }
-
-  try {
-
-    // Calcular los escaños
-    const seatResults = calculateSeats(votesData);
-    res.json(seatResults);
-  } catch (error) {
-    console.error('Error', error);
-    res.status(500).json({message: 'An error occurred while calculating seats'})
-  }  
-});
-
-
 
 app.get('/election/:id', (req, res) => {
   const id = parseInt(req.params.id);
@@ -43,23 +22,6 @@ app.get('/election/:id', (req, res) => {
   }
 });
 
-app.get('/test', (req, res) => {
-  const testVotes = [
-    { party: "Party 1", votes: 500000 },
-    { party: "Party 2", votes: 400000 },
-    { party: "Party 3", votes: 300000 },
-    { party: "Party 4", votes: 200000 },
-    { party: "Party 5", votes: 100000 },
-  ];
-
-  const seatResults = calculateSeats(testVotes, 10);
-  res.json(seatResults);
-});
-
-app.listen(port, () => {
-  console.log(`App listening at http://localhost:${port}`);
-});
-
 app.get('/', (req, res) => {
   res.send('Te calculo los escaños');
 });
@@ -68,9 +30,7 @@ app.get('/electionForm', (req, res) => {
   res.render('electionForm');
 });
 
-app.get('/api/elections', (req, res) => {
-  res.json(geography);
-});
+
 
 app.get('/api/seats/:ac/:province?', (req, res) => {
   const { ac, province} = req.params;
@@ -96,3 +56,8 @@ app.get('/api/seats/:ac/:province?', (req, res) => {
   res.json({ totalSeats })
   
 });
+
+```
+//contenido del archivo 
+//fin del archivo
+```

@@ -3,9 +3,10 @@ const app = express();
 const port = 3000;
 
 // Importamos nuestros módulos de rutas
-const apiRoutes = reqire('./routes/api');
-const viewRoutes = reqire('./routes/views');
-const postRoutes = reqire('./routes/post');
+const viewRoutes = require('./routes/views');
+const postRoutes = require('./routes/post');
+const getElectionsData = require('./routes/api/getElectionsData');
+const calculateSeats = require('./routes/api/calculateSeats');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -15,7 +16,8 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 // usamos nuestros módulos de rutas con express
-app.use('/api', apiRoutes);
+app.use('/api/elections', getElectionsData);
+app.use('/api/calculateSeats', calculateSeats);
 app.use('/', viewRoutes);
 app.use('/', postRoutes);
 
