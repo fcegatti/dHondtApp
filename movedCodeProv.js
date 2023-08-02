@@ -22,9 +22,6 @@ app.get('/election/:id', (req, res) => {
   }
 });
 
-app.get('/', (req, res) => {
-  res.send('Te calculo los escaños');
-});
 
 app.get('/electionForm', (req, res) => {
   res.render('electionForm');
