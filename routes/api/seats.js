@@ -1,4 +1,4 @@
-const express = require('exoress');
+const express = require('express');
 const router = express.Router();
 const electionsData = require('../../data/electionsData');
 
