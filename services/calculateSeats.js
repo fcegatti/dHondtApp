@@ -10,7 +10,7 @@ const calculateSeats = (votesData) => {
   const electionType = votesData.type;
   const provinceName = votesData.province;
 
-  const community = geography.autonomousCommunities.find(c => c.name === votesData.community);
+  const community = electionsData.autonomousCommunities.find(c => c.name === votesData.community);
   if (!community) throw new Error('La comunidad autónoma especificada no se encontró en los datos geográficos.');
 
   // Extraemos la provincia específica
@@ -91,7 +91,4 @@ const calculateSeats = (votesData) => {
   return results.map(r => ({ party: r.party, seats: r.seats, percentage: r.percentage }));
 };
 
-module.exports = {
-  geography,
-  calculateSeats,
-};
+module.exports = calculateSeats;
