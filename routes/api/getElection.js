@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const electionsData = require('../../data/electionsData');
+const electionsData = require('../../data/electionsData.json');
 
 router.get('/election/:id', (req, res) => {
   const id = parseInt(req.params.id);

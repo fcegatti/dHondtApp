@@ -1,5 +1,5 @@
 
-const electionsData = require('../data/electionsData');
+const electionsData = require('../data/electionsData.json');
 const calculateSeats = (votesData) => { 
   const {type, province, parties} = votesData;
   console.log("Iniciando calculateSeats");
