@@ -70,7 +70,7 @@ const calculateSeats = (votesData) => {
     votes: votes[party], // Inicializamos los votos con los datos proporcionados
     seats: 0,
     quotient: votes[party], // El cociente inicial es el número de votos
-    percentage: (votes[party] / castedVotes) * 100, 
+    votesPercentage: (votes[party] / castedVotes) * 100, 
     
   }));
 
@@ -90,7 +90,7 @@ const calculateSeats = (votesData) => {
   }
 
   // Devolvemos los resultados de cada partido
-  return results.map(r => ({ party: r.party, seats: r.seats, percentage: r.percentage }));
+  return results.map(r => ({ party: r.party, seats: r.seats, votesPercentage: r.votesPercentage }));
 };
 
 module.exports = calculateSeats;

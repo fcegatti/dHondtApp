@@ -513,7 +513,7 @@ function generateVotingForm() {
 
         if (row) {
           // Actualizo la tercera celda con el porcentaje de votos
-          row.children[2].textContent = result.percentage.toFixed(2) + '%';
+          row.children[2].textContent = result.votesPercentage.toFixed(2) + '%';
           // Actualizo la cuarta celda con el número de escaños
           if(result.party !== 'votos en blanco' && result.party !== 'votos nulos') {
           row.children[3].textContent = result.seats;
