@@ -427,7 +427,6 @@ function generateVotingForm() {
 
     let partiesWithoutVotes = [];
 
-
     for (let i = 0; i < form.elements.length; i++) {
       const element = form.elements[i];
 
@@ -440,19 +439,35 @@ function generateVotingForm() {
           partyName = 'votos nulos';
         }
 
+        let partyColor;
+
         if (element.value === '') {
           partiesWithoutVotes.push(partyName);
         } else if (element.value < 0 || !Number.isInteger(Number(element.value))) {
           showModal('Los votos deben ser números enteros no negativos');
           return;
         } else { 
+          
+          if (partyName !== 'votos en blanco' && partyName !== 'votos nulos') {
+            partyColor = acParties.find(party => party.name === partyName).color;
+          }
+          
           votesData.parties.push({
             name: partyName,
             votes: parseInt(element.value, 10),
+            color: partyColor,
           });
         }    
       }
     }
+
+    votesData.parties.forEach(party => {
+      if (party.name === 'votos en blanco') {
+        party.color = 'white';
+      } else if (party.name === 'votos nulos') {
+        party.color = 'gray';
+      }
+    });
 
     if (partiesWithoutVotes.length > 0) {
       const confirmed = await new Promise(resolve => {

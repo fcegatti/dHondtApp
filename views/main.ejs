@@ -67,7 +67,14 @@
       <section class="seats-graph">
         <h2 id="seats-title">ESCAÑOS(350)</h2>
         <!-- Gráfico de escaños --> 
-        <svg id="seats-chart" width="500" height="500"></svg>      
+        <svg id="seats-chart" width="500" height="500">
+          <defs>
+            <linearGradient id="seatGradient" x1="0" y1="0" x2="1" y2="0" spreadMethod="pad">
+                <stop offset="0%" stop-color="green" stop-opacity="1"></stop>
+                <stop offset="50%" stop-color="red" stop-opacity="1"></stop>
+            </linearGradient>
+        </defs>
+        </svg>      
       </section>
 
       <section class="region-map">
