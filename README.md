@@ -24,7 +24,7 @@ npm start
 To use dHondtApp, follow these steps:
 
 1. Start the server with `npm start`.
-2. Open a web browser and navigate to `http://localhost:3000/electionForm`.
+2. Open a web browser and navigate to `http://localhost:3000`.
 3. Fill out the election form with your election type, chamber, autonomous community, and province, and add parties with their votes.
 4. Click the "Calculate Seats" button to get the distribution of seats.
 
