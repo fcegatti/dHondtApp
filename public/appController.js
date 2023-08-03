@@ -477,7 +477,7 @@ function generateVotingForm() {
 
     console.log(votesData);
 
-    fetch('/calculateSeats', {
+    fetch('/api/calculateSeats', {
             method: 'POST',
             headers: {
         'Content-Type': 'application/json',

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const calculateSeats = require('../../services/calculateSeats');
 
-router.post('/calculateSeats', (req, res) => {
+router.post('/', (req, res) => {
   // Extraer los datos del formulario del objeto req.body
   const votesData = req.body;
   console.log('votesData:', votesData);
