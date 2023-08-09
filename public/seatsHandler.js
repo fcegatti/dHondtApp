@@ -7,7 +7,9 @@ document.addEventListener('DOMContentLoaded', function() {
   const provinceSelect = document.querySelector('#province');
   const seatsSectionTitle = document.querySelector('.seats-graph h2');
 
-  function updateSeatsSectionTitle() {
+  let unassignedSeats = 0;
+
+  function updateSeatsInfo() {
     const electionType = electionTypeSelect.value;
     const chamber = chamberSelect.value;
     const acName = acSelect.value;
@@ -21,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       return;
     }
-
     
 
     const url = provinceName
@@ -30,19 +31,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
     fetch(url)
       .then(response => response.json())
-      .then(data => {seatsSectionTitle.textContent = `ESCAÑOS (${data.totalSeats})`;
+      .then(data => {
+        seatsSectionTitle.textContent = `ESCAÑOS (${data.totalSeats})`;
+
+        unassignedSeats = data.totalSeats;
       })
       .catch(error => console.error('Error', error))
   }
 
-  electionTypeSelect.addEventListener('change', updateSeatsSectionTitle);
-  chamberSelect.addEventListener('change', updateSeatsSectionTitle);
+  electionTypeSelect.addEventListener('change', updateSeatsInfo);
+  chamberSelect.addEventListener('change', updateSeatsInfo);
   acSelect.addEventListener('change', function () {
     provinceSelect.selectedIndex = 0; // Reseteo la selección de la provincia cuando se selecciona una comunidad autónoma para que no devuelva undefined al volver a la CCAA
-    updateSeatsSectionTitle();
+    updateSeatsInfo();
   });
-  provinceSelect.addEventListener('change', updateSeatsSectionTitle);
+  provinceSelect.addEventListener('change', updateSeatsInfo);
 
-  updateSeatsSectionTitle();
+  updateSeatsInfo();
 
 });
+
+
+  
