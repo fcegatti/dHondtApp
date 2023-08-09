@@ -4,7 +4,32 @@
       "name": "Andalucía",
       "electoralThreshold": 3,
       "thresholdRef": "valid",
-      "parties": [],
+      "parties": [
+        {
+          "party": "Partido 1",
+          "seats": 5,
+          "votesPercentage": 72.21854304635762,
+          "seatsPercentage": 83.33333333333334
+        },
+        {
+          "party": "Partido 2",
+          "seats": 1,
+          "votesPercentage": 27.052980132450333,
+          "seatsPercentage": 16.666666666666664
+        },
+        {
+          "party": "votos en blanco",
+          "seats": 0,
+          "votesPercentage": 0.37527593818984545,
+          "seatsPercentage": 0
+        },
+        {
+          "party": "votos nulos",
+          "seats": 0,
+          "votesPercentage": 0.35320088300220753,
+          "seatsPercentage": 0
+        }
+      ],
       "provinces": [
         {
           "name": "Almería",
