@@ -247,33 +247,45 @@
       "thresholdRef": "valid",
       "parties": [
         {
-          "party": "Sumar - ECP",
-          "seats": 21,
-          "votesPercentage": 62.68884092928781,
-          "seatsPercentage": 65.625
+          "party": "Partido 1",
+          "seats": 15,
+          "votesPercentage": 43.75355533190391,
+          "seatsPercentage": 46.875
         },
         {
-          "party": "PSOE",
-          "seats": 9,
-          "votesPercentage": 28.989462993525457,
-          "seatsPercentage": 28.125
+          "party": "Partido 2",
+          "seats": 8,
+          "votesPercentage": 24.307530739946614,
+          "seatsPercentage": 25
         },
         {
-          "party": "PP",
-          "seats": 2,
-          "votesPercentage": 7.832931319030087,
-          "seatsPercentage": 6.25
+          "party": "Partido 3",
+          "seats": 6,
+          "votesPercentage": 19.446024591957293,
+          "seatsPercentage": 18.75
+        },
+        {
+          "party": "Partido 4",
+          "seats": 3,
+          "votesPercentage": 9.723012295978647,
+          "seatsPercentage": 9.375
+        },
+        {
+          "party": "Partido 5",
+          "seats": 0,
+          "votesPercentage": 0.6344900013127379,
+          "seatsPercentage": 0
         },
         {
           "party": "votos en blanco",
           "seats": 0,
-          "votesPercentage": 0.20312301637679323,
+          "votesPercentage": 1.9953616593007484,
           "seatsPercentage": 0
         },
         {
           "party": "votos nulos",
           "seats": 0,
-          "votesPercentage": 0.2856417417798654,
+          "votesPercentage": 0.1400253796000525,
           "seatsPercentage": 0
         }
       ],

@@ -513,10 +513,12 @@ function generateVotingForm() {
 
       console.log(seatResults);
 
-      let chartData = seatResults.map(result => ({
-        party: result.party,
-        votesPercentage: result.votesPercentage,
-        color: result.color,
+      let chartData = seatResults
+          .filter(result => result.seatsPercentage > 0)
+          .map(result => ({
+            party: result.party,
+            seatsPercentage: result.seatsPercentage,
+            color: result.color,
       }));
 
       drawSeatsArc(chartData);

@@ -91,9 +91,12 @@ const calculateSeats = (votesData) => {
 
   // Obtenemos el pocentaje de escaños sobre el total para el gráfico
   for  (let result of results) {
-    result.seatsPercentage = (result.seats / totalSeats) * 100;
+    if (result.seats > 0) {
+        result.seatsPercentage = (result.seats / totalSeats) * 100;
+    } else {
+        result.seatsPercentage = 0;
+    }
   }
-
   // Devolvemos los resultados de cada partido
   return results.map(r => ({ party: r.party, seats: r.seats, votesPercentage: r.votesPercentage, seatsPercentage: r.seatsPercentage  }));
 };

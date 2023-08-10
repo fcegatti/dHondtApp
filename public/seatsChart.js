@@ -15,7 +15,7 @@ const pie = d3.pie()
   .startAngle(-Math.PI/2)
   .endAngle(Math.PI/2)
   .sort(null)
-  .value(d => d.votesPercentage);
+  .value(d => d.seatsPercentage);
 
 function drawSeatsArc(partiesData) {
   // Creo un grupo SGV para cada segmento del pie chart
