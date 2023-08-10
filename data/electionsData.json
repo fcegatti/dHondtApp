@@ -245,7 +245,38 @@
       "name": "Catalunya",
       "electoralThreshold": 3,
       "thresholdRef": "valid",
-      "parties": [],
+      "parties": [
+        {
+          "party": "Sumar - ECP",
+          "seats": 21,
+          "votesPercentage": 62.68884092928781,
+          "seatsPercentage": 65.625
+        },
+        {
+          "party": "PSOE",
+          "seats": 9,
+          "votesPercentage": 28.989462993525457,
+          "seatsPercentage": 28.125
+        },
+        {
+          "party": "PP",
+          "seats": 2,
+          "votesPercentage": 7.832931319030087,
+          "seatsPercentage": 6.25
+        },
+        {
+          "party": "votos en blanco",
+          "seats": 0,
+          "votesPercentage": 0.20312301637679323,
+          "seatsPercentage": 0
+        },
+        {
+          "party": "votos nulos",
+          "seats": 0,
+          "votesPercentage": 0.2856417417798654,
+          "seatsPercentage": 0
+        }
+      ],
       "provinces": [
         {
           "name": "Barcelona",

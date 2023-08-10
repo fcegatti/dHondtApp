@@ -492,6 +492,11 @@ function generateVotingForm() {
 
     console.log(votesData);
 
+    let partyColorsMap = {};
+    for (const party of votesData.parties) {
+      partyColorsMap[party.name.toLowerCase()] = party.color
+    }
+
     fetch('/api/calculateSeats', {
             method: 'POST',
             headers: {
@@ -502,7 +507,19 @@ function generateVotingForm() {
     .then(response => response.json())
     .then(seatResults => {
 
+      for (const result of seatResults) {
+        result.color = partyColorsMap[result.party.toLowerCase()];
+      }
+
       console.log(seatResults);
+
+      let chartData = seatResults.map(result => ({
+        party: result.party,
+        votesPercentage: result.votesPercentage,
+        color: result.color,
+      }));
+
+      drawSeatsArc(chartData);
       // Selecciono todas las filas de la tabla del cuerpo
       const rows = Array.from(document.querySelector('tbody').children);
       // Actualizo la tabla con los resultados de los escaños
