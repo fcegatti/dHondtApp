@@ -73,7 +73,24 @@ fetch('/api/elections')
     provinceSelect.addEventListener('change', (event) => {
       console.log(`Provincia seleccionada: ${event.target.value}`);
       if (event.target.value) {
-      generateVotingForm();
+        generateVotingForm();
+        const selectedProvinceData = electionsData.provinces.find(p => p.name === event.target.value);
+        if (selectedProvinceData && selectedProvinceData.seatResults) {
+          const chartData = selectedProvinceData.seatResults.map(result => ({
+            party: result.party,
+            seatsPercentage: result.seatsPercentage,
+            color: result.color,
+          }));
+          drawSeatsArc(chartData);
+        } else {
+          const unassignedChartData = [{
+            party: 'No Asignados',
+            seatsPercentage: 100,
+            color: 'gray'
+
+          }];
+          drawSeatsArc(unassignedChartData);
+        }
       }
     });
     addPartyForm.addEventListener('submit', handleAddPartySubmit);
@@ -480,9 +497,15 @@ function generateVotingForm() {
       
       if (confirmed) {
         for (let partyName of partiesWithoutVotes) {
+          let partyColor;
+          const partyInfo = votesData.parties.find(p => p.name === partyName);
+          if (partyInfo) {
+            partyColor = partyInfo.color;
+          }
           votesData.parties.push({
             name: partyName,
             votes: 0,
+            color: partyColor,
           });
         }        
       } else {
@@ -491,11 +514,6 @@ function generateVotingForm() {
     }  
 
     console.log(votesData);
-
-    let partyColorsMap = {};
-    for (const party of votesData.parties) {
-      partyColorsMap[party.name.toLowerCase()] = party.color
-    }
 
     fetch('/api/calculateSeats', {
             method: 'POST',
@@ -506,10 +524,6 @@ function generateVotingForm() {
     })
     .then(response => response.json())
     .then(seatResults => {
-
-      for (const result of seatResults) {
-        result.color = partyColorsMap[result.party.toLowerCase()];
-      }
 
       console.log(seatResults);
 

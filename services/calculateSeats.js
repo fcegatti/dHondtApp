@@ -65,14 +65,20 @@ const calculateSeats = (votesData) => {
 
   // Creamos un array para almacenar los resultados de cada partido
 
-  let results = Object.keys(votes).map(party => ({
-    party,
-    votes: votes[party], // Inicializamos los votos con los datos proporcionados
-    seats: 0,
-    quotient: votes[party], // El cociente inicial es el número de votos
-    votesPercentage: (votes[party] / castedVotes) * 100, 
-    
-  }));
+  let results = Object.keys(votes).map(party => {
+
+    const partyData = votesData.parties.find(p => p.name === party);
+    const partyColor = partyData ? partyData.color : undefined;
+
+    return {
+      party,
+      votes: votes[party], // Inicializamos los votos con los datos proporcionados
+      seats: 0,
+      quotient: votes[party], // El cociente inicial es el número de votos
+      votesPercentage: (votes[party] / castedVotes) * 100, 
+      color: partyColor,
+    };
+  });
 
   const validParties = results.filter(party => party.party !== 'votos nulos' && party.party !== 'votos en blanco');
   console.log(results);

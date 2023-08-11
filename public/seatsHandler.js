@@ -39,6 +39,22 @@ document.addEventListener('DOMContentLoaded', function() {
       .catch(error => console.error('Error', error))
   }
 
+  function updateSeatsChart(ac, province) {
+    const endpoint = province ? `/api/seats/${ac}/${province}` : `/api/seats/${ac}`;
+    fetch(endpoint)
+      .then(response => response.json())
+      .then(data => {
+        const unassignedSeatsData = {
+          party: 'No Asignado',
+          seatsPercentage: (data.unassignedSeats / data.totalSeats) * 100,
+          color: 'gray'
+        };
+        drawSeatsArc([unassignedSeatsData]);
+        seatsSectionTitle.textContent = `ESCAÑOS (${data.totalSeats})`;
+      })
+      .catch(error => console.error('Error', error));
+  }
+
   electionTypeSelect.addEventListener('change', updateSeatsInfo);
   chamberSelect.addEventListener('change', updateSeatsInfo);
   acSelect.addEventListener('change', function () {
