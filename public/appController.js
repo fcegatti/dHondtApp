@@ -74,20 +74,22 @@ fetch('/api/elections')
       console.log(`Provincia seleccionada: ${event.target.value}`);
       if (event.target.value) {
         generateVotingForm();
-        const selectedProvinceData = electionsData.provinces.find(p => p.name === event.target.value);
-        if (selectedProvinceData && selectedProvinceData.seatResults) {
-          const chartData = selectedProvinceData.seatResults.map(result => ({
-            party: result.party,
-            seatsPercentage: result.seatsPercentage,
-            color: result.color,
-          }));
-          drawSeatsArc(chartData);
-        } else {
-          const unassignedChartData = [{
-            party: 'No Asignados',
-            seatsPercentage: 100,
-            color: 'gray'
+        const selectedProvinceData = getSelectedProvince(acSelect.value, event.target.value);
+        if (selectedProvinceData) {
+          if (selectedProvinceData.seatResults) {
+            const chartData = selectedProvinceData.seatResults.map(result => ({
+              party: result.party,
+              seatsPercentage: result.seatsPercentage,
+              color: result.color,
+            }));
+            drawSeatsArc(chartData);
 
+          }
+        } else {
+            const unassignedChartData = [{
+              party: 'No Asignados',
+              seatsPercentage: 100,
+              color: 'gray'
           }];
           drawSeatsArc(unassignedChartData);
         }
@@ -152,6 +154,11 @@ function fillProvinces() {
     option.text = province.name;
     provinceSelect.add(option);
   }
+}
+
+function getSelectedProvince(acName, provinceName) {
+  const ac = electionsData.autonomousCommunities.find(ac => ac.name === acName);
+  return ac ? ac.provinces.find(province => province.name === provinceName) : null;
 }
 
 function isValidURL(string) {
@@ -524,6 +531,12 @@ function generateVotingForm() {
     })
     .then(response => response.json())
     .then(seatResults => {
+      seatResults.forEach(result => {
+        const partyFromVotesData = votesData.parties.find(p => p.name === result.party);
+        if (partyFromVotesData) {
+          result.color = partyFromVotesData.color;
+        }
+      });
 
       console.log(seatResults);
 
@@ -559,8 +572,6 @@ function generateVotingForm() {
     .catch(error => console.error('Error', error));
   });
 }
-
-
 });
 
 

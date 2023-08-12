@@ -222,33 +222,39 @@
       "thresholdRef": "valid",
       "parties": [
         {
-          "party": "Partido 1",
+          "party": "Partido 2",
           "seats": 18,
-          "votesPercentage": 56.22216974767238,
+          "votesPercentage": 55.179074002538485,
           "seatsPercentage": 56.25
         },
         {
-          "party": "Partido 2",
-          "seats": 10,
-          "votesPercentage": 31.234538748706875,
-          "seatsPercentage": 31.25
+          "party": "Partido 3",
+          "seats": 8,
+          "votesPercentage": 24.590254400971247,
+          "seatsPercentage": 25
         },
         {
-          "party": "Partido 3",
-          "seats": 4,
-          "votesPercentage": 12.49381549948275,
-          "seatsPercentage": 12.5
+          "party": "Partido 4",
+          "seats": 6,
+          "votesPercentage": 18.39302466751283,
+          "seatsPercentage": 18.75
+        },
+        {
+          "party": "Partido 1",
+          "seats": 0,
+          "votesPercentage": 1.2913194636057612,
+          "seatsPercentage": 0
         },
         {
           "party": "votos en blanco",
           "seats": 0,
-          "votesPercentage": 0.02530022938874646,
+          "votesPercentage": 0.1876276143700679,
           "seatsPercentage": 0
         },
         {
           "party": "votos nulos",
           "seats": 0,
-          "votesPercentage": 0.024175774749246613,
+          "votesPercentage": 0.35869985100160034,
           "seatsPercentage": 0
         }
       ],

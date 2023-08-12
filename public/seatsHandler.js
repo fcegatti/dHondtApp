@@ -9,6 +9,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
   let unassignedSeats = 0;
 
+  function updateSeatsChart(ac, province) {
+    const endpoint = province ? `/api/seats/${ac}/${province}` : `/api/seats/${ac}`;
+    fetch(endpoint)
+      .then(response => response.json())
+      .then(data => {
+        const unassignedSeatsData = {
+          party: 'No Asignado',
+          seatsPercentage: (data.unassignedSeats / data.totalSeats) * 100,
+          color: 'gray'
+        };
+        drawSeatsArc([unassignedSeatsData]);
+        seatsSectionTitle.textContent = `ESCAÑOS (${data.totalSeats})`;
+      })
+      .catch(error => console.error('Error', error));
+  }
+
   function updateSeatsInfo() {
     const electionType = electionTypeSelect.value;
     const chamber = chamberSelect.value;
@@ -21,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
       } else {
         seatsSectionTitle.textContent = `Escaños (350)`;
       }
+      updateSeatsChart(acName, provinceName);
       return;
     }
     
@@ -39,21 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
       .catch(error => console.error('Error', error))
   }
 
-  function updateSeatsChart(ac, province) {
-    const endpoint = province ? `/api/seats/${ac}/${province}` : `/api/seats/${ac}`;
-    fetch(endpoint)
-      .then(response => response.json())
-      .then(data => {
-        const unassignedSeatsData = {
-          party: 'No Asignado',
-          seatsPercentage: (data.unassignedSeats / data.totalSeats) * 100,
-          color: 'gray'
-        };
-        drawSeatsArc([unassignedSeatsData]);
-        seatsSectionTitle.textContent = `ESCAÑOS (${data.totalSeats})`;
-      })
-      .catch(error => console.error('Error', error));
-  }
+  
 
   electionTypeSelect.addEventListener('change', updateSeatsInfo);
   chamberSelect.addEventListener('change', updateSeatsInfo);
@@ -64,8 +67,6 @@ document.addEventListener('DOMContentLoaded', function() {
   provinceSelect.addEventListener('change', updateSeatsInfo);
 
   updateSeatsInfo();
+  window.updateSeatsChart = updateSeatsChart;
 
-});
-
-
-  
+}); 
