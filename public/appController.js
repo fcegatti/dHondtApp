@@ -217,28 +217,42 @@ function handleAddPartySubmit(event) {
     logo: logoURL,
   };
 
-  
-  if (!parties[acName]) {
-  parties[acName] = [];
-  }
+  const selectedAC = electionsData.autonomousCommunities.find(ac => ac.name === partyName);
 
-  const isPartyDuplicated = parties[acName].some(party => party.name === partyName);
+  const isPartyDuplicated = selectedAC.parties && selectedAC.parties.some(party => party.name === partyName);
 
   if (isPartyDuplicated) {
     showModal(`Ya existe un partido de nombre ${partyName} en ${acName}.`, function() { return; });
     return;
   }
 
+  if (!selectedAC.parties) {
+    selectedAC.parties = [];
+  }
+  selectedAC.parties.push(newParty);
+
+  for (const province of selectedAC.provinces) {
+    if (!province.partyData) {
+      province.partyData = [];
+    }
+    province.partyData.push({
+      party: partyName,
+      votes: 0,
+      votesPercentage: 0,
+      seats: 0,
+      seatsPercentage: 0,
+      color: partyColor,
+    });
+  }
+
   if (!logoURL) {
     showModal(`Estás ingresando el partido ${partyName} sin un logo. El espacio del logo será reemplazado por el color del partido.`, function () {
       showModal(`¿Confirmas que deseas añadir ${partyName} a ${acName}?`, function() {
-        parties[acName].push(newParty);
         updatePartyList();
       }, function() {return; });
     }, function() {return; });
   } else {
     showModal(`¿Confirmas que deseas añadir ${partyName} a ${acName}?`, function () {
-      parties[acName].push(newParty);
       updatePartyList();
     }, function() {return; });
   }
