@@ -9,48 +9,56 @@
         {
           "name": "Almería",
           "congressSeats": 6,
+          "partyData": [],
           "parliamentSeats": 12,
           "municipalities": []
         },
         {
           "name": "Cádiz",
           "congressSeats": 9,
+          "partyData": [],
           "parliamentSeats": 15,
           "municipalities": []
         },
         {
           "name": "Córdoba",
           "congressSeats": 6,
+          "partyData": [],
           "parliamentSeats": 12,
           "municipalities": []
         },
         {
           "name": "Granada",
           "congressSeats": 7,
+          "partyData": [],
           "parliamentSeats": 13,
           "municipalities": []
         },
         {
           "name": "Huelva",
           "congressSeats": 5,
+          "partyData": [],
           "parliamentSeats": 11,
           "municipalities": []
         },
         {
           "name": "Jaén",
           "congressSeats": 5,
+          "partyData": [],
           "parliamentSeats": 11,
           "municipalities": []
         },
         {
           "name": "Málaga",
           "congressSeats": 11,
+          "partyData": [],
           "parliamentSeats": 17,
           "municipalities": []
         },
         {
           "name": "Sevilla",
           "congressSeats": 12,
+          "partyData": [],
           "parliamentSeats": 18,
           "municipalities": []
         }
@@ -65,18 +73,21 @@
         {
           "name": "Huesca",
           "congressSeats": 3,
+          "partyData": [],
           "parliamentSeats": 14,
           "municipalities": []
         },
         {
           "name": "Teruel",
           "congressSeats": 3,
+          "partyData": [],
           "parliamentSeats": 14,
           "municipalities": []
         },
         {
           "name": "Zaragoza",
           "congressSeats": 7,
+          "partyData": [],
           "parliamentSeats": 35,
           "municipalities": []
         }
@@ -91,12 +102,14 @@
         {
           "name": "Las Palmas",
           "congressSeats": 8,
+          "partyData": [],
           "parliamentSeats": null,
           "municipalities": []
         },
         {
           "name": "Santa Cruz de Tenerife",
           "congressSeats": 7,
+          "partyData": [],
           "parliamentSeats": null,
           "municipalities": []
         }
@@ -111,6 +124,7 @@
         {
           "name": "Cantabria",
           "congressSeats": 5,
+          "partyData": [],
           "parliamentSeats": 35,
           "municipalities": []
         }
@@ -125,30 +139,35 @@
         {
           "name": "Albacete",
           "congressSeats": 4,
+          "partyData": [],
           "parliamentSeats": 6,
           "municipalities": []
         },
         {
           "name": "Ciudad Real",
           "congressSeats": 5,
+          "partyData": [],
           "parliamentSeats": 8,
           "municipalities": []
         },
         {
           "name": "Cuenca",
           "congressSeats": 3,
+          "partyData": [],
           "parliamentSeats": 5,
           "municipalities": []
         },
         {
           "name": "Guadalajara",
           "congressSeats": 3,
+          "partyData": [],
           "parliamentSeats": 5,
           "municipalities": []
         },
         {
           "name": "Toledo",
           "congressSeats": 6,
+          "partyData": [],
           "parliamentSeats": 9,
           "municipalities": []
         }
@@ -163,54 +182,63 @@
         {
           "name": "Ávila",
           "congressSeats": 3,
+          "partyData": [],
           "parliamentSeats": 7,
           "municipalities": []
         },
         {
           "name": "Burgos",
           "congressSeats": 4,
+          "partyData": [],
           "parliamentSeats": 11,
           "municipalities": []
         },
         {
           "name": "León",
           "congressSeats": 4,
+          "partyData": [],
           "parliamentSeats": 13,
           "municipalities": []
         },
         {
           "name": "Palencia",
           "congressSeats": 3,
+          "partyData": [],
           "parliamentSeats": 7,
           "municipalities": []
         },
         {
           "name": "Salamanca",
           "congressSeats": 4,
+          "partyData": [],
           "parliamentSeats": 10,
           "municipalities": []
         },
         {
           "name": "Segovia",
           "congressSeats": 3,
+          "partyData": [],
           "parliamentSeats": 6,
           "municipalities": []
         },
         {
           "name": "Soria",
           "congressSeats": 2,
+          "partyData": [],
           "parliamentSeats": 5,
           "municipalities": []
         },
         {
           "name": "Valladolid",
           "congressSeats": 5,
+          "partyData": [],
           "parliamentSeats": 15,
           "municipalities": []
         },
         {
           "name": "Zamora",
           "congressSeats": 3,
+          "partyData": [],
           "parliamentSeats": 7,
           "municipalities": []
         }
@@ -220,48 +248,12 @@
       "name": "Catalunya",
       "electoralThreshold": 3,
       "thresholdRef": "valid",
-      "parties": [
-        {
-          "party": "Partido 2",
-          "seats": 18,
-          "votesPercentage": 55.179074002538485,
-          "seatsPercentage": 56.25
-        },
-        {
-          "party": "Partido 3",
-          "seats": 8,
-          "votesPercentage": 24.590254400971247,
-          "seatsPercentage": 25
-        },
-        {
-          "party": "Partido 4",
-          "seats": 6,
-          "votesPercentage": 18.39302466751283,
-          "seatsPercentage": 18.75
-        },
-        {
-          "party": "Partido 1",
-          "seats": 0,
-          "votesPercentage": 1.2913194636057612,
-          "seatsPercentage": 0
-        },
-        {
-          "party": "votos en blanco",
-          "seats": 0,
-          "votesPercentage": 0.1876276143700679,
-          "seatsPercentage": 0
-        },
-        {
-          "party": "votos nulos",
-          "seats": 0,
-          "votesPercentage": 0.35869985100160034,
-          "seatsPercentage": 0
-        }
-      ],
+      "parties": [],
       "provinces": [
         {
           "name": "Barcelona",
           "congressSeats": 32,
+          "partyData": [],
           "parliamentSeats": 85,
           "municipalities": [
             {
@@ -278,18 +270,21 @@
         {
           "name": "Girona",
           "congressSeats": 6,
+          "partyData": [],
           "parliamentSeats": 17,
           "municipalities": []
         },
         {
           "name": "Lleida",
           "congressSeats": 4,
+          "partyData": [],
           "parliamentSeats": 15,
           "municipalities": []
         },
         {
           "name": "Tarragona",
           "congressSeats": 6,
+          "partyData": [],
           "parliamentSeats": 18,
           "municipalities": []
         }
@@ -304,6 +299,7 @@
         {
           "name": "Ceuta",
           "congressSeats": 1,
+          "partyData": [],
           "parliamentSeats": 25,
           "municipalities": []
         }
@@ -318,6 +314,7 @@
         {
           "name": "Melilla",
           "congressSeats": 1,
+          "partyData": [],
           "parliamentSeats": 25,
           "municipalities": []
         }
@@ -332,6 +329,7 @@
         {
           "name": "Madrid",
           "congressSeats": 37,
+          "partyData": [],
           "parliamentSeats": 136,
           "municipalities": []
         }
@@ -346,6 +344,7 @@
         {
           "name": "Navarra",
           "congressSeats": 5,
+          "partyData": [],
           "parliamentSeats": 50,
           "municipalities": []
         }
@@ -360,18 +359,21 @@
         {
           "name": "Alacant",
           "congressSeats": 12,
+          "partyData": [],
           "parliamentSeats": 35,
           "municipalities": []
         },
         {
           "name": "Castelló",
           "congressSeats": 5,
+          "partyData": [],
           "parliamentSeats": 24,
           "municipalities": []
         },
         {
           "name": "València",
           "congressSeats": 16,
+          "partyData": [],
           "parliamentSeats": 40,
           "municipalities": []
         }
@@ -386,12 +388,14 @@
         {
           "name": "Badajoz",
           "congressSeats": 5,
+          "partyData": [],
           "parliamentSeats": 36,
           "municipalities": []
         },
         {
           "name": "Cáceres",
           "congressSeats": 4,
+          "partyData": [],
           "parliamentSeats": 29,
           "municipalities": []
         }
@@ -406,24 +410,28 @@
         {
           "name": "A Coruña",
           "congressSeats": 8,
+          "partyData": [],
           "parliamentSeats": 25,
           "municipalities": []
         },
         {
           "name": "Lugo",
           "congressSeats": 4,
+          "partyData": [],
           "parliamentSeats": 14,
           "municipalities": []
         },
         {
           "name": "Ourense",
           "congressSeats": 4,
+          "partyData": [],
           "parliamentSeats": 14,
           "municipalities": []
         },
         {
           "name": "Pontevedra",
           "congressSeats": 7,
+          "partyData": [],
           "parliamentSeats": 22,
           "municipalities": []
         }
@@ -438,6 +446,7 @@
         {
           "name": "Illes Balears",
           "congressSeats": 8,
+          "partyData": [],
           "parliamentSeats": null,
           "municipalities": []
         }
@@ -452,6 +461,7 @@
         {
           "name": "La Rioja",
           "congressSeats": 4,
+          "partyData": [],
           "parliamentSeats": 33,
           "municipalities": []
         }
@@ -466,18 +476,21 @@
         {
           "name": "Álava",
           "congressSeats": 4,
+          "partyData": [],
           "parliamentSeats": 25,
           "municipalities": []
         },
         {
           "name": "Guipúzcoa",
           "congressSeats": 6,
+          "partyData": [],
           "parliamentSeats": 25,
           "municipalities": []
         },
         {
           "name": "Vizcaya",
           "congressSeats": 8,
+          "partyData": [],
           "parliamentSeats": 25,
           "municipalities": []
         }
@@ -492,6 +505,7 @@
         {
           "name": "Asturias",
           "congressSeats": 7,
+          "partyData": [],
           "parliamentSeats": null,
           "municipalities": []
         }
@@ -506,6 +520,7 @@
         {
           "name": "Murcia",
           "congressSeats": 10,
+          "partyData": [],
           "parliamentSeats": 45,
           "municipalities": []
         }
