@@ -217,7 +217,7 @@ function handleAddPartySubmit(event) {
     logo: logoURL,
   };
 
-  const selectedAC = electionsData.autonomousCommunities.find(ac => ac.name === partyName);
+  const selectedAC = electionsData.autonomousCommunities.find(ac => ac.name === acName);
 
   const isPartyDuplicated = selectedAC.parties && selectedAC.parties.some(party => party.name === partyName);
 
@@ -268,27 +268,31 @@ function updatePartyList() {
     partyListItems.removeChild(partyListItems.firstChild);
   }
 
-  // recreo la lista de partidos basada en los partidos de la Comunidad Autónoma seleccionada
-  const acParties = parties[acName];
-  if (acParties) {
-    for (let i = 0; i <acParties.length; i++) {
-      const party = acParties[i];
-      const partyListItem = document.createElement('li');
-      partyListItem.textContent = party.name;
+  // recupero la CA seleccionada desde electionsData
+  const selectedAC = electionsData.autonomousCommunities.find(ac => ac.name === acName);
 
-      const deleteButton = document.createElement('button');
-      deleteButton.textContent = 'Eliminar'
-      deleteButton.addEventListener('click', function() {
-        showModal(`¿Confirmas que deseas eliminar a ${party.name} de ${acName}?`, function () {
-          acParties.splice(i, 1);
-          updatePartyList();
-        }, function() {return; });  
-      });
+  // recreo la lista de partidos basada en los partidos de la Comunidad Autónoma seleccionada
+  const acParties = selectedAC.parties || [];
+  
+
+  for (let i = 0; i <acParties.length; i++) {
+    const party = acParties[i];
+    const partyListItem = document.createElement('li');
+    partyListItem.textContent = party.name;
+
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Eliminar'
+    deleteButton.addEventListener('click', function() {
+      showModal(`¿Confirmas que deseas eliminar a ${party.name} de ${acName}?`, function () {
+        acParties.splice(i, 1);
+        updatePartyList();
+      }, function() {return; });  
+    });
       
-      partyListItem.appendChild(deleteButton);
-      partyListItems.appendChild(partyListItem);
-    }
+    partyListItem.appendChild(deleteButton);
+    partyListItems.appendChild(partyListItem);
   }
+  
 }
 
 function formatPartiesList(parties) {
