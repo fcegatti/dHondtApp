@@ -313,7 +313,8 @@ function generateVotingForm() {
   const acName = provinceToAcMap[provinceName]; 
 
   // Obtengo la lista de partidos para la comunidad autónoma seleccionada
-  const acParties = parties[acName];
+  const selectedAC = electionsData.autonomousCommunities.find(ac => ac.name === acName);
+  const acParties = selectedAC ? selectedAC.parties : [];
 
   // Obtengo el contenedor del formulario
   const formContainer = document.querySelector('.voting-form');
@@ -481,7 +482,8 @@ function generateVotingForm() {
           partyName = 'votos nulos';
         }
 
-        let partyColor;
+        partyColor = acParties ? acParties.find(party => party.name === partyName).color : undefined;
+
 
         if (element.value === '') {
           partiesWithoutVotes.push(partyName);
