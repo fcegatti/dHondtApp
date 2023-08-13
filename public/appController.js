@@ -482,7 +482,8 @@ function generateVotingForm() {
           partyName = 'votos nulos';
         }
 
-        partyColor = acParties ? acParties.find(party => party.name === partyName).color : undefined;
+        partyColor = acParties?.find(party => party.name === partyName)?.color;
+
 
 
         if (element.value === '') {

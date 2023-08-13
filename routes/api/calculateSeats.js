@@ -18,12 +18,32 @@ router.post('/', (req, res) => {
     const seatResults = calculateSeats(votesData);
 
     const acData = electionsData.autonomousCommunities.find(ac => ac.name === votesData.community);
-
     if (!acData) {
       return res.status(400).json({ message: 'Invalid community provided'});
     }
+    if (!acData.provinces || !Array.isArray(acData.provinces)) {
+      return res.status(500).json({ message: 'Invalid provinces data' });
+  }
+    console.log(acData);
+    console.log("votesData.province:", votesData.province);
+    console.log("acData.provinces:", acData.provinces);
 
-    acData.parties = seatResults;
+    const provinceData = acData.provinces.find(p => p.name === votesData.province);
+    if (!provinceData) {
+      return res.status(400).json({ message: 'Invalid province provided'});
+    }
+    provinceData.parties = seatResults;
+    if (!acData.parties) {
+      acData.parties = [];
+    }
+    for (const party of votesData.parties) {
+      const acPartyIndex = acData.parties.findIndex(p => p.name === party.name);
+      if (acPartyIndex !== -1) {
+        acData.parties[acPartyIndex].votes = party.votes;
+      } else {
+        acData.parties.push(party);
+      }
+    }
     fs.writeFileSync(path.join(__dirname, '../../data/electionsData.json'), JSON.stringify(electionsData, null, 2));
 
     res.json(seatResults);

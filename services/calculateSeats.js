@@ -11,6 +11,7 @@ const calculateSeats = (votesData) => {
 
   const electionType = votesData.type;
   const provinceName = votesData.province;
+  const communityName = votesData.community;
 
   const community = electionsData.autonomousCommunities.find(c => c.name === votesData.community);
   if (!community) throw new Error('La comunidad autónoma especificada no se encontró en los datos geográficos.');
