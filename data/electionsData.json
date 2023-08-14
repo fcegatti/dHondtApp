@@ -248,74 +248,7 @@
       "name": "Catalunya",
       "electoralThreshold": 3,
       "thresholdRef": "valid",
-      "parties": [
-        {
-          "party": "Partido 1",
-          "seats": 7,
-          "votesPercentage": 22.01525809967304,
-          "seatsPercentage": 21.875
-        },
-        {
-          "party": "Partido 2",
-          "seats": 9,
-          "votesPercentage": 27.519072624591303,
-          "seatsPercentage": 28.125
-        },
-        {
-          "party": "Partido 3",
-          "seats": 16,
-          "votesPercentage": 49.53433072426434,
-          "seatsPercentage": 50
-        },
-        {
-          "party": "Partido 4",
-          "seats": 0,
-          "votesPercentage": 0.5498860596452987,
-          "seatsPercentage": 0
-        },
-        {
-          "party": "votos en blanco",
-          "seats": 0,
-          "votesPercentage": 0.21301892400673733,
-          "seatsPercentage": 0
-        },
-        {
-          "party": "votos nulos",
-          "seats": 0,
-          "votesPercentage": 0.1684335678192807,
-          "seatsPercentage": 0
-        },
-        {
-          "name": "Partido 1",
-          "votes": 4444,
-          "color": "#184cb4"
-        },
-        {
-          "name": "Partido 2",
-          "votes": 5555,
-          "color": "#e60a0a"
-        },
-        {
-          "name": "Partido 3",
-          "votes": 9999,
-          "color": "#990ae6"
-        },
-        {
-          "name": "Partido 4",
-          "votes": 111,
-          "color": "#44e60a"
-        },
-        {
-          "name": "votos en blanco",
-          "votes": 32,
-          "color": "white"
-        },
-        {
-          "name": "votos nulos",
-          "votes": 43,
-          "color": "gray"
-        }
-      ],
+      "parties": [],
       "provinces": [
         {
           "name": "Barcelona",
@@ -331,44 +264,6 @@
               "name": "Barcelona",
               "cityHallSeats": 41,
               "electoralThreshold": 5
-            }
-          ],
-          "parties": [
-            {
-              "party": "Partido 1",
-              "seats": 7,
-              "votesPercentage": 22.017439556084025,
-              "seatsPercentage": 21.875
-            },
-            {
-              "party": "Partido 2",
-              "seats": 9,
-              "votesPercentage": 27.52179944510503,
-              "seatsPercentage": 28.125
-            },
-            {
-              "party": "Partido 3",
-              "seats": 16,
-              "votesPercentage": 49.53923900118906,
-              "seatsPercentage": 50
-            },
-            {
-              "party": "Partido 4",
-              "seats": 0,
-              "votesPercentage": 0.5499405469678953,
-              "seatsPercentage": 0
-            },
-            {
-              "party": "votos en blanco",
-              "seats": 0,
-              "votesPercentage": 0.15854141894569956,
-              "seatsPercentage": 0
-            },
-            {
-              "party": "votos nulos",
-              "seats": 0,
-              "votesPercentage": 0.2130400317082838,
-              "seatsPercentage": 0
             }
           ]
         },

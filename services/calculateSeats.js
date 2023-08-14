@@ -1,5 +1,5 @@
-
 const electionsData = require('../data/electionsData.json');
+
 const calculateSeats = (votesData) => { 
   const {type, province, parties} = votesData;
   console.log("Iniciando calculateSeats");
@@ -13,7 +13,7 @@ const calculateSeats = (votesData) => {
   const provinceName = votesData.province;
   const communityName = votesData.community;
 
-  const community = electionsData.autonomousCommunities.find(c => c.name === votesData.community);
+  const community = electionsData.autonomousCommunities.find(c => c.name === communityName);
   if (!community) throw new Error('La comunidad autónoma especificada no se encontró en los datos geográficos.');
 
   // Extraemos la provincia específica
@@ -104,8 +104,15 @@ const calculateSeats = (votesData) => {
         result.seatsPercentage = 0;
     }
   }
-  // Devolvemos los resultados de cada partido
-  return results.map(r => ({ party: r.party, seats: r.seats, votesPercentage: r.votesPercentage, seatsPercentage: r.seatsPercentage  }));
+
+ 
+  return results.map(r => ({
+    party: r.party,
+    seats: r.seats,
+    votesPercentage: r.votesPercentage,
+    seatsPercentage: r.seatsPercentage,
+    color: r.color,
+  }));
 };
 
 module.exports = calculateSeats;
