@@ -48,7 +48,7 @@ fetch('/api/elections')
         showModal('El cálculo de elecciones europeas no está disponible en esta versión', function() { return; });
         return;  
       }
-    
+      initializeView(event.target.value);    
       handleElectionTypeChange(event);
       fillAutonomousCommunities(event);
     });
@@ -58,12 +58,14 @@ fetch('/api/elections')
         return;  
       }
 
+      initializeView(electionTypeSelect.value, event.target.value);
       handleChamberChange(event);
       fillAutonomousCommunities(event);
     });
     acSelect.addEventListener('change', fillProvinces);
     acSelect.addEventListener('change', () => {
       console.log('Comunidad Autónoma seleccionada:', acSelect.value);
+      initializeView(electionTypeSelect.value, chamberSelect.value, acSelect.value);
       updatePartyList();
       partyEntryForm.classList.remove('hide');
       partyList.classList.remove('hide');
@@ -310,6 +312,7 @@ function formatPartiesList(parties) {
 function generateVotingForm() {
   // Obtengo el nombre de la provincia y la comunidad autónoma seleccionada
   const provinceName = provinceSelect.value;
+  if (!provinceName) return;
   const acName = provinceToAcMap[provinceName]; 
 
   // Obtengo la lista de partidos para la comunidad autónoma seleccionada
