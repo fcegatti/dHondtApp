@@ -1,3 +1,5 @@
+const { initializeView } = require("../helpers/viewHelpers");
+
 document.addEventListener('DOMContentLoaded', function() {
   console.log('DOM fully loaded and parsed');
   
@@ -30,6 +32,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const chamber = chamberSelect.value;
     const acName = acSelect.value;
     let provinceName = provinceSelect.value;
+
+    initializeView(electionType, chamber, acName);
 
     if (!acName) {
       if (electionType === 'generales' && chamber === 'congreso') {
