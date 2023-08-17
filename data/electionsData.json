@@ -248,12 +248,58 @@
       "name": "Catalunya",
       "electoralThreshold": 3,
       "thresholdRef": "valid",
-      "parties": [],
+      "parties": [
+        {
+          "name": "Partid",
+          "color": "#ea1010"
+        },
+        {
+          "name": "Partid0",
+          "color": "#1f10ea"
+        },
+        {
+          "name": "votos en blanco",
+          "color": "white"
+        },
+        {
+          "name": "votos nulos",
+          "color": "gray"
+        }
+      ],
       "provinces": [
         {
           "name": "Barcelona",
           "congressSeats": 32,
-          "partyData": [],
+          "partyData": [
+            {
+              "party": "Partid",
+              "seats": 20,
+              "votesPercentage": 59.7398091934085,
+              "seatsPercentage": 62.5,
+              "color": "#ea1010"
+            },
+            {
+              "party": "Partid0",
+              "seats": 12,
+              "votesPercentage": 38.5429314830876,
+              "seatsPercentage": 37.5,
+              "color": "#1f10ea"
+            },
+            {
+              "party": "votos en blanco",
+              "seats": 0,
+              "votesPercentage": 0.7458803122289679,
+              "seatsPercentage": 0,
+              "color": "white"
+            },
+            {
+              "party": "votos nulos",
+              "seats": 0,
+              "votesPercentage": 0.971379011274935,
+              "seatsPercentage": 0,
+              "color": "gray"
+            }
+          ],
           "parliamentSeats": 85,
           "municipalities": [
             {

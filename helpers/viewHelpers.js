@@ -4,7 +4,7 @@ function initializeView(electionType = null, chamberType = null, ac = null) {
   const chamberMessage = document.querySelector('.election-msg');
   const acMessage = document.querySelector('.ac-msg');
   //const regionTitle = document.querySelector('#region-title');
-  const regionMapPlaceholder = document.querySelector('#region-map-placeholder');
+  const regionMapPlaceholder = document.querySelector('.region-map-placeholder');
 
   electionMessage.textContent = electionType ? '' : "Seleccione un tipo de elección";
   chamberMessage.textContent = chamberType ? '' : "Seleccione una cámara";
@@ -24,7 +24,12 @@ function resetGraphics() {
   
 }
 
-module.exports = { 
-  initializeView, 
-  resetGraphics
-};
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    initializeView,
+    resetGraphics
+  };
+  console.log("Exportando funciones de viewHelpers para Node.js");
+} else {
+  console.log("viewHelpers se está ejecutando en el navegador");
+}

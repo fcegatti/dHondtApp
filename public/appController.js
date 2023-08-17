@@ -593,11 +593,9 @@ function generateVotingForm() {
 
 
     })
-    .catch(error => console.error('Error', error));
+    .catch(error => console.error('Error:', error));
   });
 }
 });
-
-
 /* Todavía se necesita verificar que tanto una elección como una cámara estén seleccionadas antes de llenar las comunidades autónomas, y verificar que se haya seleccionado una comunidad autónoma antes de llenar las provincias..
 */

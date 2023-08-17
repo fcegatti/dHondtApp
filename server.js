@@ -11,6 +11,7 @@ const getElectionsData = require('./routes/api/getElectionsData');
 const calculateSeats = require('./routes/api/calculateSeats');
 const getSeatsData = require('./routes/api/seats');
 const homeRoutes = require('./routes/views/home');
+const viewRoutes = require('./routes/api/view');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -18,11 +19,13 @@ app.use(express.json());
 app.set('view engine', 'ejs');
 
 app.use(express.static('public'));
+app.use('/helpers', express.static('helpers'));
 
 // usamos nuestros módulos de rutas con express
 app.use('/api/elections', getElectionsData);
 app.use('/api/calculateSeats', calculateSeats);
 app.use('/api/seats', getSeatsData);
+app.use('/api/view', viewRoutes);
 app.use('/api', getElection);
 app.use('/', homeRoutes);
 app.use('/', mainGetRoutes);
