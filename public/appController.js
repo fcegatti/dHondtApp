@@ -6,6 +6,7 @@ const chamberSelect = document.getElementById('chamber');
 const acSelect = document.getElementById('autonomousCommunity');
 const provinceSelect = document.getElementById('province');
 const addPartyForm = document.forms['addParty'];
+const partyEntryTitle = document.querySelector('#party-entry-title');
 const partyEntryForm = document.querySelector('.party-list');
 const partyList = document.querySelector('#party-list');
 const formContainer = document.querySelector('.voting-form');
@@ -34,40 +35,76 @@ fetch('/api/elections')
 
     // Agregamos los event listeners a los elementos correspondientes
     electionTypeSelect.addEventListener('change', function(event) {
-      if (event.target.value === 'autonomicas') {
-        showModal('El cálculo de elecciones autonómicas no está disponible en esta versión', function() { return; });
-        return;  
-      }
+      let type = event.target.value;
 
-      if (event.target.value === 'municipales') {
-        showModal('El cálculo de elecciones municipales no está disponible en esta versión', function() { return; });
-        return;  
-      }
+      if (['autonomicas', 'municipales','europeas'].includes(type)) {
+        let displayType = type;
+        if (type === 'autonomicas') {
+          displayType = 'autonómicas';
+        }
+        
+        showModal(`El cálculo de elecciones ${displayType} no está disponible en esta versión`, function() { return; });
+        event.target.selectedIndex = 0;
+        return;     
+      }  
 
-      if (event.target.value === 'europeas') {
-        showModal('El cálculo de elecciones europeas no está disponible en esta versión', function() { return; });
-        return;  
-      }
-      initializeView(event.target.value);    
+      chamberSelect.removeAttribute('disabled');
+      acSelect.setAttribute('disabled', 'disabled');
+      provinceSelect.setAttribute('disabled', 'disabled');
+
+      initializeView(type);
+      chamberSelect.selectedIndex = 0;
+      acSelect.selectedIndex = 0;
+      provinceSelect.selectedIndex = 0;
+      
       handleElectionTypeChange(event);
       fillAutonomousCommunities(event);
     });
+
     chamberSelect.addEventListener('change', function(event) {
+      if (!electionTypeSelect.value) {
+        showModal('Por favor, seleccione un tipo de elección primero', function() {return; });
+        event.target.selectedIndex = 0;
+        return;
+      }
+
       if (event.target.value === 'senado') {
         showModal('El cálculo de elecciones al senado no está disponible en esta versión', function() { return; });
+        event.target.selectedIndex = 0;
         return;  
       }
 
+      acSelect.removeAttribute('disabled');
+      provinceSelect.setAttribute('disabled', 'disabled');
+
       initializeView(electionTypeSelect.value, event.target.value);
+
+      acSelect.selectedIndex = 0;
+      provinceSelect.selectedIndex = 0;
+
       handleChamberChange(event);
       fillAutonomousCommunities(event);
     });
+
     acSelect.addEventListener('change', fillProvinces);
-    acSelect.addEventListener('change', () => {
+    acSelect.addEventListener('change', function(event) {
+      if (!electionTypeSelect.value || !chamberSelect.value) {
+        showModal('Por favor, seleccione un tipo de elección y una cámara primero', function() {return; });
+        event.target.selectedIndex = 0;
+        return;
+      }
+
+      provinceSelect.removeAttribute('disabled');
+
+      initializeView(electionTypeSelect.value, chamberSelect.value, event.target.value);
+
+      provinceSelect.selectedIndex = 0;
+
       console.log('Comunidad Autónoma seleccionada:', acSelect.value);
-      initializeView(electionTypeSelect.value, chamberSelect.value, acSelect.value);
       updatePartyList();
       partyEntryForm.classList.remove('hide');
+      partyEntryTitle.classList.remove('hide');
+      addPartyForm.classList.remove('hide');
       partyList.classList.remove('hide');
       formContainer.classList.add('hide');
       formContainer.style.display = 'none';

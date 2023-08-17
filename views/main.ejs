@@ -22,17 +22,17 @@
         <option value="europeas">Europeas</option>
       </select>
     
-      <select id="chamber" name="chamber">
+      <select id="chamber" name="chamber" disabled>
         <option value="">-Cámara-</option>
         <option value="congreso">Congreso</option>
         <option value="senado">Senado</option>
       </select>
 
-      <select id="autonomousCommunity" name="autonomousCommunity">
+      <select id="autonomousCommunity" name="autonomousCommunity" disabled>
         <option value="">-Comunidad Autónoma-</option>
     </select>
     
-    <select id="province" name="province">
+    <select id="province" name="province" disabled>
         <option value="">-Provincia-</option>
     </select>
     </nav>
@@ -45,11 +45,11 @@
         <p class="election-msg"></p>
         <p class="chamber-msg"></p>
         <p class="ac-msg"></p>
-        <h2>Inrgesar partidos</h2>
+        <h2 id="party-entry-title" class="hide">Inrgesar partidos</h2>
          <!-- Lista de partidos y formulario de votos aquí -->
         
         <!-- Formulario de entrada de partidos y colores -->
-        <form id="addParty">
+        <form id="addParty" class="hide">
           <label for="party">Partido:</label>
           <input type="text" id="party" name="party" required>
           <label for="color">Color:</label>
@@ -58,7 +58,7 @@
           <input type="text" id="logo" name="logo">
           <input type="submit" value="Submit">
         </form>
-        <div id="party-list">
+        <div id="party-list" class="hide">
           <ul id="party-list-items">
 
           </ul>
