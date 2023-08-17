@@ -94,6 +94,12 @@ fetch('/api/elections')
         return;
       }
 
+      if (event.target.value === '') {
+        partyEntryTitle.classList.add('hide');
+        partyList.classList.add('hide'); //revisar si esta línea es necesaria
+        return;
+      }
+
       provinceSelect.removeAttribute('disabled');
 
       initializeView(electionTypeSelect.value, chamberSelect.value, event.target.value);
