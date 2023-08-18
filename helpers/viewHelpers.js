@@ -13,29 +13,29 @@ function initializeView(electionType = null, chamberType = null, ac = null) {
     electionMessage.textContent = "Seleccione un tipo de elección";
     chamberMessage.textContent = '';
     acMessage.textContent = '';
-    partyEntryForm.computedStyleMap.display = 'none';
-    partyList.computedStyleMap.display = 'none';
+    partyEntryForm.style.display = 'none';
+    partyList.style.display = 'none';
     mapTitle.textContent = 'España';
   } else if (!chamberType) {
     chamberMessage.textContent = "Seleccione una cámara";
     electionMessage.textContent = '';
     acMessage.textContent = '';
-    partyEntryForm.computedStyleMap.display = 'none';
-    partyList.computedStyleMap.display = 'none';
+    partyEntryForm.style.display = 'none';
+    partyList.style.display = 'none';
     mapTitle.textContent = 'España';
   } else if (!ac) {
     acMessage.textContent = "Seleccione una comunidad autónoma";
     electionMessage.textContent = '';
     chamberMessage.textContent = '';
-    partyEntryForm.computedStyleMap.display = 'none';
-    partyList.computedStyleMap.display = 'none';
+    partyEntryForm.style.display = 'none';
+    partyList.style.display = 'none';
     mapTitle.textContent = 'España';
   } else {
     electionMessage.textContent = '';
     chamberMessage.textContent = '';
     acMessage.textContent = '';
-    partyEntryForm.computedStyleMap.display = 'block';
-    partyList.computedStyleMap.display = 'block';
+    partyEntryForm.style.display = 'block';
+    partyList.style.display = 'block';
     mapTitle.textContent = `${ac}`
   }
   
