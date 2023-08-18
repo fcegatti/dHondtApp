@@ -8,6 +8,7 @@ const postRoutes = require('./routes/post/main');
 const mainGetRoutes = require('./routes/views/main');
 const getElection = require('./routes/api/getElection');
 const getElectionsData = require('./routes/api/getElectionsData');
+const getACPartiesRoute = require('./routes/api/getACParties');
 const calculateSeats = require('./routes/api/calculateSeats');
 const getSeatsData = require('./routes/api/seats');
 const homeRoutes = require('./routes/views/home');
@@ -26,6 +27,7 @@ app.use('/api/elections', getElectionsData);
 app.use('/api/calculateSeats', calculateSeats);
 app.use('/api/seats', getSeatsData);
 app.use('/api/view', viewRoutes);
+app.use('/api/getACParties', getACPartiesRoute);
 app.use('/api', getElection);
 app.use('/', homeRoutes);
 app.use('/', mainGetRoutes);
@@ -36,10 +38,3 @@ app.use('/', postRoutes);
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
 });
-
-
-
-
-
-
-

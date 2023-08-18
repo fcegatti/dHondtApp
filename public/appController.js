@@ -99,10 +99,7 @@ fetch('/api/elections')
       }
 
       if (event.target.value === '') {
-        partyEntryTitle.classList.add('hide');
-        partyList.classList.add('hide'); //revisar si esta línea es necesaria
-        mapTitle.textContent = 'España';
-        regionMapPlaceholder.textContent = 'Mapa de España';
+        resetACView();
         return;
       } else {
         mapTitle.textContent = `${acSelect.value}`;
@@ -116,6 +113,7 @@ fetch('/api/elections')
       provinceSelect.selectedIndex = 0;
 
       console.log('Comunidad Autónoma seleccionada:', acSelect.value);
+
       updatePartyList();
       partyEntryForm.classList.remove('hide');
       partyEntryTitle.classList.remove('hide');
@@ -123,6 +121,23 @@ fetch('/api/elections')
       partyList.classList.remove('hide');
       formContainer.classList.add('hide');
       formContainer.style.display = 'none';
+
+      console.log("Checking parties for", acSelect.value);
+      const encodedAC = encodeURIComponent(acSelect.value);
+      fetch(`api/getACParties/parties/${encodedAC}`)
+        .then(response => response.json())
+        .then(parties => {
+          if (parties && parties.length > 0) {
+            addPartyForm.classList.add('hide');
+            partyList.classList.remove('hide');
+          } else {
+            addPartyForm.classList.remove('hide');
+            partyList.classList.add('hide');
+          }
+        })
+        .catch( error => {
+          console.error('Error fetching parties for autonomous community', error);
+        });
     });
     provinceSelect.addEventListener('change', (event) => {
       console.log(`Provincia seleccionada: ${event.target.value}`);
@@ -131,12 +146,11 @@ fetch('/api/elections')
       if (selectedProvince === '') {
         mapTitle.textContent = `${acSelect.value}`;
         regionMapPlaceholder.textContent = `Mapa de ${acSelect.value}`;
+        return;
       } else {
         mapTitle.textContent = selectedProvince;
         regionMapPlaceholder.textContent = `Mapa de ${selectedProvince}`;
       }
-      
-      if (selectedProvince) {
         generateVotingForm();
         const selectedProvinceData = getSelectedProvince(acSelect.value, selectedProvince);
         if (selectedProvinceData) {
@@ -147,7 +161,6 @@ fetch('/api/elections')
               color: result.color,
             }));
             drawSeatsArc(chartData);
-
           }
         } else {
             const unassignedChartData = [{
@@ -157,14 +170,18 @@ fetch('/api/elections')
           }];
           drawSeatsArc(unassignedChartData);
         }
-      }
     });
     addPartyForm.addEventListener('submit', handleAddPartySubmit);
 
   })
   .catch(error => console.error('Error:', error));
 
-
+function resetACView() {
+  partyEntryTitle.classList.add('hide');
+  partyList.classList.add('hide'); //revisar si esta línea es necesaria
+  mapTitle.textContent = 'España';
+  regionMapPlaceholder.textContent = 'Mapa de España';
+}
 // Definimos las funciones que manejarán los eventos
 function handleElectionTypeChange(event) {
   // imprimir el tipo de elección seleccionado en la consola
