@@ -10,6 +10,8 @@ const partyEntryTitle = document.querySelector('#party-entry-title');
 const partyEntryForm = document.querySelector('.party-list');
 const partyList = document.querySelector('#party-list');
 const formContainer = document.querySelector('.voting-form');
+const mapTitle = document.querySelector('#map-title');
+const regionMapPlaceholder = document.querySelector('#region-map-placeholder');
 let parties = {};
 let electionsData = null;
 let provinceToAcMap = {};
@@ -81,6 +83,8 @@ fetch('/api/elections')
 
       acSelect.selectedIndex = 0;
       provinceSelect.selectedIndex = 0;
+      mapTitle.textContent = 'España';
+      regionMapPlaceholder.textContent = `Mapa de España`;
 
       handleChamberChange(event);
       fillAutonomousCommunities(event);
@@ -97,7 +101,12 @@ fetch('/api/elections')
       if (event.target.value === '') {
         partyEntryTitle.classList.add('hide');
         partyList.classList.add('hide'); //revisar si esta línea es necesaria
+        mapTitle.textContent = 'España';
+        regionMapPlaceholder.textContent = 'Mapa de España';
         return;
+      } else {
+        mapTitle.textContent = `${acSelect.value}`;
+        regionMapPlaceholder.textContent = `Mapa de ${acSelect.value}`;
       }
 
       provinceSelect.removeAttribute('disabled');
@@ -117,9 +126,19 @@ fetch('/api/elections')
     });
     provinceSelect.addEventListener('change', (event) => {
       console.log(`Provincia seleccionada: ${event.target.value}`);
-      if (event.target.value) {
+      const selectedProvince = event.target.value;
+      
+      if (selectedProvince === '') {
+        mapTitle.textContent = `${acSelect.value}`;
+        regionMapPlaceholder.textContent = `Mapa de ${acSelect.value}`;
+      } else {
+        mapTitle.textContent = selectedProvince;
+        regionMapPlaceholder.textContent = `Mapa de ${selectedProvince}`;
+      }
+      
+      if (selectedProvince) {
         generateVotingForm();
-        const selectedProvinceData = getSelectedProvince(acSelect.value, event.target.value);
+        const selectedProvinceData = getSelectedProvince(acSelect.value, selectedProvince);
         if (selectedProvinceData) {
           if (selectedProvinceData.seatResults) {
             const chartData = selectedProvinceData.seatResults.map(result => ({
