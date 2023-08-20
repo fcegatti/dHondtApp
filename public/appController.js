@@ -5,17 +5,17 @@ const electionTypeSelect = document.getElementById('electionType');
 const chamberSelect = document.getElementById('chamber');
 const acSelect = document.getElementById('autonomousCommunity');
 const provinceSelect = document.getElementById('province');
-const addPartyForm = document.forms['addParty'];
+const partyEntryForm = document.querySelector('#party-entry');
 const partyEntryTitle = document.querySelector('#party-entry-title');
-const partyEntryForm = document.querySelector('.party-list');
+const addPartyForm = document.forms['addParty'];
 const partyList = document.querySelector('#party-list');
-const formContainer = document.querySelector('.voting-form');
-const mapTitle = document.querySelector('#map-title');
+const partyListTitle = document.querySelector('#party-list-title');
+const partyListItems = document.querySelector('#party-list-items');
+const votingForm = document.querySelector('.voting-form');
+const mapTitle = document.querySelector('#region-map-title');
 const regionMapPlaceholder = document.querySelector('#region-map-placeholder');
-let parties = {};
 let electionsData = null;
 let provinceToAcMap = {};
-let votes = {};
 
 // Obtenemos los datos de elections desde el servidor
 fetch('/api/elections')
@@ -116,11 +116,11 @@ fetch('/api/elections')
 
       updatePartyList();
       partyEntryForm.classList.remove('hide');
-      partyEntryTitle.classList.remove('hide');
+      partyListTitle.classList.remove('hide');
       addPartyForm.classList.remove('hide');
-      partyList.classList.remove('hide');
-      formContainer.classList.add('hide');
-      formContainer.style.display = 'none';
+      partyListItems.classList.remove('hide');
+      votingForm.classList.add('hide');
+      votingForm.style.display = 'none';
 
       console.log("Checking parties for", acSelect.value);
       const encodedAC = encodeURIComponent(acSelect.value);
@@ -129,10 +129,10 @@ fetch('/api/elections')
         .then(parties => {
           if (parties && parties.length > 0) {
             addPartyForm.classList.add('hide');
-            partyList.classList.remove('hide');
+            partyListItems.classList.remove('hide');
           } else {
             addPartyForm.classList.remove('hide');
-            partyList.classList.add('hide');
+            partyListItems.classList.add('hide');
           }
         })
         .catch( error => {
@@ -177,8 +177,8 @@ fetch('/api/elections')
   .catch(error => console.error('Error:', error));
 
 function resetACView() {
-  partyEntryTitle.classList.add('hide');
-  partyList.classList.add('hide'); //revisar si esta línea es necesaria
+  partyListTitle.classList.add('hide');
+  // partyListItems.classList.add('hide'); //revisar si esta línea es necesaria
   mapTitle.textContent = 'España';
   regionMapPlaceholder.textContent = 'Mapa de España';
 }
@@ -399,17 +399,17 @@ function generateVotingForm() {
   const acParties = selectedAC ? selectedAC.parties : [];
 
   // Obtengo el contenedor del formulario
-  const formContainer = document.querySelector('.voting-form');
+  const votingForm = document.querySelector('.voting-form');
   
   // Borra el contenido actual del formulario
-  formContainer.innerHTML = '';
+  votingForm.innerHTML = '';
 
   // Crea el título del formulario de votos
   const formTitle = document.createElement('h2');
   formTitle.textContent = 'Ingresar votos';
   
   // Añade el título al contenedor del formulario
-  formContainer.appendChild(formTitle);
+  votingForm.appendChild(formTitle);
   
   // Crea un formulario
   const form = document.createElement('form');
@@ -526,9 +526,9 @@ function generateVotingForm() {
   submit.value = 'Calcular';
 
   // Añade el formulario al contenedor
-  formContainer.appendChild(form);
+  votingForm.appendChild(form);
   table.appendChild(tableBody);
-  formContainer.appendChild(table);
+  votingForm.appendChild(table);
   form.appendChild(table);
   form.appendChild(submit);
 
@@ -536,9 +536,9 @@ function generateVotingForm() {
   
 
   partyEntryForm.classList.add('hide');
-  partyList.classList.add('hide');
-  formContainer.classList.remove('hide');
-  formContainer.style.display = 'block';
+  partyListItems.classList.add('hide');
+  votingForm.classList.remove('hide');
+  votingForm.style.display = 'block';
 
   form.addEventListener('submit', async function(event) {
     event.preventDefault();

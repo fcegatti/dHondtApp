@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const chamberSelect = document.querySelector('#chamber');
   const acSelect = document.querySelector('#autonomousCommunity');
   const provinceSelect = document.querySelector('#province');
-  const seatsSectionTitle = document.querySelector('.seats-graph h2');
+  const seatsSectionTitle = document.querySelector('#seats-title');
 
   let unassignedSeats = 0;
 

@@ -270,48 +270,7 @@
         {
           "name": "Girona",
           "congressSeats": 6,
-          "partyData": [
-            {
-              "party": "Partido 1",
-              "seats": 1,
-              "votesPercentage": 14.285714285714285,
-              "seatsPercentage": 16.666666666666664,
-              "color": "#0b19e5"
-            },
-            {
-              "party": "Partido 2",
-              "seats": 1,
-              "votesPercentage": 19.047619047619047,
-              "seatsPercentage": 16.666666666666664,
-              "color": "#ea1010"
-            },
-            {
-              "party": "Partido 3",
-              "seats": 3,
-              "votesPercentage": 42.857142857142854,
-              "seatsPercentage": 50,
-              "color": "#d804e7"
-            },
-            {
-              "party": "Partido 4",
-              "seats": 1,
-              "votesPercentage": 23.809523809523807,
-              "seatsPercentage": 16.666666666666664,
-              "color": "#07e704"
-            },
-            {
-              "party": "votos en blanco",
-              "seats": 0,
-              "votesPercentage": 0,
-              "seatsPercentage": 0
-            },
-            {
-              "party": "votos nulos",
-              "seats": 0,
-              "votesPercentage": 0,
-              "seatsPercentage": 0
-            }
-          ],
+          "partyData": [],
           "parliamentSeats": 17,
           "municipalities": []
         },

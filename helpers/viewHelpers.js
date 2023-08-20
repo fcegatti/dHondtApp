@@ -3,7 +3,7 @@ function initializeView(electionType = null, chamberType = null, ac = null) {
   const electionMessage = document.querySelector('.election-msg');
   const chamberMessage = document.querySelector('.chamber-msg');
   const acMessage = document.querySelector('.ac-msg');
-  const mapTitle = document.querySelector('#map-title');
+  const mapTitle = document.querySelector('#region-map-title');
   const regionMapPlaceholder = document.querySelector('.region-map-placeholder');
   const partyEntryForm = document.querySelector('#addParty');
   const partyList = document.querySelector('#party-list');
