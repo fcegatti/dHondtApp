@@ -58,8 +58,6 @@ document.addEventListener('DOMContentLoaded', function() {
       .catch(error => console.error('Error', error))
   }
 
-  
-
   electionTypeSelect.addEventListener('change', updateSeatsInfo);
   chamberSelect.addEventListener('change', updateSeatsInfo);
   acSelect.addEventListener('change', function () {

@@ -9,3 +9,10 @@
 -En Extremadura, el umbral de votos es del 5% por circunscripción o 5% de la comunidad.
 -En Valencia, el umbral es del 5% pero de los votos emitidos en toda la comunidad.
 // CONFIRMAR QUE EL UMBRAL DE VOTOS DEL 5% ES SOBRE VOTOS VÁLIDOS EN CEUTA Y MELILLA
+
+
+```
+// código de 
+
+//fin del código de 
+```

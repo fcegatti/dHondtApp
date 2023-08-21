@@ -5,6 +5,7 @@ function initializeView(electionType = null, chamberType = null, ac = null) {
   const acMessage = document.querySelector('.ac-msg');
   const mapTitle = document.querySelector('#region-map-title');
   const regionMapPlaceholder = document.querySelector('.region-map-placeholder');
+  const partyEntryTitle = document.querySelector('#party-entry-title')
   const partyEntryForm = document.querySelector('#addParty');
   const partyList = document.querySelector('#party-list');
 
@@ -27,6 +28,7 @@ function initializeView(electionType = null, chamberType = null, ac = null) {
     acMessage.textContent = "Seleccione una comunidad autónoma";
     electionMessage.textContent = '';
     chamberMessage.textContent = '';
+    partyEntryTitle.style.display = 'none';
     partyEntryForm.style.display = 'none';
     partyList.style.display = 'none';
     mapTitle.textContent = 'España';

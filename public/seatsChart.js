@@ -31,5 +31,4 @@ function drawSeatsArc(partiesData) {
     .style('fill', d => d.data.color);
 }
 
-window.drawSeatsArc = drawSeatsArc;
-            
+window.drawSeatsArc = drawSeatsArc;  

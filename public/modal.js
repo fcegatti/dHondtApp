@@ -29,4 +29,3 @@ function showModal(message, onConfirm = null, onCancel = null) {
     }
   }
 }
-
