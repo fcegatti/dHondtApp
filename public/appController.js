@@ -114,20 +114,14 @@ fetch('/api/elections')
 
       console.log('Comunidad Autónoma seleccionada:', acSelect.value);
 
-      updatePartyList();
-      partyEntryForm.classList.remove('hide');
-      partyListTitle.classList.remove('hide');
-      addPartyForm.classList.remove('hide');
-      partyListItems.classList.remove('hide');
-      votingForm.classList.add('hide');
-      votingForm.style.display = 'none';
-
-      console.log("Checking parties for", acSelect.value);
       const encodedAC = encodeURIComponent(acSelect.value);
       fetch(`api/getACParties/parties/${encodedAC}`)
         .then(response => response.json())
         .then(parties => {
+          partyListTitle.textContent = `Partidos de ${acSelect.value}`
+
           if (parties && parties.length > 0) {
+            updatePartyList(parties);
             addPartyForm.classList.add('hide');
             partyListItems.classList.remove('hide');
           } else {
@@ -289,7 +283,7 @@ function handleAddPartySubmit(event) {
   if (logoURL && !isValidURL(logoURL)) {
   showModal(`Debes ingresar una URL válida para el logo de ${partyName}.`, function() { return; });
   return;
-}
+  }
 
 
   const newParty = {
@@ -340,7 +334,7 @@ function handleAddPartySubmit(event) {
 
 }
 
-function updatePartyList() {
+function updatePartyList(parties) {
   const acName = acSelect.value;
 
   // borro todos los elementos actuales de la lista de partidos
@@ -349,15 +343,15 @@ function updatePartyList() {
     partyListItems.removeChild(partyListItems.firstChild);
   }
 
-  // recupero la CA seleccionada desde electionsData
+  /* recupero la CA seleccionada desde electionsData
   const selectedAC = electionsData.autonomousCommunities.find(ac => ac.name === acName);
 
   // recreo la lista de partidos basada en los partidos de la Comunidad Autónoma seleccionada
-  const acParties = selectedAC.parties || [];
+  const acParties = selectedAC.parties || []; */
   
 
-  for (let i = 0; i <acParties.length; i++) {
-    const party = acParties[i];
+  for (let i = 0; i < parseFloatarties.length; i++) {
+    const party = parties[i];
     const partyListItem = document.createElement('li');
     partyListItem.textContent = party.name;
 
@@ -365,8 +359,9 @@ function updatePartyList() {
     deleteButton.textContent = 'Eliminar'
     deleteButton.addEventListener('click', function() {
       showModal(`¿Confirmas que deseas eliminar a ${party.name} de ${acName}?`, function () {
-        acParties.splice(i, 1);
-        updatePartyList();
+        const remainingParties = parties.filter((p, index) => index !==i);
+        //acParties.splice(i, 1);
+        updatePartyList(remainingParties);
       }, function() {return; });  
     });
       

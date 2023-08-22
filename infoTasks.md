@@ -16,3 +16,11 @@
 
 //fin del código de 
 ```
+  console.log("Checking parties for", acSelect.value);
+updatePartyList();
+      partyEntryForm.classList.remove('hide');
+      partyListTitle.classList.remove('hide');
+      addPartyForm.classList.remove('hide');
+      partyListItems.classList.remove('hide');
+      votingForm.classList.add('hide');
+      votingForm.style.display = 'none';
