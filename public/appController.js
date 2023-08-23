@@ -121,12 +121,14 @@ fetch('/api/elections')
           partyListTitle.textContent = `Partidos de ${acSelect.value}`
 
           if (parties && parties.length > 0) {
+            partyListTitle.textContent = `Partidos de ${acSelect.value}`;
             updatePartyList(parties);
-            addPartyForm.classList.add('hide');
-            partyListItems.classList.remove('hide');
+            partyEntryForm.classList.add('hide');
+            partyList.classList.remove('hide');
           } else {
-            addPartyForm.classList.remove('hide');
-            partyListItems.classList.add('hide');
+            partyEntryTitle.textContent = `Ingresar partidos`;
+            partyEntryForm.classList.remove('hide');
+            partyList.classList.add('hide');
           }
         })
         .catch( error => {
@@ -171,8 +173,7 @@ fetch('/api/elections')
   .catch(error => console.error('Error:', error));
 
 function resetACView() {
-  partyListTitle.classList.add('hide');
-  // partyListItems.classList.add('hide'); //revisar si esta línea es necesaria
+  partyList.classList.add('hide');
   mapTitle.textContent = 'España';
   regionMapPlaceholder.textContent = 'Mapa de España';
 }
@@ -350,7 +351,7 @@ function updatePartyList(parties) {
   const acParties = selectedAC.parties || []; */
   
 
-  for (let i = 0; i < parseFloatarties.length; i++) {
+  for (let i = 0; i < parties.length; i++) {
     const party = parties[i];
     const partyListItem = document.createElement('li');
     partyListItem.textContent = party.name;
@@ -533,7 +534,6 @@ function generateVotingForm() {
   partyEntryForm.classList.add('hide');
   partyListItems.classList.add('hide');
   votingForm.classList.remove('hide');
-  votingForm.style.display = 'block';
 
   form.addEventListener('submit', async function(event) {
     event.preventDefault();
