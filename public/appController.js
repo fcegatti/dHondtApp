@@ -324,18 +324,20 @@ function handleAddPartySubmit(event) {
   if (!logoURL) {
     showModal(`Estás ingresando el partido ${partyName} sin un logo. El espacio del logo será reemplazado por el color del partido.`, function () {
       showModal(`¿Confirmas que deseas añadir ${partyName} a ${acName}?`, function() {
-        updatePartyList();
+        partyList.classList.remove('hide');
+        updatePartyList(selectedAC.parties);
       }, function() {return; });
     }, function() {return; });
   } else {
     showModal(`¿Confirmas que deseas añadir ${partyName} a ${acName}?`, function () {
-      updatePartyList();
+      partyList.classList.remove('hide');
+      updatePartyList(selectedAC.parties);
     }, function() {return; });
   }
 
 }
 
-function updatePartyList(parties) {
+function updatePartyList(parties = []) {
   const acName = acSelect.value;
 
   // borro todos los elementos actuales de la lista de partidos
@@ -343,13 +345,6 @@ function updatePartyList(parties) {
   while (partyListItems.firstChild) {
     partyListItems.removeChild(partyListItems.firstChild);
   }
-
-  /* recupero la CA seleccionada desde electionsData
-  const selectedAC = electionsData.autonomousCommunities.find(ac => ac.name === acName);
-
-  // recreo la lista de partidos basada en los partidos de la Comunidad Autónoma seleccionada
-  const acParties = selectedAC.parties || []; */
-  
 
   for (let i = 0; i < parties.length; i++) {
     const party = parties[i];
