@@ -16,6 +16,7 @@ const mapTitle = document.querySelector('#region-map-title');
 const regionMapPlaceholder = document.querySelector('#region-map-placeholder');
 let electionsData = null;
 let provinceToAcMap = {};
+let parties = {};
 
 // Obtenemos los datos de elections desde el servidor
 fetch('/api/elections')
@@ -117,12 +118,14 @@ fetch('/api/elections')
       const encodedAC = encodeURIComponent(acSelect.value);
       fetch(`api/getACParties/parties/${encodedAC}`)
         .then(response => response.json())
-        .then(parties => {
+        .then(partiesFromAPI => {
+          const acName = acSelect.value;
           partyListTitle.textContent = `Partidos de ${acSelect.value}`
 
-          if (parties && parties.length > 0) {
+          if (partiesFromAPI && partiesFromAPI.length > 0) {
+            parties[acName] = partiesFromAPI;
             partyListTitle.textContent = `Partidos de ${acSelect.value}`;
-            updatePartyList(parties);
+            updatePartyList();
             partyEntryForm.classList.add('hide');
             partyList.classList.remove('hide');
           } else {
@@ -248,7 +251,6 @@ function isValidURL(string) {
 
 function handleAddPartySubmit(event) {
   event.preventDefault();  
-
   const acName = acSelect.value;
 
   if (!acName) {
@@ -293,19 +295,24 @@ function handleAddPartySubmit(event) {
     logo: logoURL,
   };
 
-  const selectedAC = electionsData.autonomousCommunities.find(ac => ac.name === acName);
+  if (!parties[acName]) {
+    parties[acName] = [];
+  }
 
-  const isPartyDuplicated = selectedAC.parties && selectedAC.parties.some(party => party.name === partyName);
+  const isPartyDuplicated = parties[acName].some(party => party.name === partyName);
 
   if (isPartyDuplicated) {
     showModal(`Ya existe un partido de nombre ${partyName} en ${acName}.`, function() { return; });
     return;
   }
 
-  if (!selectedAC.parties) {
+  /* if (!selectedAC.parties) {
     selectedAC.parties = [];
-  }
+  } 
+
   selectedAC.parties.push(newParty);
+
+ 
 
   for (const province of selectedAC.provinces) {
     if (!province.partyData) {
@@ -320,24 +327,27 @@ function handleAddPartySubmit(event) {
       color: partyColor,
     });
   }
+   */
 
   if (!logoURL) {
     showModal(`Estás ingresando el partido ${partyName} sin un logo. El espacio del logo será reemplazado por el color del partido.`, function () {
       showModal(`¿Confirmas que deseas añadir ${partyName} a ${acName}?`, function() {
-        partyList.classList.remove('hide');
-        updatePartyList(selectedAC.parties);
+        //partyList.classList.remove('hide');
+        parties[acName].push(newParty);
+        updatePartyList();
       }, function() {return; });
     }, function() {return; });
   } else {
     showModal(`¿Confirmas que deseas añadir ${partyName} a ${acName}?`, function () {
-      partyList.classList.remove('hide');
-      updatePartyList(selectedAC.parties);
+      //partyList.classList.remove('hide');
+      parties[acName].push(newParty);
+      updatePartyList();
     }, function() {return; });
   }
 
 }
 
-function updatePartyList(parties = []) {
+function updatePartyList() {
   const acName = acSelect.value;
 
   // borro todos los elementos actuales de la lista de partidos
@@ -345,9 +355,16 @@ function updatePartyList(parties = []) {
   while (partyListItems.firstChild) {
     partyListItems.removeChild(partyListItems.firstChild);
   }
+ 
+  const acParties = parties[acName] || [];
+  if (acParties.length === 0) {
+    partyList.classList.add('hide');
+  } else {
+    partyList.classList.remove('hide');
+  }
 
-  for (let i = 0; i < parties.length; i++) {
-    const party = parties[i];
+  for (let i = 0; i < acParties.length; i++) {
+    const party = acParties[i];
     const partyListItem = document.createElement('li');
     partyListItem.textContent = party.name;
 
@@ -355,9 +372,8 @@ function updatePartyList(parties = []) {
     deleteButton.textContent = 'Eliminar'
     deleteButton.addEventListener('click', function() {
       showModal(`¿Confirmas que deseas eliminar a ${party.name} de ${acName}?`, function () {
-        const remainingParties = parties.filter((p, index) => index !==i);
-        //acParties.splice(i, 1);
-        updatePartyList(remainingParties);
+        acParties.splice(i, 1);
+        updatePartyList();
       }, function() {return; });  
     });
       
