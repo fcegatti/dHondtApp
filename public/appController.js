@@ -102,10 +102,10 @@ fetch('/api/elections')
       if (event.target.value === '') {
         resetACView();
         return;
-      } else {
-        mapTitle.textContent = `${acSelect.value}`;
-        regionMapPlaceholder.textContent = `Mapa de ${acSelect.value}`;
       }
+
+      mapTitle.textContent = `${acSelect.value}`;
+      regionMapPlaceholder.textContent = `Mapa de ${acSelect.value}`;
 
       provinceSelect.removeAttribute('disabled');
 
@@ -115,28 +115,31 @@ fetch('/api/elections')
 
       console.log('Comunidad Autónoma seleccionada:', acSelect.value);
 
-      const encodedAC = encodeURIComponent(acSelect.value);
+      const acName = acSelect.value;
+      partyListTitle.textContent = `Partidos de ${acName}`;
+      const encodedAC = encodeURIComponent(acName);
+
       fetch(`api/getACParties/parties/${encodedAC}`)
         .then(response => response.json())
         .then(partiesFromAPI => {
-          const acName = acSelect.value;
-          partyListTitle.textContent = `Partidos de ${acSelect.value}`
-
           if (partiesFromAPI && partiesFromAPI.length > 0) {
             parties[acName] = partiesFromAPI;
-            partyListTitle.textContent = `Partidos de ${acSelect.value}`;
             updatePartyList();
             partyEntryForm.classList.add('hide');
             partyList.classList.remove('hide');
+          } else if (parties[acName] && parties[acName].length > 0) {
+              updatePartyList();
+              partyEntryForm.classList.remove('hide');
+              partyList.classList.remove('hide');
           } else {
-            partyEntryTitle.textContent = `Ingresar partidos`;
-            partyEntryForm.classList.remove('hide');
-            partyList.classList.add('hide');
+              partyEntryTitle.textContent = `Ingresar partidos`;
+              partyEntryForm.classList.remove('hide');
+              partyList.classList.add('hide');
           }
         })
         .catch( error => {
           console.error('Error fetching parties for autonomous community', error);
-        });
+      });
     });
     provinceSelect.addEventListener('change', (event) => {
       console.log(`Provincia seleccionada: ${event.target.value}`);
