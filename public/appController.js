@@ -11,7 +11,7 @@ const addPartyForm = document.forms['addParty'];
 const partyList = document.querySelector('#party-list');
 const partyListTitle = document.querySelector('#party-list-title');
 const partyListItems = document.querySelector('#party-list-items');
-const votingForm = document.querySelector('.voting-form');
+const votingForm = document.querySelector('#voting-form');
 const mapTitle = document.querySelector('#region-map-title');
 const regionMapPlaceholder = document.querySelector('#region-map-placeholder');
 let electionsData = null;
@@ -409,7 +409,7 @@ function generateVotingForm() {
   const acParties = selectedAC ? selectedAC.parties : [];
 
   // Obtengo el contenedor del formulario
-  const votingForm = document.querySelector('.voting-form');
+  const votingForm = document.querySelector('#voting-form');
   
   // Borra el contenido actual del formulario
   votingForm.innerHTML = '';
