@@ -44,7 +44,12 @@ router.post('/', (req, res) => {
 
     provinceData.partyData = seatResults;
 
-    fs.writeFileSync(path.join(__dirname, '../../data/electionsData.json'), JSON.stringify(electionsData, null, 2));
+    try {
+      fs.writeFileSync(path.join(__dirname, '../../data/electionsData.json'), JSON.stringify(electionsData, null, 2));
+    } catch {
+      console.error('Error saving to electionsData.json', error);
+      return res.status(500).json({ message: 'An error occurred while saving the data.' });
+    }
 
     res.json(seatResults);
     
