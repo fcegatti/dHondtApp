@@ -154,7 +154,6 @@ fetch('/api/elections')
         regionMapPlaceholder.textContent = `Mapa de ${selectedProvince}`;
       }
 
-
       const acName = acSelect.value;
       fetch(`api/getACParties/parties/${encodeURIComponent(acName)}`)
         .then(response => response.json())
@@ -163,29 +162,39 @@ fetch('/api/elections')
             console.log(partiesFromAPI);
           } else {
             showModal(`Si continúa, se agregarán los partidos de la lista a todas las provincias de ${acName} y ya no se podrán incluir otros. ¿Desea continuar?`, function() {
-              console.log("sarasa")
+              console.log("Continuar seleccionado");
+              
+              generateVotingForm();
+              const selectedProvinceData = getSelectedProvince(acSelect.value,       selectedProvince);
+              if (selectedProvinceData) {
+                if (selectedProvinceData.seatResults) {
+                  const chartData = selectedProvinceData.seatResults.map(result => ({
+                    party: result.party,
+                    seatsPercentage: result.seatsPercentage,
+                    color: result.color,
+                  }));
+                  drawSeatsArc(chartData);
+                }
+              } else {
+                  const unassignedChartData = [{
+                    party: 'No Asignados',
+                    seatsPercentage: 100,
+                    color: 'gray'
+                }];
+                drawSeatsArc(unassignedChartData);
+              }
+            },
+            function() {
+              console.log("Volver seleccionado");
+              provinceSelect.selectedIndex = 0;
+              mapTitle.textContent = `${acSelect.value}`;
+              regionMapPlaceholder.textContent = `Mapa de ${acSelect.value}`;
+              partyEntryForm.classList.remove('hide');
+              updatePartyList();
             })
           }
         })
-        generateVotingForm();
-        const selectedProvinceData = getSelectedProvince(acSelect.value, selectedProvince);
-        if (selectedProvinceData) {
-          if (selectedProvinceData.seatResults) {
-            const chartData = selectedProvinceData.seatResults.map(result => ({
-              party: result.party,
-              seatsPercentage: result.seatsPercentage,
-              color: result.color,
-            }));
-            drawSeatsArc(chartData);
-          }
-        } else {
-            const unassignedChartData = [{
-              party: 'No Asignados',
-              seatsPercentage: 100,
-              color: 'gray'
-          }];
-          drawSeatsArc(unassignedChartData);
-        }
+        .catch(error => console.error('Error:', error));
     });
     addPartyForm.addEventListener('submit', handleAddPartySubmit);
 
@@ -349,14 +358,12 @@ function handleAddPartySubmit(event) {
   if (!logoURL) {
     showModal(`Estás ingresando el partido ${partyName} sin un logo. El espacio del logo será reemplazado por el color del partido.`, function () {
       showModal(`¿Confirmas que deseas añadir ${partyName} a ${acName}?`, function() {
-        //partyList.classList.remove('hide');
         parties[acName].push(newParty);
         updatePartyList();
       }, function() {return; });
     }, function() {return; });
   } else {
     showModal(`¿Confirmas que deseas añadir ${partyName} a ${acName}?`, function () {
-      //partyList.classList.remove('hide');
       parties[acName].push(newParty);
       updatePartyList();
     }, function() {return; });
