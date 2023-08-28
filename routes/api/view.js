@@ -8,5 +8,3 @@ router.get('/resetGraphics', (req, res) => {
 });
 
 module.exports = router;
-
-

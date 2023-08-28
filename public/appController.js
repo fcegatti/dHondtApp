@@ -153,6 +153,20 @@ fetch('/api/elections')
         mapTitle.textContent = selectedProvince;
         regionMapPlaceholder.textContent = `Mapa de ${selectedProvince}`;
       }
+
+
+      const acName = acSelect.value;
+      fetch(`api/getACParties/parties/${encodeURIComponent(acName)}`)
+        .then(response => response.json())
+        .then(partiesFromAPI => {
+          if (partiesFromAPI && partiesFromAPI.length > 0) {
+            console.log(partiesFromAPI);
+          } else {
+            showModal(`Si continúa, se agregarán los partidos de la lista a todas las provincias de ${acName} y ya no se podrán incluir otros. ¿Desea continuar?`, function() {
+              console.log("sarasa")
+            })
+          }
+        })
         generateVotingForm();
         const selectedProvinceData = getSelectedProvince(acSelect.value, selectedProvince);
         if (selectedProvinceData) {
