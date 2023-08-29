@@ -4,58 +4,12 @@
       "name": "Andalucía",
       "electoralThreshold": 3,
       "thresholdRef": "valid",
-      "parties": [
-        {
-          "name": "Partido 1",
-          "color": "#000000"
-        },
-        {
-          "name": "Partido 2",
-          "color": "#da0707"
-        },
-        {
-          "name": "votos en blanco",
-          "color": "white"
-        },
-        {
-          "name": "votos nulos",
-          "color": "gray"
-        }
-      ],
+      "parties": [],
       "provinces": [
         {
           "name": "Almería",
           "congressSeats": 6,
-          "partyData": [
-            {
-              "party": "Partido 1",
-              "seats": 3,
-              "votesPercentage": 46.59606656580938,
-              "seatsPercentage": 50,
-              "color": "#000000"
-            },
-            {
-              "party": "Partido 2",
-              "seats": 3,
-              "votesPercentage": 52.7231467473525,
-              "seatsPercentage": 50,
-              "color": "#da0707"
-            },
-            {
-              "party": "votos en blanco",
-              "seats": 0,
-              "votesPercentage": 0.3094484940173291,
-              "seatsPercentage": 0,
-              "color": "white"
-            },
-            {
-              "party": "votos nulos",
-              "seats": 0,
-              "votesPercentage": 0.37133819282079494,
-              "seatsPercentage": 0,
-              "color": "gray"
-            }
-          ],
+          "partyData": [],
           "parliamentSeats": 12,
           "municipalities": []
         },
