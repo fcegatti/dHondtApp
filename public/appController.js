@@ -119,7 +119,7 @@ fetch('/api/elections')
       partyListTitle.textContent = `Partidos de ${acName}`;
       const encodedAC = encodeURIComponent(acName);
 
-      fetch(`api/getACParties/parties/${encodedAC}`)
+      fetch(`api/getACParties/${encodedAC}`)
         .then(response => response.json())
         .then(partiesFromAPI => {
           if (partiesFromAPI && partiesFromAPI.length > 0) {
@@ -142,7 +142,8 @@ fetch('/api/elections')
       });
     });
     provinceSelect.addEventListener('change', (event) => {
-      console.log(`Provincia seleccionada: ${event.target.value}`);
+      console.log(`Provincia seleccionada: ${event.target.value} - ${new Date().toISOString()}`);
+
       const selectedProvince = event.target.value;
       
       if (selectedProvince === '') {
@@ -155,7 +156,8 @@ fetch('/api/elections')
       }
 
       const acName = acSelect.value;
-      fetch(`api/getACParties/parties/${encodeURIComponent(acName)}`)
+      console.log(`Solicitando partidos de la comunidad autónoma: ${acName} - ${new Date().toISOString()}`);
+      fetch(`api/getACParties/${encodeURIComponent(acName)}`)
         .then(response => response.json())
         .then(partiesFromAPI => {
           if (partiesFromAPI && partiesFromAPI.length > 0) {
@@ -169,6 +171,7 @@ fetch('/api/elections')
                 parties: parties[acName]
               };
 
+              console.log(`Actualizando partidos en el servidor para ${acName} - ${new Date().toISOString()}`);
               fetch('/post/updateParties', {
                 method: 'POST',
                 headers: {
@@ -178,6 +181,8 @@ fetch('/api/elections')
               })
               .then(response => response.json())
               .then(data => {
+                console.log(`Partidos actualizados con éxito para ${acName} - ${new Date().toISOString()}`);
+
                 console.log(data.message);
 
                 generateVotingForm();
@@ -438,290 +443,304 @@ function formatPartiesList(parties) {
 
 
 function generateVotingForm() {
+  console.log(`Inicio de generateVotingForm() - ${new Date().toISOString()}`);
   // Obtengo el nombre de la provincia y la comunidad autónoma seleccionada
   const provinceName = provinceSelect.value;
   if (!provinceName) return;
   const acName = provinceToAcMap[provinceName]; 
-
-  // Obtengo la lista de partidos para la comunidad autónoma seleccionada
-  const selectedAC = electionsData.autonomousCommunities.find(ac => ac.name === acName);
-  const acParties = selectedAC ? selectedAC.parties : [];
-
-  // Obtengo el contenedor del formulario
-  const votingForm = document.querySelector('#voting-form');
   
   // Borra el contenido actual del formulario
   votingForm.innerHTML = '';
 
-  // Crea el título del formulario de votos
-  const formTitle = document.createElement('h2');
-  formTitle.textContent = 'Ingresar votos';
-  
-  // Añade el título al contenedor del formulario
-  votingForm.appendChild(formTitle);
-  
-  // Crea un formulario
-  const form = document.createElement('form');
-  form.action = '/calculateSeats';
-  form.method = 'POST';
-
-  const table = document.createElement('table'); 
-
-  const tableHead = document.createElement('thead');
-  const tableRow = document.createElement('tr');
-
-  const headers = ['Partido', 'Votos', '%', 'Escaños'];
-
-  headers.forEach(header => {
-    const th= document.createElement('th');
-    th.textContent = header;
-    tableRow.appendChild(th);
-  });
-
-  tableHead.appendChild(tableRow);
-  table.appendChild(tableHead);
-
-  const tableBody = document.createElement('tbody');
-
-
-  // Crea un campo de entrada para cada partido
-  if (acParties) {
-    for (const party of acParties) {
-
-      const tableRow = document.createElement('tr');
-
-      const partyCell = document.createElement('td');
-      partyCell.textContent = party.name;
-      tableRow.appendChild(partyCell);
-
-      const label = document.createElement('label');
-      label.for = `votes-${party.name}`;
-      label.textContent = `${party.name}:`;
-
-      const input = document.createElement('input');
-      input.type = 'number';
-      input.id = `votes-${party.name}`;
-      input.name = `votes-${party.name}`;
-      input.style.width = '60px';
-
-      const votesCell = document.createElement('td');
-      votesCell.appendChild(input);
-      tableRow.appendChild(votesCell);
-
-      const percentageCell = document.createElement('td');
-      tableRow.appendChild(percentageCell);
-
-      const seatsCell = document.createElement('td');
-      tableRow.appendChild(seatsCell);
-
-
-      tableBody.appendChild(tableRow);
+  console.log(`Solicitando partidos de la comunidad autónoma para generar formulario: ${acName} - ${new Date().toISOString()}`);
+  fetch(`/api/getACParties/${acName}`)
+  .then(response => {
+    if (!response.ok) {  
+      throw new Error(`Error fetching parties: ${response.statusText}`);
     }
-  }
-
-  const blankRow = document.createElement('tr');
-  
-  // Añade campos para los votos nulos y en blanco
-  const blankLabel = document.createElement('td');
-  blankLabel.textContent = 'Votos en blanco';
-  blankRow.appendChild(blankLabel);
-
-  const blankInput = document.createElement('input');
-  blankInput.type = 'number';
-  blankInput.id = 'blankVotes';
-  blankInput.name = 'blankVotes';
-  blankInput.style.width = '60px';
-
-  const blankVotesCell = document.createElement('td');
-  blankVotesCell.appendChild(blankInput);
-  blankRow.appendChild(blankVotesCell);
-
-  const blankPercentageCell = document.createElement('td');
-  blankRow.appendChild(blankPercentageCell);
-
-  const blankSeatsCell = document.createElement('td');
-  blankRow.appendChild(blankSeatsCell);
-
-  tableBody.appendChild(blankRow);
-
-  const nullRow = document.createElement('tr');
-  
-  const nullLabel = document.createElement('td');
-  nullLabel.textContent = 'Votos nulos';
-  nullRow.appendChild(nullLabel);
-  
-  const nullInput = document.createElement('input');
-  nullInput.type = 'number';
-  nullInput.id = 'nullVotes';
-  nullInput.name = 'nullVotes';
-  nullInput.style.width = '60px';
-
-  const nullVotesCell = document.createElement('td');
-  nullVotesCell.appendChild(nullInput);
-  nullRow.appendChild(nullVotesCell);
-  
-  const nullPercentageCell = document.createElement('td');
-  nullRow.appendChild(nullPercentageCell);
-
-  const nullSeatsCell = document.createElement('td');
-  nullRow.appendChild(nullSeatsCell);
-  
-  
-  tableBody.appendChild(nullRow);
-  
-  // Añade un botón de envío al formulario
-  const submit = document.createElement('input');
-  submit.type = 'submit';
-  submit.value = 'Calcular';
-
-  // Añade el formulario al contenedor
-  votingForm.appendChild(form);
-  table.appendChild(tableBody);
-  votingForm.appendChild(table);
-  form.appendChild(table);
-  form.appendChild(submit);
-
-  console.log("Formulario de votación generado");
-  
-
-  partyEntryForm.classList.add('hide');
-  partyListItems.classList.add('hide');
-  votingForm.classList.remove('hide');
-
-  form.addEventListener('submit', async function(event) {
-    event.preventDefault();
-
-    let votesData = {
-      type: 'generales',
-      province: provinceName,
-      community: acName,
-      parties: [],
-    };
-
-    let partiesWithoutVotes = [];
-
-    for (let i = 0; i < form.elements.length; i++) {
-      const element = form.elements[i];
-
-      if (element.type === 'number') {
-        let partyName = element.name.replace('votes-', '');
-
-        if (partyName === 'blankVotes') {
-          partyName = 'votos en blanco';
-        } else if (partyName === 'nullVotes') {
-          partyName = 'votos nulos';
-        }
-
-        partyColor = acParties?.find(party => party.name === partyName)?.color;
-
-
-
-        if (element.value === '') {
-          partiesWithoutVotes.push(partyName);
-        } else if (element.value < 0 || !Number.isInteger(Number(element.value))) {
-          showModal('Los votos deben ser números enteros no negativos');
-          return;
-        } else { 
+    return response.json();
+  })
+  .then(parties => {
+    if (!parties || !Array.isArray) {
+      console.error("Datos recividos de la API:", parties);
+      throw new Error("No se recibieron datos válidos de la API");
+    }
+    console.log(`Partidos obtenidos para generar formulario: ${parties.length} partidos - ${new Date().toISOString()}`);
+    const acParties = parties;
+    
+    // Crea el título del formulario de votos
+    const formTitle = document.createElement('h2');
+    formTitle.textContent = 'Ingresar votos';
+    
+    // Añade el título al contenedor del formulario
+    votingForm.appendChild(formTitle);
+    
+    // Crea un formulario
+    const form = document.createElement('form');
+    form.action = '/calculateSeats';
+    form.method = 'POST';
+    
+    const table = document.createElement('table'); 
+    
+    const tableHead = document.createElement('thead');
+    const tableRow = document.createElement('tr');
+    
+    const headers = ['Partido', 'Votos', '%', 'Escaños'];
+    
+    headers.forEach(header => {
+      const th= document.createElement('th');
+      th.textContent = header;
+      tableRow.appendChild(th);
+    });
+    
+    tableHead.appendChild(tableRow);
+    table.appendChild(tableHead);
+    
+    const tableBody = document.createElement('tbody');
+    
+    
+    // Crea un campo de entrada para cada partido
+    if (acParties) {
+      for (const party of acParties) {
+        
+        const tableRow = document.createElement('tr');
+        
+        const partyCell = document.createElement('td');
+        partyCell.textContent = party.name;
+        tableRow.appendChild(partyCell);
+        
+        const label = document.createElement('label');
+        label.for = `votes-${party.name}`;
+        label.textContent = `${party.name}:`;
+        
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.id = `votes-${party.name}`;
+        input.name = `votes-${party.name}`;
+        input.style.width = '60px';
+        
+        const votesCell = document.createElement('td');
+        votesCell.appendChild(input);
+        tableRow.appendChild(votesCell);
+        
+        const percentageCell = document.createElement('td');
+        tableRow.appendChild(percentageCell);
+        
+        const seatsCell = document.createElement('td');
+        tableRow.appendChild(seatsCell);
+        
+        
+        tableBody.appendChild(tableRow);
+      }
+    }
+    
+    const blankRow = document.createElement('tr');
+    
+    // Añade campos para los votos nulos y en blanco
+    const blankLabel = document.createElement('td');
+    blankLabel.textContent = 'Votos en blanco';
+    blankRow.appendChild(blankLabel);
+    
+    const blankInput = document.createElement('input');
+    blankInput.type = 'number';
+    blankInput.id = 'blankVotes';
+    blankInput.name = 'blankVotes';
+    blankInput.style.width = '60px';
+    
+    const blankVotesCell = document.createElement('td');
+    blankVotesCell.appendChild(blankInput);
+    blankRow.appendChild(blankVotesCell);
+    
+    const blankPercentageCell = document.createElement('td');
+    blankRow.appendChild(blankPercentageCell);
+    
+    const blankSeatsCell = document.createElement('td');
+    blankRow.appendChild(blankSeatsCell);
+    
+    tableBody.appendChild(blankRow);
+    
+    const nullRow = document.createElement('tr');
+    
+    const nullLabel = document.createElement('td');
+    nullLabel.textContent = 'Votos nulos';
+    nullRow.appendChild(nullLabel);
+    
+    const nullInput = document.createElement('input');
+    nullInput.type = 'number';
+    nullInput.id = 'nullVotes';
+    nullInput.name = 'nullVotes';
+    nullInput.style.width = '60px';
+    
+    const nullVotesCell = document.createElement('td');
+    nullVotesCell.appendChild(nullInput);
+    nullRow.appendChild(nullVotesCell);
+    
+    const nullPercentageCell = document.createElement('td');
+    nullRow.appendChild(nullPercentageCell);
+    
+    const nullSeatsCell = document.createElement('td');
+    nullRow.appendChild(nullSeatsCell);
+    
+    
+    tableBody.appendChild(nullRow);
+    
+    // Añade un botón de envío al formulario
+    const submit = document.createElement('input');
+    submit.type = 'submit';
+    submit.value = 'Calcular';
+    
+    // Añade el formulario al contenedor
+    votingForm.appendChild(form);
+    table.appendChild(tableBody);
+    votingForm.appendChild(table);
+    form.appendChild(table);
+    form.appendChild(submit);
+    
+    console.log("Formulario de votación generado");
+    
+    
+    partyEntryForm.classList.add('hide');
+    partyListItems.classList.add('hide');
+    votingForm.classList.remove('hide');
+    
+    form.addEventListener('submit', async function(event) {
+      event.preventDefault();
+      
+      let votesData = {
+        type: 'generales',
+        province: provinceName,
+        community: acName,
+        parties: [],
+      };
+      
+      let partiesWithoutVotes = [];
+      
+      for (let i = 0; i < form.elements.length; i++) {
+        const element = form.elements[i];
+        
+        if (element.type === 'number') {
+          let partyName = element.name.replace('votes-', '');
           
-          if (partyName !== 'votos en blanco' && partyName !== 'votos nulos') {
-            partyColor = acParties.find(party => party.name === partyName).color;
+          if (partyName === 'blankVotes') {
+            partyName = 'votos en blanco';
+          } else if (partyName === 'nullVotes') {
+            partyName = 'votos nulos';
           }
           
-          votesData.parties.push({
-            name: partyName,
-            votes: parseInt(element.value, 10),
-            color: partyColor,
-          });
-        }    
+          partyColor = acParties?.find(party => party.name === partyName)?.color;
+          
+          
+          
+          if (element.value === '') {
+            partiesWithoutVotes.push(partyName);
+          } else if (element.value < 0 || !Number.isInteger(Number(element.value))) {
+            showModal('Los votos deben ser números enteros no negativos');
+            return;
+          } else { 
+            
+            if (partyName !== 'votos en blanco' && partyName !== 'votos nulos') {
+              partyColor = acParties.find(party => party.name === partyName).color;
+            }
+            
+            votesData.parties.push({
+              name: partyName,
+              votes: parseInt(element.value, 10),
+              color: partyColor,
+            });
+          }    
+        }
       }
-    }
-
-    votesData.parties.forEach(party => {
-      if (party.name === 'votos en blanco') {
-        party.color = 'white';
-      } else if (party.name === 'votos nulos') {
-        party.color = 'gray';
-      }
-    });
-
-    if (partiesWithoutVotes.length > 0) {
-      const confirmed = await new Promise(resolve => {
-        if (partiesWithoutVotes.length === 1) {
-          showModal(`No has introducido un número de votos para ${formatPartiesList(partiesWithoutVotes)}. Se le asignarán cero votos.`, resolve);
-        } else {
-          showModal(`No has introducido un número de votos para ${formatPartiesList(partiesWithoutVotes)}. Se les asignarán cero votos a cada uno.`, resolve);
+      
+      votesData.parties.forEach(party => {
+        if (party.name === 'votos en blanco') {
+          party.color = 'white';
+        } else if (party.name === 'votos nulos') {
+          party.color = 'gray';
         }
       });
       
-      if (confirmed) {
-        for (let partyName of partiesWithoutVotes) {
-          let partyColor;
-          const partyInfo = votesData.parties.find(p => p.name === partyName);
-          if (partyInfo) {
-            partyColor = partyInfo.color;
+      if (partiesWithoutVotes.length > 0) {
+        const confirmed = await new Promise(resolve => {
+          if (partiesWithoutVotes.length === 1) {
+            showModal(`No has introducido un número de votos para ${formatPartiesList(partiesWithoutVotes)}. Se le asignarán cero votos.`, resolve);
+          } else {
+            showModal(`No has introducido un número de votos para ${formatPartiesList(partiesWithoutVotes)}. Se les asignarán cero votos a cada uno.`, resolve);
           }
-          votesData.parties.push({
-            name: partyName,
-            votes: 0,
-            color: partyColor,
-          });
-        }        
-      } else {
+        });
+        
+        if (confirmed) {
+          for (let partyName of partiesWithoutVotes) {
+            let partyColor;
+            const partyInfo = votesData.parties.find(p => p.name === partyName);
+            if (partyInfo) {
+              partyColor = partyInfo.color;
+            }
+            votesData.parties.push({
+              name: partyName,
+              votes: 0,
+              color: partyColor,
+            });
+          }        
+        } else {
           return;
-      }
-    }  
-
-    console.log(votesData);
-
-    fetch('/api/calculateSeats', {
-            method: 'POST',
-            headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(votesData),
-    })
-    .then(response => response.json())
-    .then(seatResults => {
-      seatResults.forEach(result => {
-        const partyFromVotesData = votesData.parties.find(p => p.name === result.party);
-        if (partyFromVotesData) {
-          result.color = partyFromVotesData.color;
         }
-      });
-
-      console.log(seatResults);
-
-      let chartData = seatResults
-          .filter(result => result.seatsPercentage > 0)
-          .map(result => ({
-            party: result.party,
-            seatsPercentage: result.seatsPercentage,
-            color: result.color,
-      }));
-
-      drawSeatsArc(chartData);
-      // Selecciono todas las filas de la tabla del cuerpo
-      const rows = Array.from(document.querySelector('tbody').children);
-      // Actualizo la tabla con los resultados de los escaños
-      for (const result of seatResults) {
-
-        // Busco la fila que tiene el nombre del partido en la primera celda
-        const row = rows.find(row => row.children[0].textContent.toLowerCase() === result.party.toLowerCase());
-
-        if (row) {
-          // Actualizo la tercera celda con el porcentaje de votos
-          row.children[2].textContent = result.votesPercentage.toFixed(2) + '%';
-          // Actualizo la cuarta celda con el número de escaños
-          if(result.party !== 'votos en blanco' && result.party !== 'votos nulos') {
-          row.children[3].textContent = result.seats;
+      }  
+      
+      console.log(votesData);
+      
+      fetch('/api/calculateSeats', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(votesData),
+      })
+      .then(response => response.json())
+      .then(seatResults => {
+        seatResults.forEach(result => {
+          const partyFromVotesData = votesData.parties.find(p => p.name === result.party);
+          if (partyFromVotesData) {
+            result.color = partyFromVotesData.color;
+          }
+        });
+        
+        console.log(seatResults);
+        
+        let chartData = seatResults
+        .filter(result => result.seatsPercentage > 0)
+        .map(result => ({
+          party: result.party,
+          seatsPercentage: result.seatsPercentage,
+          color: result.color,
+        }));
+        
+        drawSeatsArc(chartData);
+        // Selecciono todas las filas de la tabla del cuerpo
+        const rows = Array.from(document.querySelector('tbody').children);
+        // Actualizo la tabla con los resultados de los escaños
+        for (const result of seatResults) {
+          
+          // Busco la fila que tiene el nombre del partido en la primera celda
+          const row = rows.find(row => row.children[0].textContent.toLowerCase() === result.party.toLowerCase());
+          
+          if (row) {
+            // Actualizo la tercera celda con el porcentaje de votos
+            row.children[2].textContent = result.votesPercentage.toFixed(2) + '%';
+            if(result.party !== 'votos en blanco' && result.party !== 'votos nulos') {
+            // Actualizo la cuarta celda con el número de escaños
+              row.children[3].textContent = result.seats;
+            }
           }
         }
-      }
-
-
-    })
-    .catch(error => console.error('Error:', error));
-  });
+        
+        
+      })
+      .catch(error => console.error('Error:', error));
+    });
+  })
+  .catch(error => {
+    console.error('Error fetching parties:', error);
+  })
 }
 });
 /* Todavía se necesita verificar que tanto una elección como una cámara estén seleccionadas antes de llenar las comunidades autónomas, y verificar que se haya seleccionado una comunidad autónoma antes de llenar las provincias..

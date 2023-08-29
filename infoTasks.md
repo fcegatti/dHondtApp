@@ -24,3 +24,7 @@ updatePartyList();
       partyListItems.classList.remove('hide');
       votingForm.classList.add('hide');
       votingForm.style.display = 'none';
+
+// Obtengo la lista de partidos para la comunidad autónoma seleccionada
+  const selectedAC = electionsData.autonomousCommunities.find(ac => ac.name === acName);
+  const acParties = selectedAC ? selectedAC.parties : [];
