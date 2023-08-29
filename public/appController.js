@@ -148,6 +148,7 @@ fetch('/api/elections')
       votingForm.classList.add('hide');
       
       if (selectedProvince === '') {
+        partyList.classList.remove('hide');
         mapTitle.textContent = `${acSelect.value}`;
         regionMapPlaceholder.textContent = `Mapa de ${acSelect.value}`;
         return;
@@ -602,7 +603,7 @@ function generateVotingForm() {
     
     
     partyEntryForm.classList.add('hide');
-    partyListItems.classList.add('hide');
+    partyList.classList.add('hide');
     votingForm.classList.remove('hide');
     
     form.addEventListener('submit', async function(event) {
