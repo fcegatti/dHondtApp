@@ -161,7 +161,7 @@ fetch('/api/elections')
         .then(response => response.json())
         .then(partiesFromAPI => {
           if (partiesFromAPI && partiesFromAPI.length > 0) {
-            console.log(partiesFromAPI);
+            generateVotingForm();
           } else {
             showModal(`Si continúa, se agregarán los partidos de la lista a todas las provincias de ${acName} y ya no se podrán incluir otros. ¿Desea continuar?`, function() {
               console.log("Continuar seleccionado");
