@@ -104,6 +104,7 @@ fetch('/api/elections')
         return;
       }
 
+      votingForm.classList.add('hide');
       mapTitle.textContent = `${acSelect.value}`;
       regionMapPlaceholder.textContent = `Mapa de ${acSelect.value}`;
 
@@ -143,8 +144,8 @@ fetch('/api/elections')
     });
     provinceSelect.addEventListener('change', (event) => {
       console.log(`Provincia seleccionada: ${event.target.value} - ${new Date().toISOString()}`);
-
       const selectedProvince = event.target.value;
+      votingForm.classList.add('hide');
       
       if (selectedProvince === '') {
         mapTitle.textContent = `${acSelect.value}`;
@@ -226,6 +227,7 @@ fetch('/api/elections')
 
 function resetACView() {
   partyList.classList.add('hide');
+  votingForm.classList.add('hide');
   mapTitle.textContent = 'España';
   regionMapPlaceholder.textContent = 'Mapa de España';
 }
