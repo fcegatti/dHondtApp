@@ -29,16 +29,19 @@ router.post('/', (req, res) => {
     }
 
     for (const party of votesData.parties) {
-      const acParty = acData.parties.find(p => p.name === party.name);
-      if (acParty) {
-        acParty.color = party.color;
-        acParty.logo = party.logo;
-      } else {
-        acData.parties.push({
-          name: party.name,
-          color: party.color,
-          logo: party.logo,
-        });
+      if (party.name !== 'votos en blanco' && party.name !== 'votos nulos') {
+
+        const acParty = acData.parties.find(p => p.name === party.name);
+        if (acParty) {
+          acParty.color = party.color;
+          acParty.logo = party.logo;
+        } else {
+          acData.parties.push({
+            name: party.name,
+            color: party.color,
+            logo: party.logo,
+          });
+        }
       }
     }
 
