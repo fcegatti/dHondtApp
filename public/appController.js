@@ -173,49 +173,8 @@ fetch('/api/elections')
               partyEntryForm.classList.remove('hide');
             });
           } else if (parties[acName].length === 1) {
-            showModal(`Está añadiendo solamente un partido en ${acName}. Si confirma no podrá añadir más partidos en esta comunidad autónoma. ¿Desea continuar?`, function() {
-              console.log("Continuar seleccionado");
-
-              const dataToSend = {
-                acName: acName,
-                parties: parties[acName]
-              };
-
-              console.log(`Actualizando partidos en el servidor para ${acName} - ${new Date().toISOString()}`);
-              fetch('/post/updateParties', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(dataToSend),               
-              })
-              .then(response => response.json())
-              .then(data => {
-                console.log(`Partidos actualizados con éxito para ${acName} - ${new Date().toISOString()}`);
-
-                console.log(data.message);
-
-                generateVotingForm();
-                const selectedProvinceData = getSelectedProvince(acSelect.value,         selectedProvince);
-                if (selectedProvinceData) {
-                  if (selectedProvinceData.seatResults) {
-                    const chartData = selectedProvinceData.seatResults.map(result => ({
-                      party: result.party,
-                      seatsPercentage: result.seatsPercentage,
-                      color: result.color,
-                    }));
-                    drawSeatsArc(chartData);
-                  }
-                } else {
-                  const unassignedChartData = [{
-                    party: 'No Asignados',
-                    seatsPercentage: 100,
-                    color: 'gray'
-                  }];
-                  drawSeatsArc(unassignedChartData);
-                }
-              })
-              .catch(error => console.error('Error', error));
+            showModal(`Está añadiendo solamente un partido en ${acName}. Si confirma, no podrá añadir más partidos en esta comunidad autónoma. ¿Desea continuar?`, function() {
+              partiesToJson(acName);
             }, 
             function() {
               provinceSelect.selectedIndex = 0;
@@ -226,48 +185,7 @@ fetch('/api/elections')
             });
           } else {
             showModal(`Si continúa, se agregarán los partidos de la lista a todas las provincias de ${acName} y ya no se podrán incluir otros. ¿Desea continuar?`, function() {
-              console.log("Continuar seleccionado");
-
-              const dataToSend = {
-                acName: acName,
-                parties: parties[acName]
-              };
-
-              console.log(`Actualizando partidos en el servidor para ${acName} - ${new Date().toISOString()}`);
-              fetch('/post/updateParties', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(dataToSend),               
-              })
-              .then(response => response.json())
-              .then(data => {
-                console.log(`Partidos actualizados con éxito para ${acName} - ${new Date().toISOString()}`);
-
-                console.log(data.message);
-
-                generateVotingForm();
-                const selectedProvinceData = getSelectedProvince(acSelect.value,         selectedProvince);
-                if (selectedProvinceData) {
-                  if (selectedProvinceData.seatResults) {
-                    const chartData = selectedProvinceData.seatResults.map(result => ({
-                      party: result.party,
-                      seatsPercentage: result.seatsPercentage,
-                      color: result.color,
-                    }));
-                    drawSeatsArc(chartData);
-                  }
-                } else {
-                  const unassignedChartData = [{
-                    party: 'No Asignados',
-                    seatsPercentage: 100,
-                    color: 'gray'
-                  }];
-                  drawSeatsArc(unassignedChartData);
-                }
-              })
-              .catch(error => console.error('Error', error));
+              partiesToJson(acName);
         },
         function() {
           console.log("Volver seleccionado");
@@ -503,7 +421,6 @@ function formatPartiesList(parties) {
     return `${parties.join(', ')} ni ${lastParty}`;
   }
 }
-
 
 function generateVotingForm() {
   console.log(`Inicio de generateVotingForm() - ${new Date().toISOString()}`);
@@ -804,6 +721,51 @@ function generateVotingForm() {
   .catch(error => {
     console.error('Error fetching parties:', error);
   })
+}
+
+function partiesToJson(acName) {
+  console.log("Continuar seleccionado");
+
+              const dataToSend = {
+                acName: acName,
+                parties: parties[acName]
+              };
+
+              console.log(`Actualizando partidos en el servidor para ${acName} - ${new Date().toISOString()}`);
+              fetch('/post/updateParties', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(dataToSend),               
+              })
+              .then(response => response.json())
+              .then(data => {
+                console.log(`Partidos actualizados con éxito para ${acName} - ${new Date().toISOString()}`);
+
+                console.log(data.message);
+
+                generateVotingForm();
+                const selectedProvinceData = getSelectedProvince(acSelect.value,         selectedProvince);
+                if (selectedProvinceData) {
+                  if (selectedProvinceData.seatResults) {
+                    const chartData = selectedProvinceData.seatResults.map(result => ({
+                      party: result.party,
+                      seatsPercentage: result.seatsPercentage,
+                      color: result.color,
+                    }));
+                    drawSeatsArc(chartData);
+                  }
+                } else {
+                  const unassignedChartData = [{
+                    party: 'No Asignados',
+                    seatsPercentage: 100,
+                    color: 'gray'
+                  }];
+                  drawSeatsArc(unassignedChartData);
+                }
+              })
+              .catch(error => console.error('Error', error));
 }
 });
 /* Todavía se necesita verificar que tanto una elección como una cámara estén seleccionadas antes de llenar las comunidades autónomas, y verificar que se haya seleccionado una comunidad autónoma antes de llenar las provincias..
