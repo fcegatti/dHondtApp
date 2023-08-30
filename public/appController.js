@@ -640,15 +640,15 @@ function generateVotingForm() {
       });
       
       if (partiesWithoutVotes.length > 0) {
-        const confirmed = await new Promise(resolve => {
-          if (partiesWithoutVotes.length === 1) {
-            showModal(`No has introducido un número de votos para ${formatPartiesList(partiesWithoutVotes)}. Se le asignarán cero votos.`, resolve);
-          } else {
-            showModal(`No has introducido un número de votos para ${formatPartiesList(partiesWithoutVotes)}. Se les asignarán cero votos a cada uno.`, resolve);
-          }
-        });
-        
-        if (confirmed) {
+        let message;
+        if (partiesWithoutVotes.length === 1) {
+          message = `No has introducido un número de votos para ${formatPartiesList(partiesWithoutVotes)}. Se le asignarán cero votos. ¿Desea continuar?`;
+        } else {
+          message = `No has introducido un número de votos para ${formatPartiesList(partiesWithoutVotes)}. Se les asignarán cero votos a cada uno. ¿Desea continuar? `;
+        } 
+       
+        showModal(message, function() {
+          //Continuar
           for (let partyName of partiesWithoutVotes) {
             let partyColor;
             const partyInfo = votesData.parties.find(p => p.name === partyName);
@@ -660,62 +660,17 @@ function generateVotingForm() {
               votes: 0,
               color: partyColor,
             });
-          }        
-        } else {
-          return;
-        }
-      }  
-      
-      console.log(votesData);
-      
-      fetch('/api/calculateSeats', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+          }
+          sendDataForCalculation(votesData);
+        
         },
-        body: JSON.stringify(votesData),
-      })
-      .then(response => response.json())
-      .then(seatResults => {
-        seatResults.forEach(result => {
-          const partyFromVotesData = votesData.parties.find(p => p.name === result.party);
-          if (partyFromVotesData) {
-            result.color = partyFromVotesData.color;
-          }
+        function() {
+          //Volver
+          return;
         });
-        
-        console.log(seatResults);
-        
-        let chartData = seatResults
-        .filter(result => result.seatsPercentage > 0)
-        .map(result => ({
-          party: result.party,
-          seatsPercentage: result.seatsPercentage,
-          color: result.color,
-        }));
-        
-        drawSeatsArc(chartData);
-        // Selecciono todas las filas de la tabla del cuerpo
-        const rows = Array.from(document.querySelector('tbody').children);
-        // Actualizo la tabla con los resultados de los escaños
-        for (const result of seatResults) {
-          
-          // Busco la fila que tiene el nombre del partido en la primera celda
-          const row = rows.find(row => row.children[0].textContent.toLowerCase() === result.party.toLowerCase());
-          
-          if (row) {
-            // Actualizo la tercera celda con el porcentaje de votos
-            row.children[2].textContent = result.votesPercentage.toFixed(2) + '%';
-            if(result.party !== 'votos en blanco' && result.party !== 'votos nulos') {
-            // Actualizo la cuarta celda con el número de escaños
-              row.children[3].textContent = result.seats;
-            }
-          }
-        }
-        
-        
-      })
-      .catch(error => console.error('Error:', error));
+      } else {        
+        sendDataForCalculation(votesData);
+      }      
     });
   })
   .catch(error => {
@@ -766,6 +721,59 @@ function partiesToJson(acName) {
                 }
               })
               .catch(error => console.error('Error', error));
+}
+
+function sendDataForCalculation(votesData) {
+  console.log(votesData);
+      
+      fetch('/api/calculateSeats', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(votesData),
+      })
+      .then(response => response.json())
+      .then(seatResults => {
+        seatResults.forEach(result => {
+          const partyFromVotesData = votesData.parties.find(p => p.name === result.party);
+          if (partyFromVotesData) {
+            result.color = partyFromVotesData.color;
+          }
+        });
+        
+        console.log(seatResults);
+        
+        let chartData = seatResults
+        .filter(result => result.seatsPercentage > 0)
+        .map(result => ({
+          party: result.party,
+          seatsPercentage: result.seatsPercentage,
+          color: result.color,
+        }));
+        
+        drawSeatsArc(chartData);
+        // Selecciono todas las filas de la tabla del cuerpo
+        const rows = Array.from(document.querySelector('tbody').children);
+        // Actualizo la tabla con los resultados de los escaños
+        for (const result of seatResults) {
+          
+          // Busco la fila que tiene el nombre del partido en la primera celda
+          const row = rows.find(row => row.children[0].textContent.toLowerCase() === result.party.toLowerCase());
+          
+          if (row) {
+            // Actualizo la tercera celda con el porcentaje de votos
+            row.children[2].textContent = result.votesPercentage.toFixed(2) + '%';
+            if(result.party !== 'votos en blanco' && result.party !== 'votos nulos') {
+            // Actualizo la cuarta celda con el número de escaños
+              row.children[3].textContent = result.seats;
+            }
+          }
+        }
+        
+        
+      })
+      .catch(error => console.error('Error:', error));
 }
 });
 /* Todavía se necesita verificar que tanto una elección como una cámara estén seleccionadas antes de llenar las comunidades autónomas, y verificar que se haya seleccionado una comunidad autónoma antes de llenar las provincias..
