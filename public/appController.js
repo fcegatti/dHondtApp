@@ -146,6 +146,8 @@ fetch('/api/elections')
       console.log(`Provincia seleccionada: ${event.target.value} - ${new Date().toISOString()}`);
       const selectedProvince = event.target.value;
       votingForm.classList.add('hide');
+
+      const acName = acSelect.value;
       
       if (selectedProvince === '') {
         partyList.classList.remove('hide');
@@ -157,13 +159,19 @@ fetch('/api/elections')
         regionMapPlaceholder.textContent = `Mapa de ${selectedProvince}`;
       }
 
-      const acName = acSelect.value;
       console.log(`Solicitando partidos de la comunidad autónoma: ${acName} - ${new Date().toISOString()}`);
       fetch(`api/getACParties/${encodeURIComponent(acName)}`)
         .then(response => response.json())
         .then(partiesFromAPI => {
           if (partiesFromAPI && partiesFromAPI.length > 0) {
             generateVotingForm();
+          } else if (!parties[acName] || parties[acName] === 0) {
+            showModal(`Debe agregar al menos un partido en ${acName} antes de continuar`, function() {
+              provinceSelect.selectedIndex = 0;
+              mapTitle.textContent = `${acSelect.value}`;
+              regionMapPlaceholder.textContent = `Mapa de ${acSelect.value}`;
+              partyEntryForm.classList.remove('hide');
+            });
           } else {
             showModal(`Si continúa, se agregarán los partidos de la lista a todas las provincias de ${acName} y ya no se podrán incluir otros. ¿Desea continuar?`, function() {
               console.log("Continuar seleccionado");
