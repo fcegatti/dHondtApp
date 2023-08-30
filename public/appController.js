@@ -174,7 +174,7 @@ fetch('/api/elections')
             });
           } else if (parties[acName].length === 1) {
             showModal(`Está añadiendo solamente un partido en ${acName}. Si confirma, no podrá añadir más partidos en esta comunidad autónoma. ¿Desea continuar?`, function() {
-              partiesToJson(acName);
+              partiesToJson(acName, selectedProvince);
             }, 
             function() {
               provinceSelect.selectedIndex = 0;
@@ -185,7 +185,7 @@ fetch('/api/elections')
             });
           } else {
             showModal(`Si continúa, se agregarán los partidos de la lista a todas las provincias de ${acName} y ya no se podrán incluir otros. ¿Desea continuar?`, function() {
-              partiesToJson(acName);
+              partiesToJson(acName, selectedProvince);
         },
         function() {
           console.log("Volver seleccionado");
@@ -678,7 +678,7 @@ function generateVotingForm() {
   })
 }
 
-function partiesToJson(acName) {
+function partiesToJson(acName, selectedProvince) {
   console.log("Continuar seleccionado");
 
               const dataToSend = {
@@ -701,7 +701,7 @@ function partiesToJson(acName) {
                 console.log(data.message);
 
                 generateVotingForm();
-                const selectedProvinceData = getSelectedProvince(acSelect.value,         selectedProvince);
+                const selectedProvinceData = getSelectedProvince(acSelect.value,   selectedProvince);
                 if (selectedProvinceData) {
                   if (selectedProvinceData.seatResults) {
                     const chartData = selectedProvinceData.seatResults.map(result => ({
