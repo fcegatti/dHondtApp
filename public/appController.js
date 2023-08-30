@@ -181,7 +181,7 @@ fetch('/api/elections')
               mapTitle.textContent = `${acSelect.value}`;
               regionMapPlaceholder.textContent = `Mapa de ${acSelect.value}`;
               partyEntryForm.classList.remove('hide');
-              updaetPartyList();
+              updatePartyList();
             });
           } else {
             showModal(`Si continúa, se agregarán los partidos de la lista a todas las provincias de ${acName} y ya no se podrán incluir otros. ¿Desea continuar?`, function() {
