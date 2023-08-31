@@ -631,6 +631,12 @@ function generateVotingForm() {
           }    
         }
       }
+
+      const zeroVotesEntered = votesData.parties.every(party => party.votes === 0);
+      if (zeroVotesEntered) {
+        showModal('No es posible calcular escaños sin ningún voto ingresado. Por favor, ingrese votos en al menos un campo.');
+        return;
+      }
       
       votesData.parties.forEach(party => {
         if (party.name === 'votos en blanco') {
