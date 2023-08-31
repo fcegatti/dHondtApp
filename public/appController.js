@@ -650,11 +650,8 @@ function generateVotingForm() {
         showModal(message, function() {
           //Continuar
           for (let partyName of partiesWithoutVotes) {
-            let partyColor;
-            const partyInfo = votesData.parties.find(p => p.name === partyName);
-            if (partyInfo) {
-              partyColor = partyInfo.color;
-            }
+            const partyInfo = acParties.find(p => p.name === partyName);
+            const partyColor = partyInfo?.color;
             votesData.parties.push({
               name: partyName,
               votes: 0,
