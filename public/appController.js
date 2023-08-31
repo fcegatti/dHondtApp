@@ -632,8 +632,19 @@ function generateVotingForm() {
         }
       }
 
-      const zeroVotesEntered = votesData.parties.every(party => party.votes === 0);
-      if (zeroVotesEntered) {
+      const zeroVotesEntered = votesData.parties.every(party => {
+        if (party.name.toLowerCase() === 'votos nulos') return true;
+        return party.votes === 0;
+      });
+      const nullVotesOnly = votesData.parties.some(party => party.name.toLowerCase() === 'votos nulos' && party.votes > 0);
+
+      console.log('zeroVotesEntered: ', zeroVotesEntered);
+      console.log('nullVotesOnly: ', nullVotesOnly);
+
+      if (zeroVotesEntered && nullVotesOnly) {
+        showModal('No es posible calcular escaños cuando solo se han ingresado votos nulos. Por favor, ingrese votos en al menos un partido.');
+        return;
+      } else if (zeroVotesEntered) {
         showModal('No es posible calcular escaños sin ningún voto ingresado. Por favor, ingrese votos en al menos un campo.');
         return;
       }
