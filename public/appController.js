@@ -412,13 +412,14 @@ function updatePartyList() {
 }
 
 function formatPartiesList(parties) {
-  if (parties.length === 1) {
-    return parties[0];
-  } else if (parties.length === 2) {
-    return `${parties[0]} ni ${parties[1]}`;
+  let partiesGrammar = [...parties]; //Hago una copia porque esta función modificaba el original y daba error si se añadían 3 campos con o votos.
+  if (partiesGrammar.length === 1) {
+    return partiesGrammar[0];
+  } else if (partiesGrammar.length === 2) {
+    return `${partiesGrammar[0]} ni ${partiesGrammar[1]}`;
   } else {
-    let lastParty = parties.pop();
-    return `${parties.join(', ')} ni ${lastParty}`;
+    let lastParty = partiesGrammar.pop();
+    return `${partiesGrammar.join(', ')} ni ${lastParty}`;
   }
 }
 
@@ -650,9 +651,16 @@ function generateVotingForm() {
         showModal(message, function() {
           //Continuar
           for (let partyName of partiesWithoutVotes) {
-            const partyInfo = acParties.find(p => p.name === partyName);
-            const partyColor = partyInfo?.color;
-            votesData.parties.push({
+            let partyColor;
+            if (partyName === 'votos en blanco') {
+              partyColor = 'white';
+            } else if (partyName === 'votos nulos') {
+              partyColor = 'gray';
+            } else {
+              const partyInfo = acParties.find(p => p.name === partyName);
+              partyColor = partyInfo?.color;
+            }
+              votesData.parties.push({
               name: partyName,
               votes: 0,
               color: partyColor,
