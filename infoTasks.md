@@ -28,3 +28,26 @@ updatePartyList();
 // Obtengo la lista de partidos para la comunidad autónoma seleccionada
   const selectedAC = electionsData.autonomousCommunities.find(ac => ac.name === acName);
   const acParties = selectedAC ? selectedAC.parties : [];
+
+    /* if (!selectedAC.parties) {
+    selectedAC.parties = [];
+  } 
+
+  selectedAC.parties.push(newParty);
+
+ 
+
+  for (const province of selectedAC.provinces) {
+    if (!province.partyData) {
+      province.partyData = [];
+    }
+    province.partyData.push({
+      party: partyName,
+      votes: 0,
+      votesPercentage: 0,
+      seats: 0,
+      seatsPercentage: 0,
+      color: partyColor,
+    });
+  }
+   */

@@ -336,29 +336,6 @@ function handleAddPartySubmit(event) {
     return;
   }
 
-  /* if (!selectedAC.parties) {
-    selectedAC.parties = [];
-  } 
-
-  selectedAC.parties.push(newParty);
-
- 
-
-  for (const province of selectedAC.provinces) {
-    if (!province.partyData) {
-      province.partyData = [];
-    }
-    province.partyData.push({
-      party: partyName,
-      votes: 0,
-      votesPercentage: 0,
-      seats: 0,
-      seatsPercentage: 0,
-      color: partyColor,
-    });
-  }
-   */
-
   if (!logoURL) {
     showModal(`Estás ingresando el partido ${partyName} sin un logo. El espacio del logo será reemplazado por el color del partido.`, function () {
       showModal(`¿Confirmas que deseas añadir ${partyName} a ${acName}?`, function() {
