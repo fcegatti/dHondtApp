@@ -708,6 +708,7 @@ function partiesToJson(acName, selectedProvince) {
                       seatsPercentage: result.seatsPercentage,
                       color: result.color,
                     }));
+                    chartData = sortPartiesForArcDisplay(chartData);
                     console.log(chartData);
                     drawSeatsArc(chartData);
                   }
@@ -752,6 +753,8 @@ function sendDataForCalculation(votesData) {
           color: result.color,
         }));
         
+        chartData = sortPartiesForArcDisplay(chartData);
+        console.log(chartData);
         drawSeatsArc(chartData);
         // Selecciono todas las filas de la tabla del cuerpo
         const rows = Array.from(document.querySelector('tbody').children);

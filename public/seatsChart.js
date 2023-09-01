@@ -35,4 +35,17 @@ function drawSeatsArc(partiesData) {
     .style('fill', d => d.data.color);
 }
 
-window.drawSeatsArc = drawSeatsArc;  
+window.drawSeatsArc = drawSeatsArc; 
+
+// Ordeno los partidos de más votado a menos votado para el arco de escaños
+
+function sortPartiesForArcDisplay(data) {
+  return data.sort((a, b) => {
+    if (b.seatsPercentage === a.seatsPercentage) {
+      return b.votesPercentage - a.votesPercentage;
+    }
+    return b.seatsPercentage - a.seatsPercentage;
+  });
+}
+
+window.sortPartiesForArcDisplay = sortPartiesForArcDisplay;
