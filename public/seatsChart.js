@@ -18,6 +18,10 @@ const pie = d3.pie()
   .value(d => d.seatsPercentage);
 
 function drawSeatsArc(partiesData) {
+  const pieData = pie(partiesData);
+  console.log('pieData: ', pieData);
+
+  g.selectAll('.arc').remove();
   // Creo un grupo SGV para cada segmento del pie chart
   const arcs = g.selectAll('.arc')
       .data(pie(partiesData))

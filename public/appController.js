@@ -708,6 +708,7 @@ function partiesToJson(acName, selectedProvince) {
                       seatsPercentage: result.seatsPercentage,
                       color: result.color,
                     }));
+                    console.log(chartData);
                     drawSeatsArc(chartData);
                   }
                 } else {
