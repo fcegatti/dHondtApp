@@ -33,10 +33,4 @@ function initializeView(electionType = null, chamberType = null, ac = null) {
     acMessage.textContent = '';
     mapTitle.textContent = `${ac}`
   }
-  
-  resetGraphics();
-}
-
-function resetGraphics() {
-  
 }

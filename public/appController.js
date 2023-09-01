@@ -101,9 +101,11 @@ fetch('/api/elections')
 
       if (event.target.value === '') {
         resetACView();
+        resetGraphics('country', null);
         return;
       }
 
+      resetGraphics('ac', event.target.value);
       votingForm.classList.add('hide');
       mapTitle.textContent = `${acSelect.value}`;
       regionMapPlaceholder.textContent = `Mapa de ${acSelect.value}`;
@@ -150,6 +152,7 @@ fetch('/api/elections')
       const acName = acSelect.value;
       
       if (selectedProvince === '') {
+        resetGraphics('ac', acSelect.value);
         partyList.classList.remove('hide');
         mapTitle.textContent = `${acSelect.value}`;
         regionMapPlaceholder.textContent = `Mapa de ${acSelect.value}`;
@@ -163,6 +166,7 @@ fetch('/api/elections')
       fetch(`api/getACParties/${encodeURIComponent(acName)}`)
         .then(response => response.json())
         .then(partiesFromAPI => {
+          resetGraphics(acName, selectedProvince);
           if (partiesFromAPI && partiesFromAPI.length > 0) {
             generateVotingForm();
           } else if (!parties[acName] || parties[acName].length === 0) {
@@ -203,6 +207,43 @@ fetch('/api/elections')
 
   })
   .catch(error => console.error('Error:', error));
+
+  function resetGraphics(territorialLevel, selectedValue) {
+    let data;
+  
+    try {
+      switch (territorialLevel) {
+        case 'province': 
+        data = getProvincePartyData(selectedValue);
+        break;
+        case 'ac':
+          case 'country':
+            data = null;
+            break;
+            default:
+              break;
+      }
+            
+      if (data && data.Partydata) {
+        const chartData= data.partyData.map(result => ({
+          party: result.party,
+          seatsPercentage: result.seatsPercentage,
+          color: result.color,
+        }))
+        .sort((a, b) => b.seatsPercentage - a.seatsPercentage || b.votes - votes);
+        drawSeatsArc(chartData);
+      } else {
+        const unassignedChartData = [{
+          party: 'No Asignados',
+          seatsPercentage: 100,
+          color: 'gray'
+        }];
+        drawSeatsArc(unassignedChartData);
+      }
+    } catch (error) {
+      console.error('Error while generating data visualization: ', error);      
+    }
+  } 
 
 function resetACView() {
   partyList.classList.add('hide');
