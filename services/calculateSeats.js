@@ -115,4 +115,18 @@ const calculateSeats = (votesData) => {
   }));
 };
 
-module.exports = calculateSeats;
+function updateSeatsAndPercentagesForAC(acData) {
+  const totalSeats = acData.provinces.reduce((total, p) => total + p.congressSeats, 0);
+
+  for (const party of acData.parties) {
+    const totalSeatsForParty = acData.provinces.reduce((total, p) => {
+      const provinceParty = p.partyData?.find(pd => pd.party === party.name);
+      return total + (provinceParty?.seats || 0);
+    }, 0);
+
+    party.seats = totalSeatsForParty;
+    party.seatsPercentage = (totalSeatsForParty / totalSeats) * 100;
+  }
+}
+
+module.exports = { calculateSeats, updateSeatsAndPercentagesForAC};

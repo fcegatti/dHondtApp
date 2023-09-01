@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const electionsData = require('../../data/electionsData.json');
-const calculateSeats = require('../../services/calculateSeats');
+const { calculateSeats, updateSeatsAndPercentagesForAC } = require('../../services/calculateSeats');
 const fs = require('fs');
 const path = require('path');
 
@@ -46,6 +46,8 @@ router.post('/', (req, res) => {
     }
 
     provinceData.partyData = seatResults;
+
+    updateSeatsAndPercentagesForAC(acData);
 
     try {
       fs.writeFileSync(path.join(__dirname, '../../data/electionsData.json'), JSON.stringify(electionsData, null, 2));

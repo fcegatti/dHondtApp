@@ -17,6 +17,11 @@ router.post('/updateParties', (req, res) => {
     return res.status(404).json({ message: 'Autonomous community not found.' });
   }
 
+  for (const party of parties) {
+    party.seats = 0;
+    party.seatsPercentage = 0;
+  }
+
   acData.parties = parties;
 
   try {
